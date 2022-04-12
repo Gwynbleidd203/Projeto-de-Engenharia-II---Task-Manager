@@ -4,15 +4,6 @@ from dao import TarefaDao
 
 from models import Tarefa, Usuario
 
-## KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW KEKW K
-
-#import sqlite3
-#db = sqlite3.connect('banco.db')
-#cursor = db.cursor().execute('select 1')
-#print(cursor)
-
-
-
 
 app = Flask(__name__)
 app.secret_key = 'ENGII'
@@ -48,7 +39,6 @@ def criar():
     tarefa = Tarefa(nome, descricao, tipo, status, prioridade)
 
     TarefaDao.salvar(tarefa)
-
 
     return redirect('/sobre')
 
