@@ -13,6 +13,7 @@ app.secret_key = 'ENGII'
 db = sqlite3.connect('banco.db', check_same_thread=False)
 
 # dao
+#teste
 
 tarefa_dao = TarefaDao(db)
 usuario_dao = UsuarioDao(db)
@@ -103,6 +104,8 @@ def status():
 def sobre():
 
     return render_template('sobre.html')
+
+print("Salve")
 
 
 if __name__ == '__main__':
