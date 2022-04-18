@@ -21,6 +21,13 @@ body {
   font-family:'Roboto', sans-serif;
   background-color: var(--bg-main);
   font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-self: center;
+  align-content: center;
+  gap: 2rem;
 }
 
 /* The side navigation menu */
@@ -63,7 +70,9 @@ body {
 
 #nav-btn-push {
   float: left;
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 #nav-btn-push:hover {
@@ -97,18 +106,19 @@ body {
   word-wrap: break-word;
   overflow: hidden;
   margin: 50px;
+  transition: 0.2s;
 }
 
 .task-div:hover {
   background-color: var(--cards-sec);
   box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.2);
-  
+  transform: scale(1.1);
 }
 
 @media screen and (max-width: 1000px) {
   .task-div {
-    width: 13rem;
-    height: 15rem;
+    width: 17rem;
+    height: 18rem;
     overflow: hidden;
   }
 }

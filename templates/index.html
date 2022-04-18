@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../static/style.css">
     <title>NavBar Test</title>
 </head>
+
 <body>
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -29,6 +30,26 @@
             <h1>Faça Seu Login Aqui</h1>
 
             <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+
+            <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+
+            <input type="password" name="senha" id="senha" required placeholder="Password...">  <br>
+
+            <button class="submit-btn" type="submit">OK</button>
+
+            <p>Ainda não tem uma conta? Clique <a onclick="openCreateAccount()" href="#">aqui</a></p>
+        </form>
+    </div>
+
+    <div id="create-account" class="pop-up">
+        <form method="POST" action="{{url_for('criar_usuario')}}">
+            <span id="close-btn" onclick="closeCreateAccount()">X</span>
+
+            <h1>Faça Seu Login Aqui</h1>
+
+            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+
+            <input type="text" name="username" id="username" required placeholder="Nome de Usuário..."> <br>
 
             <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
 
@@ -67,30 +88,13 @@
       
       <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
       <div id="main">
-        <div class="task-div">
-            {% for tarefa in tarefas %}
-
-                <p>{{tarefa._nome}} - <span style="color:red;">{{tarefa._categoria}}</span></p>
-
-            {% endfor %}
+    {% for tarefa in tarefas %}
+        <div class="task-div"> 
+            <a id="task-link-btn" href="{{url_for('tarefa_info', id=tarefa._id)}}">&plus;</a>
+            <h3>{{ tarefa._nome }}</h3>
+            <p>{{ tarefa._descricao }}</p>
         </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
+    {% endfor %}
       </div>
 
     <script src="{{url_for('static', filename='script.js')}}"></script>
