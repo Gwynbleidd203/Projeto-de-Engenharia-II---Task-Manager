@@ -13,7 +13,6 @@ app.secret_key = 'ENGII'
 db = sqlite3.connect('banco.db', check_same_thread=False)
 
 # dao
-#teste
 
 tarefa_dao = TarefaDao(db)
 usuario_dao = UsuarioDao(db)
@@ -51,25 +50,29 @@ def criar():
     
     tarefa = tarefa_dao.salvar(tarefa)
 
-    return redirect('/sobre')
-
-
-@app.route('/criar_usuario', methods=['POST', ])
-def criar_usuario():
-    username = request.form['username']
-    email = request.form['email']
-    senha = request.form['senha']
-    
-    usuario = Usuario(username, email, senha)
-    
-    usuario_dao.salvar_usuario(usuario)
-    
     return redirect('/')
 
 
-@app.route('/editar_tarefa')
-def editar_tarefa():
+@app.route('/editar_tarefa/<int:id>')
+def editar_tarefa(id):
+    tarefa = tarefa_dao.busca_por_id(id)
     
+    return render_template('/tarefa_edit.html', tarefa=tarefa)
+
+
+@app.route('/atualizar', methods=['POST', ])
+def atualizar():
+    nome = request.form['nome']
+    descricao = request.form['descricao']
+    tipo = request.form['tipo']
+    status = request.form['status']
+    prioridade = request.form['prioridade']
+    id = request.form['id']
+
+    tarefa = Tarefa(nome, descricao, tipo, status, prioridade, id)
+
+    tarefa_dao.salvar(tarefa)
+
     return redirect('/')
 
 
@@ -93,6 +96,44 @@ def deletar_tarefa(id):
     
     return redirect('/')
 
+#USUARIO
+
+
+@app.route('/criar_usuario', methods=['POST', ])
+def criar_usuario():
+    username = request.form['username']
+    email = request.form['email']
+    senha = request.form['senha']
+    
+    usuario = Usuario(username, email, senha)
+    
+    usuario_dao.salvar_usuario(usuario)
+    
+    return redirect('/')
+
+@app.route('/login')
+def login():
+    proxima=request.args.get('proxima')
+    if proxima == None:
+        proxima=''
+    return render_template('index.html', proxima=proxima)
+
+
+@app.route('/autenticar', methods=['POST',])
+def autenticar_usu():
+    usuario = usuario_dao.buscar_por_email_usu(request.form['email'])
+    if usuario:
+        if usuario._senha == request.form['senha']:
+            session ['usuario_logado'] = request.form['email']
+            flash(request.form['email']+ 'Logou com sucesso')
+            u = usuario._nome
+            return redirect('/', user = u)
+
+
+
+    flash('Não logado, tente novamente')
+    return  redirect('/')           
+
 
 @app.route('/status')
 def status():
@@ -104,8 +145,6 @@ def status():
 def sobre():
 
     return render_template('sobre.html')
-
-print("Salve")
 
 
 if __name__ == '__main__':

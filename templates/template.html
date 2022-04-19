@@ -8,16 +8,24 @@
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='form.css')}}">
     <link rel="stylesheet" href="../static/style.css">
-    <title>{% block title %} Task Manager {% endblock %}</title>
+    <title>{% block title %}NavBar Test {% endblock %}</title>
 </head>
 
-{% block main %}
-
-    {% block nav %}
+{% block content %}
 
 <body>
+
+    {% block menu %}
+
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        {% block home %}
+
+        <a href="{{url_for('index')}}">Index</a>
+
+        {% endblock %}
+
         <a href="#" onclick="openLogin()">Login</a>
         <a href="#" onclick="openForm()">Criar Task</a>
         <a href="#">Progresso</a>
@@ -27,10 +35,12 @@
 
     {% endblock %}
 
+    {% block login %}
+
     <!--Modal para o login e autenticação-->
 
     <div id="login-form" class="pop-up">
-        <form method="POST" action="{{url_for('autenticar')}}">
+        <form method="POST" action="{{url_for('autenticar_usu')}}">
             <span id="close-btn" onclick="closeLogin()">X</span>
 
             <h1>Faça Seu Login Aqui</h1>
@@ -42,8 +52,36 @@
             <input type="password" name="senha" id="senha" required placeholder="Password...">  <br>
 
             <button class="submit-btn" type="submit">OK</button>
+
+            <p>Ainda não tem uma conta? Clique <a onclick="openCreateAccount()" href="#">aqui</a></p>
         </form>
     </div>
+
+    {% endblock %}
+
+    {% block conta %}
+
+    <div id="create-account" class="pop-up">
+        <form method="POST" action="{{url_for('criar_usuario')}}">
+            <span id="close-btn" onclick="closeCreateAccount()">X</span>
+
+            <h1>Faça Seu Login Aqui</h1>
+
+            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+
+            <input type="text" name="username" id="username" required placeholder="Nome de Usuário..."> <br>
+
+            <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+
+            <input type="password" name="senha" id="senha" required placeholder="Password...">  <br>
+
+            <button class="submit-btn" type="submit">OK</button>
+        </form>
+    </div>
+
+    {% endblock %}
+
+    {% block criar %}
 
     <!--Modal para a criação de tarefas-->
 
@@ -68,47 +106,31 @@
             <button class="submit-btn" type="submit">OK</button>
         </form>
     </div>
+
+    {% endblock %}
       
       <!-- Use any element to open the sidenav -->
       <img id="nav-btn-push" src="{{url_for('static', filename='list-btn-blk.png')}}" alt="" onclick="openNav()">
       
       <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 
-      {% block content %}
+    {% block task %}
 
       <div id="main">
-        <div class="task-div">
-            {% for tarefa in tarefas %}
-
-                <p>{{tarefa._nome}} - <span style="color:red;">{{tarefa._categoria}}</span></p>
-
-            {% endfor %}
+    {% for tarefa in tarefas %}
+        <div class="task-div"> 
+            <a id="task-link-btn" href="{{url_for('tarefa_info', id=tarefa._id)}}">&plus;</a>
+            <h3>{{ tarefa._nome }}</h3>
+            <p>{{ tarefa._descricao }}</p>
         </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
+    {% endfor %}
       </div>
 
-        {% endblock %}
+    {% endblock %}
 
     <script src="{{url_for('static', filename='script.js')}}"></script>
     <script src="../static/script.js"></script>
+</body>
 
 {% endblock %}
-
-</body>
 </html>

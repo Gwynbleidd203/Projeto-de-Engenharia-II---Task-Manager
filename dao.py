@@ -1,3 +1,4 @@
+import email
 import sqlite3
 
 from colorama import Cursor
@@ -23,6 +24,7 @@ SQL_BUSCA_TAREFA = 'SELECT * FROM TAREFA'
 # Search ID
 
 SQL_BUSCA_TAREFA_POR_ID = 'SELECT * FROM TAREFA WHERE ID = ?'
+SQL_USUARIO_POR_EMAIL = 'SELECT * FROM USUARIO WHERE EMAIL = ?'
 
 # Delete
 
@@ -37,10 +39,12 @@ class TarefaDao:
         cursor = self.__db.cursor()
 
         if (tarefa._id):
-            cursor.execute(SQL_ATUALIZA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo, tarefa._status, tarefa._prioridade))
+            cursor.execute(SQL_ATUALIZA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo, tarefa._status, tarefa._prioridade, tarefa._id))
 
         else:
             cursor.execute(SQL_CRIA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo, tarefa._status, tarefa._prioridade))
+            cursor._id = cursor.lastrowid
+            tarefa._id= cursor._id
 
         self.__db.commit()
         return tarefa
@@ -66,6 +70,10 @@ def traduz_tarefas(tarefas):
     def cria_tarefas_com_tupla(tupla):
         return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], id=tupla[0])
     return list(map(cria_tarefas_com_tupla, tarefas))
+
+
+def traduz_usuario(tupla):
+    return Usuario(tupla[1], tupla[2], tupla[3], id=tupla[0])
     
 
 class UsuarioDao:
@@ -82,4 +90,11 @@ class UsuarioDao:
             cursor.execute(SQL_CRIA_USUARIO, (usuario._nome, usuario._email, usuario._senha))
             
         self.__db.commit()
+        return usuario
+
+    def buscar_por_email_usu(self, email):
+        cursor =  self.__db.cursor()
+        cursor.execute(SQL_USUARIO_POR_EMAIL, (email,))
+        dados = cursor.fetchone()
+        usuario = traduz_usuario(dados) if dados else None
         return usuario
