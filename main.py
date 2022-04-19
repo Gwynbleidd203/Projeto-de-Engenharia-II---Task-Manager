@@ -146,7 +146,7 @@ def sobre():
 
     return render_template('sobre.html')
 
-
+print("atualizado")
 
 
 if __name__ == '__main__':
