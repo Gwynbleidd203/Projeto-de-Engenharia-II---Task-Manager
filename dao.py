@@ -1,7 +1,4 @@
-import email
 import sqlite3
-
-from colorama import Cursor
 
 from models import Tarefa, Usuario
 
@@ -43,8 +40,8 @@ class TarefaDao:
 
         else:
             cursor.execute(SQL_CRIA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo, tarefa._status, tarefa._prioridade))
-            cursor._id = cursor.lastrowid
-            tarefa._id= cursor._id
+            cursor_id = cursor.lastrowid
+            tarefa._id = cursor_id
 
         self.__db.commit()
         return tarefa

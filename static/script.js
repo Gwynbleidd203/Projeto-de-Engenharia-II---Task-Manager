@@ -37,3 +37,12 @@ function openCreateAccount () {
 function closeCreateAccount () {
   document.getElementById("create-account").style.display = 'none'
 }
+
+/* AJAX */
+
+function showNewTask() {
+  let xhr = new XMLHttpRequest()
+  
+  xhr.open("GET", "{{url_for('lista_de_tarefas')}}", true)
+  xhr.send()
+}
