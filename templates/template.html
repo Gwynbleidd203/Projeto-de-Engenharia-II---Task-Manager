@@ -99,7 +99,12 @@
 
             <input type="number" name="tipo" id="tipo" placeholder="Tipo de Tarefa..." required> <br>
 
-            <input type="number" name="status" id="status" placeholder="Status da Tarefa..."> <br>
+            <select name="status" id="status">
+                <option value="" selected disabled>Status</option>
+            {% for status in status_list %}
+                <option value="{{ status._id }}">{{ status._nome }}</option>
+            {% endfor %}
+            </select>
 
             <input type="number" name="prioridade" id="prioridade" placeholder="Prioridade da Tarefa..."> <br>
 

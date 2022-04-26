@@ -1,5 +1,5 @@
 class Tarefa:
-    def __init__(self, nome, descricao, tipo_id, status_id, prioridade_id, id=None):
+    def __init__(self, nome, descricao, tipo_id, status_id, prioridade_id, status, id=None):
         self._id = id
         self._nome = nome
         self._descricao = descricao
@@ -15,3 +15,20 @@ class Usuario:
         self._email = email
         self._senha = senha
 
+
+class Tipo:
+    def __init__(self, nome, id=None):
+        self._id = id
+        self._nome = nome
+
+
+class Status:
+    def __init__(self, nome, id=None):
+        self._id = id
+        self._nome = nome
+     
+        
+class Prioridade:
+    def __init__(self, nome, id=None):
+        self._id = id
+        self._nome = nome
