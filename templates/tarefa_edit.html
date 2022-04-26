@@ -5,8 +5,25 @@
                 <input type="hidden" name="id" value="{{ tarefa._id }}">
                 <input type="text" name="nome" id="nome" value="{{ tarefa._nome }}" required> <br>
                 <input type="text" name="descricao" id="descricao" value="{{ tarefa._descricao }}"> <br>
-                <input type="text" name="tipo" id="tipo" value="{{ tarefa._tipo }}" required> <br>
-                <input type="text" name="prioridade" id="prioridade" value="{{ tarefa._prioridade }}"> <br>
+
+                <select name="status" id="status">
+                {% for status in status_list %}
+                    {% if tarefa._status_id == status._id %}
+
+                    <option value="{{ status._id }}" selected>{{ status._nome }}</option>
+
+                    {% else %}
+
+                    <option value="{{ status._id }}">{{ status._nome }}</option>
+
+                    {% endif %}
+
+                {% endfor %}
+
+                </select>
+
+                <input type="text" name="tipo" id="tipo" value="{{ tarefa._tipo_id }}" required> <br>
+                <input type="text" name="prioridade" id="prioridade" value="{{ tarefa._prioridade_id }}"> <br>
                 <button type="submit">OK</button>
             </form>
 

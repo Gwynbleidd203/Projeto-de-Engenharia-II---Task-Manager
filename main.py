@@ -58,8 +58,9 @@ def criar():
 @app.route('/editar_tarefa/<int:id>')
 def editar_tarefa(id):
     tarefa = tarefa_dao.busca_por_id(id)
+    lista_status = status_dao.listar_status()
     
-    return render_template('/tarefa_edit.html', tarefa=tarefa)
+    return render_template('/tarefa_edit.html', tarefa=tarefa, status_list=lista_status)
 
 
 @app.route('/atualizar', methods=['POST', ])
@@ -87,9 +88,9 @@ def lista_de_tarefas():
 
 @app.route('/tarefa_info/<int:id>')
 def tarefa_info(id):
-    tarefa = tarefa_dao.busca_por_id(id)
+    lista = tarefa_dao.busca_por_id(id)
     
-    return render_template('tarefa_info.html', tarefa=tarefa)
+    return render_template('tarefa_info.html', tarefa=lista)
 
 
 @app.route('/deletar_tarefa/<int:id>')
