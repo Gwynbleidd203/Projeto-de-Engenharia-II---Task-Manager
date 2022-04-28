@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, session, flash
 
 from dao import StatusDao, TarefaDao, UsuarioDao, PrioridadeDao
 
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from models import Prioridade, Tarefa, Usuario
 
 import sqlite3
