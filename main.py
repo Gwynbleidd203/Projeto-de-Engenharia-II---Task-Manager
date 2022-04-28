@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, session, flash
 
-from dao import StatusDao, TarefaDao, UsuarioDao
+from dao import StatusDao, TarefaDao, UsuarioDao, PrioridadeDao
 
-from models import Tarefa, Usuario
+from models import Prioridade, Tarefa, Usuario
 
 import sqlite3
 
@@ -17,6 +17,7 @@ db = sqlite3.connect('banco.db', check_same_thread=False)
 tarefa_dao = TarefaDao(db)
 usuario_dao = UsuarioDao(db)
 status_dao = StatusDao(db)
+prioridade_dao = PrioridadeDao(db)
 
 
 @app.route('/')
@@ -24,8 +25,9 @@ def index():
     proxima = request.args.get('proxima')
     lista = tarefa_dao.listar()
     lista_status = status_dao.listar_status()
+    lista_prioridades = prioridade_dao.listar_prioridades()
 
-    return render_template('index.html', proxima=proxima, tarefas=lista, status_list=lista_status)
+    return render_template('index.html', proxima=proxima, tarefas=lista, status_list=lista_status, prioridades=lista_prioridades)
 
 
 @app.route('/autenticar')
@@ -48,7 +50,7 @@ def criar():
     status = request.form['status']
     prioridade = request.form['prioridade']
 
-    tarefa = Tarefa(nome, descricao, tipo, status, prioridade, None)
+    tarefa = Tarefa(nome, descricao, tipo, status, prioridade, None, None)
     
     tarefa = tarefa_dao.salvar(tarefa)
 
@@ -59,8 +61,9 @@ def criar():
 def editar_tarefa(id):
     tarefa = tarefa_dao.busca_por_id(id)
     lista_status = status_dao.listar_status()
+    lista_prioridade = prioridade_dao.listar_prioridades()
     
-    return render_template('/tarefa_edit.html', tarefa=tarefa, status_list=lista_status)
+    return render_template('/tarefa_edit.html', tarefa=tarefa, status_list=lista_status, prioridades=lista_prioridade)
 
 
 @app.route('/atualizar', methods=['POST', ])
@@ -72,7 +75,7 @@ def atualizar():
     prioridade_id = request.form['prioridade']
     id = request.form['id']
 
-    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, id)
+    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, id)
 
     tarefa_dao.salvar(tarefa)
 

@@ -1,6 +1,8 @@
 from msilib.schema import Class
 import sqlite3
 
+from colorama import Cursor
+
 from models import Tarefa, Usuario, Tipo, Status, Prioridade
 
 # SQL
@@ -13,6 +15,8 @@ SQL_CRIA_USUARIO = 'INSERT into USUARIO (USERNAME, EMAIL, SENHA) values (?, ?, ?
 
 SQL_CRIA_STATUS = 'INSERT INTO STATUS (NOME) VALUES (?)'
 
+SQL_CRIA_PRIORIDADE = 'INSERT INTO PRIORIDADE (NOME) VALUES (?)'
+
 
 # Atualização
 
@@ -22,15 +26,18 @@ SQL_ATUALIZA_USUARIO = 'UPDATE USUARIO SET USERNAME = ?, EMAIL = ?, SENHA = ? wh
 
 SQL_ATUALIZA_STATUS = 'UPDATE STATUS SET NOME = ? WHERE ID = ?'
 
+SQL_ATUALIZA_PRIORIDADE = 'UPDATE PRIORIDADE SET NOME = ? WHERE ID = ?'
+
 # Search
 
-SQL_BUSCA_TAREFA = 'SELECT *, STATUS.NOME, STATUS.ID_STATUS FROM TAREFA INNER JOIN STATUS ON TAREFA.STATUS_ID = STATUS.ID_STATUS'
+SQL_BUSCA_TAREFA = 'SELECT *, STATUS.NOME, STATUS.ID_STATUS, PRIORIDADE.NOME, PRIORIDADE.ID_PRIORIDADE FROM TAREFA INNER JOIN STATUS ON TAREFA.STATUS_ID = STATUS.ID_STATUS INNER JOIN PRIORIDADE ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE'
 
 SQL_BUSCA_TIPO = 'SELECT * FROM TIPO'
 
 SQL_BUSCA_STATUS = 'SELECT * FROM STATUS'
 
 SQL_BUSCA_PRIORIDADE = 'SELECT * FROM PRIORIDADE'
+
 
 # Search ID
 
@@ -74,7 +81,7 @@ class TarefaDao:
         cursor = self.__db.cursor()
         cursor.execute(SQL_BUSCA_TAREFA_POR_ID, (id, ))
         tupla = cursor.fetchone()
-        return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], id=tupla[0])
+        return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], id=tupla[0])
     
     
     def deletar(self, id):
@@ -84,7 +91,7 @@ class TarefaDao:
     
 def traduz_tarefas(tarefas):
     def cria_tarefas_com_tupla(tupla):
-        return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], id=tupla[0])
+        return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], id=tupla[0])
     return list(map(cria_tarefas_com_tupla, tarefas))
 
 
@@ -121,6 +128,40 @@ def traduz_status(status):
     def cria_status_com_tupla(tupla):
         return Status(tupla[1], tupla[0])
     return list(map(cria_status_com_tupla, status))
+
+
+# ------------------------------ PRIORIDADE -----------------------------------------------
+
+class PrioridadeDao:
+    def __init__(self, db):
+        self.__db = db
+        
+    def salvar_prioridade(self, prioridade):
+        cursor = self.__db.cursor()
+        
+        if (prioridade._id):
+            cursor.exxecute(SQL_ATUALIZA_PRIORIDADE, (prioridade._nome, prioridade._id))
+            
+        else:
+            cursor.execute(SQL_CRIA_PRIORIDADE, [prioridade._nome])
+            prioridade._id = cursor.lastrowid
+            
+        self.__db.commit()
+        
+        return prioridade
+    
+    
+    def listar_prioridades(self):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_BUSCA_PRIORIDADE)
+        prioridade = traduz_prioridade(cursor.fetchall())
+        return prioridade
+    
+    
+def traduz_prioridade(prioridade):
+    def cria_prioridade_com_tupla(tupla):
+        return Prioridade(tupla[1], tupla[0])
+    return list(map(cria_prioridade_com_tupla, prioridade))
     
 
 # --------------------- USUARIO -----------------------------------

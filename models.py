@@ -1,11 +1,13 @@
 class Tarefa:
-    def __init__(self, nome, descricao, tipo_id, status_id, prioridade_id, status, id=None):
+    def __init__(self, nome, descricao, tipo_id, status_id, prioridade_id, status, prioridade, id=None):
         self._id = id
         self._nome = nome
         self._descricao = descricao
         self._tipo_id = tipo_id
         self._status_id = status_id
         self._prioridade_id = prioridade_id
+        self._status = status
+        self._prioridade = prioridade
        
 
 class Usuario:
