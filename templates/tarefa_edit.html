@@ -9,7 +9,6 @@
 
                 <input type="text" name="descricao" id="descricao" value="{{ tarefa._descricao }}"> <br>
 
-
                 <select name="status" id="status">
 
                 {% for status in status_list %}
@@ -31,8 +30,7 @@
                 <input type="text" name="tipo" id="tipo" value="{{ tarefa._tipo_id }}" required> <br>
 
                 <select name="prioridade" id="prioridade">
-
-                    
+   
                 {% for prioridade in prioridades %}
 
                     {% if tarefa._prioridade_id == prioridade._id %}
