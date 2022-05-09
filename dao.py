@@ -13,6 +13,8 @@ SQL_CRIA_TAREFA = 'INSERT into TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIO
 
 SQL_CRIA_USUARIO = 'INSERT into USUARIO (USERNAME, EMAIL, SENHA) values (?, ?, ?)'
 
+SQL_CRIA_TIPO = 'INSERT INTO TIPO (NOME) VALUES (?)'
+
 SQL_CRIA_STATUS = 'INSERT INTO STATUS (NOME) VALUES (?)'
 
 SQL_CRIA_PRIORIDADE = 'INSERT INTO PRIORIDADE (NOME) VALUES (?)'
@@ -23,6 +25,8 @@ SQL_CRIA_PRIORIDADE = 'INSERT INTO PRIORIDADE (NOME) VALUES (?)'
 SQL_ATUALIZA_TAREFA = 'UPDATE TAREFA SET NOME = ?, DESCRICAO = ?, TIPO_ID = ?, STATUS_ID = ?, PRIORIDADE_ID = ? where ID = ?'
 
 SQL_ATUALIZA_USUARIO = 'UPDATE USUARIO SET USERNAME = ?, EMAIL = ?, SENHA = ? where ID = ?'
+
+SQL_ATUALIZA_TIPO = 'UPDATE TIPO SET NOME = ? WHERE ID = ?'
 
 SQL_ATUALIZA_STATUS = 'UPDATE STATUS SET NOME = ? WHERE ID = ?'
 
@@ -94,6 +98,40 @@ def traduz_tarefas(tarefas):
         return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], id=tupla[0])
     return list(map(cria_tarefas_com_tupla, tarefas))
 
+
+# --------------------- TIPO -------------------------------
+
+class TipoDao:
+    def __init__(self, db):
+        self.__db = db
+        
+    
+    def salvar_tipo(self, tipo):
+        cursor = self.__db.cursor()
+        
+        if (tipo._id):
+            cursor.execute(SQL_ATUALIZA_TIPO, (tipo._nome, tipo._id))
+            
+        else:
+            cursor.execute(SQL_CRIA_TIPO, [tipo._nome])
+            tipo._id = cursor.lastrowid
+            
+        self.__db.commit()
+        
+        return tipo
+    
+    
+    def listar_tipos(self):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_BUSCA_TIPO)
+        tipo = traduz_tipo(cursor.fetchall())
+        return tipo
+ 
+
+def traduz_tipo(tipo):
+    def cria_tipo_com_tupla(tupla):
+        return Tipo(tupla[1], tupla[0])
+    return list(map(cria_tipo_com_tupla, tipo))
 
 # --------------------- STATUS -----------------------------
 

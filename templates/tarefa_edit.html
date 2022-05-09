@@ -9,8 +9,26 @@
 
                 <input type="text" name="descricao" id="descricao" value="{{ tarefa._descricao }}"> <br>
 
-                <select name="status" id="status">
+                <select name="tipo" id="tipo">
 
+                {% for tipo in tipos %}
+
+                    {% if tarefa._tipo_id == tipo._id %}
+
+                    <option value="{ tipo._id }}" selected>{{ tipo._nome }}</option>
+
+                    {% else %}
+
+                    <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+
+                    {% endif %}
+    
+                {% endfor %}
+    
+                </select> <br>
+
+                <select name="status" id="status">
+        
                 {% for status in status_list %}
 
                     {% if tarefa._status_id == status._id %}
@@ -26,8 +44,6 @@
                 {% endfor %}
 
                 </select> <br>
-
-                <input type="text" name="tipo" id="tipo" value="{{ tarefa._tipo_id }}" required> <br>
 
                 <select name="prioridade" id="prioridade">
    

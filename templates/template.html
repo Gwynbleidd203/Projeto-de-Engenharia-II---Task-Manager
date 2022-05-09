@@ -97,7 +97,17 @@
 
             <input type="text" name="descricao" id="descricao" placeholder="Descrição da Tarefa..."> <br>
 
-            <input type="number" name="tipo" id="tipo" placeholder="Tipo de Tarefa..." required> <br>
+            <select name="tipo" id="tipo">
+
+                <option value="" selected disabled >Tipo</option>
+
+            {% for tipo in tipos %}
+                
+                <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+
+            {% endfor %}
+
+            </select> <br>
 
             <select name="status" id="status">
 
