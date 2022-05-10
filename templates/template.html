@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <title>{% block title %}NavBar Test {% endblock %}</title>
+    <title>{% block title %}NavBar Test{% endblock %}</title>
 </head>
 
 {% block content %}
@@ -36,6 +36,8 @@
         <a href="{{url_for('status')}}">Status</a>
         <a href="{{url_for('sobre')}}">About</a>
     </div>
+
+    <pre></pre>
 
     {% endblock %}
 
