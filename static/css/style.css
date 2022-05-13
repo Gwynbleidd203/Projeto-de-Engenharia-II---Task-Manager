@@ -122,3 +122,45 @@ body {
     overflow: hidden;
   }
 }
+
+.btn_del {
+  background-color: #e90202;
+    border: none;
+    color: white;
+    padding: 09px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin: 12px;
+}
+
+.btn_del:hover {
+  background-color: #f85555;
+  color: rgb(2, 1, 1);
+
+}
+
+.btn_edit {
+  background-color: #04d331;
+    border: none;
+    color: white;
+    padding: 09px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin: 12px;
+}
+
+.btn_edit:hover {
+  background-color: #76ce7a;
+  color: rgb(2, 1, 1);
+
+}

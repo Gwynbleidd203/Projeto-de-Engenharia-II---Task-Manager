@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash
 
-from dao import StatusDao, TarefaDao, UsuarioDao, PrioridadeDao
+from dao import StatusDao, TarefaDao, TipoDao, UsuarioDao, PrioridadeDao
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -18,6 +18,7 @@ db = sqlite3.connect('banco.db', check_same_thread=False)
 
 tarefa_dao = TarefaDao(db)
 usuario_dao = UsuarioDao(db)
+tipo_dao = TipoDao(db)
 status_dao = StatusDao(db)
 prioridade_dao = PrioridadeDao(db)
 
@@ -65,10 +66,11 @@ def criar():
 @app.route('/editar_tarefa/<int:id>')
 def editar_tarefa(id):
     tarefa = tarefa_dao.busca_por_id(id)
+    tipos = tipo_dao.listar_tipos()
     lista_status = status_dao.listar_status()
     lista_prioridade = prioridade_dao.listar_prioridades()
     
-    return render_template('/tarefa_edit.html', tarefa=tarefa, status_list=lista_status, prioridades=lista_prioridade)
+    return render_template('/tarefa_edit.html', tarefa=tarefa, tipos=tipos , status_list=lista_status, prioridades=lista_prioridade)
 
 
 @app.route('/atualizar', methods=['POST', ])

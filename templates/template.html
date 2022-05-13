@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='form.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
     <link rel="stylesheet" href="../static/style.css">
     <title>{% block title %}NavBar Test {% endblock %}</title>
 </head>
@@ -113,7 +113,17 @@
 
             <input type="text" name="descricao" id="descricao" placeholder="Descrição da Tarefa..."> <br>
 
-            <input type="number" name="tipo" id="tipo" placeholder="Tipo de Tarefa..." required> <br>
+            <select name="tipo" id="tipo">
+
+                <option value="" selected disabled >Tipo</option>
+
+            {% for tipo in tipos %}
+                
+                <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+
+            {% endfor %}
+
+            </select> <br>
 
             <select name="status" id="status">
 
@@ -147,7 +157,7 @@
     {% endblock %}
       
       <!-- Use any element to open the sidenav -->
-      <img id="nav-btn-push" src="{{url_for('static', filename='list-btn-blk.png')}}" alt="" onclick="openNav()">
+      <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="" onclick="openNav()">
       
       <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 
@@ -165,10 +175,10 @@
 
     {% endblock %}
 
-    <script src="{{url_for('static', filename='script.js')}}"></script>
+    <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
     <script src="../static/script.js"></script>
 
-    <script src="{{url_for('static', filename='jquery-3.6.0.js')}}"></script>
+    <script src="{{url_for('static', filename='scripts/jquery-3.6.0.js')}}"></script>
     <script src="../static/jquery-3.6.0.js" ></script>
 </body>
 

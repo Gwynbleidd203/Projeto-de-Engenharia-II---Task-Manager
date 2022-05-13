@@ -6,8 +6,9 @@
             <p>{{tarefa._descricao}}</p>
             <p>{{tarefa._prioridade}}</p>
 
-            <a href="{{ url_for('deletar_tarefa', id=tarefa._id) }}">deletar</a>
-            <a href="{{ url_for('editar_tarefa', id=tarefa._id) }}">editar</a>
+            
+            <a href="{{ url_for('deletar_tarefa', id=tarefa._id) }}" class="btn_del"><img class="icon" src="{{ url_for('static', filename='icons/logout.svg')}}" alt=""></a>
+            <a href="{{ url_for('editar_tarefa', id=tarefa._id) }}" class="btn_edit"> Editar</a>
         </div>
 
 {% endblock %}
