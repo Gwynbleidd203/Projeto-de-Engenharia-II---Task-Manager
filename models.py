@@ -1,5 +1,5 @@
 class Tarefa:
-    def __init__(self, nome, descricao, tipo_id, status_id, prioridade_id, status, prioridade, id=None):
+    def __init__(self, nome, descricao, tipo_id, status_id, prioridade_id, status, prioridade, usuario_id, id=None):
         self._id = id
         self._nome = nome
         self._descricao = descricao
@@ -8,6 +8,7 @@ class Tarefa:
         self._prioridade_id = prioridade_id
         self._status = status
         self._prioridade = prioridade
+        self._usuario_id = usuario_id
        
 
 class Usuario:

@@ -24,18 +24,20 @@ prioridade_dao = PrioridadeDao(db)
 
 @app.route('/')
 def index():
-    proxima = request.args.get('proxima')
-    lista = tarefa_dao.listar()
-    lista_status = status_dao.listar_status()
-    lista_prioridades = prioridade_dao.listar_prioridades()
-
-    return render_template('index.html', proxima=proxima, tarefas=lista, status_list=lista_status, prioridades=lista_prioridades)
-
-
-@app.route('/autenticar')
-def autenticar():
-
-    return redirect('/')
+    if session['usuario_logado'] != None:
+        usuario = usuario_dao.buscar_por_email_usu(session['usuario_logado'])
+        print(session['usuario_logado'])
+        proxima = request.args.get('proxima')
+        lista = tarefa_dao.listar_tarefas_por_usuario(usuario._id)
+        lista_status = status_dao.listar_status()
+        lista_prioridades = prioridade_dao.listar_prioridades()
+        
+        return render_template('index.html', proxima=proxima, status_list=lista_status, tarefas=lista, prioridades=lista_prioridades, usuario=usuario)
+        
+    else:
+        proxima = request.args.get('proxima')
+    
+        return render_template('landing.html', proxima=proxima)
 
 
 @app.route('/novo')
@@ -51,8 +53,9 @@ def criar():
     tipo = request.form['tipo']
     status = request.form['status']
     prioridade = request.form['prioridade']
+    usuario_id = request.form['usuario_id']
 
-    tarefa = Tarefa(nome, descricao, tipo, status, prioridade, None, None)
+    tarefa = Tarefa(nome, descricao, tipo, status, prioridade, None, None, usuario_id)
     
     tarefa = tarefa_dao.salvar(tarefa)
 
@@ -128,18 +131,25 @@ def login():
 
 
 @app.route('/autenticar', methods=['POST',])
-def autenticar_usu():
+def autenticar():
     usuario = usuario_dao.buscar_por_email_usu(request.form['email'])
     if usuario:
         if usuario._senha == request.form['senha']:
-            session ['usuario_logado'] = request.form['email']
-            flash(request.form['email']+ 'Logou com sucesso')
-            u = usuario._nome
-            return redirect('/', user = u)
-
-
-    flash('Não logado, tente novamente')
+            session['usuario_logado'] = request.form['email']
+            flash(request.form['email'] + 'Logou com sucesso')
+            return redirect('/')
+        
+    flash('Erro ao logar! Tente novamente.')
+    
     return  redirect('/')           
+
+
+@app.route('/logout')
+def logout():
+    session['usuario_logado'] = None
+    flash('Nenhum usuário logado')
+    
+    return redirect('/')
 
 
 @app.route('/status')

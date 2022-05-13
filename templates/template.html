@@ -17,6 +17,16 @@
 
     {% block menu %}
 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul id="messages" class="msg-ul-bad">
+            {% for message in messages %}
+            <li class="msg-li">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
@@ -90,6 +100,12 @@
             <span id="close-btn" onclick="closeForm()">X</span>
 
             <h1>Crie Sua Tarefa</h1>
+
+            {% if usuario: %}
+
+            <input type="hidden" name="usuario_id" value="{{ usuario._id }}">
+
+            {% endif %}
 
             <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
 
