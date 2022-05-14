@@ -19,9 +19,9 @@
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <ul id="messages" class="msg-ul-bad">
+        <ul id="messages" class="msg msg-ul-bad">
             {% for message in messages %}
-            <li class="msg-li">{{ message }}</li>
+            <li class="msg msg-li">{{ message }}</li>
             {% endfor %}
         </ul>
         {% endif %}
@@ -30,18 +30,31 @@
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
+
+    {% block menu_btn %}
+
         {% block home %}
 
         <a href="{{url_for('index')}}">Index</a>
 
         {% endblock %}
 
+        <!--Bloco do Menu-->
+
+        {% block login_btn %}
+
         <a href="#" onclick="openLogin()">Login</a>
+
+        {% endblock %}
         <a href="#" onclick="openForm()">Criar Task</a>
         <a href="#">Progresso</a>
         <a href="{{url_for('status')}}">Status</a>
         <a href="{{url_for('sobre')}}">About</a>
+
+    {% endblock %}
+    
     </div>
+
 
     {% endblock %}
 

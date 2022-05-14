@@ -25,21 +25,33 @@ prioridade_dao = PrioridadeDao(db)
 
 @app.route('/')
 def index():
-    if session['usuario_logado'] != None:
-        usuario = usuario_dao.buscar_por_email_usu(session['usuario_logado'])
-        print(session['usuario_logado'])
-        proxima = request.args.get('proxima')
-        lista = tarefa_dao.listar_tarefas_por_usuario(usuario._id)
-        lista_status = status_dao.listar_status()
-        lista_prioridades = prioridade_dao.listar_prioridades()
-        
-        return render_template('index.html', proxima=proxima, status_list=lista_status, tarefas=lista, prioridades=lista_prioridades, usuario=usuario)
-        
-    else:
+    if session == None or "":
         proxima = request.args.get('proxima')
     
         return render_template('landing.html', proxima=proxima)
-
+    
+    if session:
+        try:
+            usuario = usuario_dao.buscar_por_email_usu(session['usuario_logado'])
+            print(session['usuario_logado'])
+            proxima = request.args.get('proxima')
+            lista = tarefa_dao.listar_tarefas_por_usuario(usuario._id)
+            lista_status = status_dao.listar_status()
+            lista_prioridades = prioridade_dao.listar_prioridades()
+            
+            return render_template('index.html', proxima=proxima, status_list=lista_status, tarefas=lista, prioridades=lista_prioridades, usuario=usuario)
+        
+        except:
+            proxima = request.args.get('proxima')
+    
+            return render_template('landing.html', proxima=proxima)
+    
+    else:
+        
+        proxima = request.args.get('proxima')
+    
+        return render_template('landing.html', proxima=proxima)
+       
 
 @app.route('/novo')
 def novo():

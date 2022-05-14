@@ -164,3 +164,19 @@ body {
   color: rgb(2, 1, 1);
 
 }
+
+.msg {
+  width: fit-content;
+  height: fit-content;
+  padding: 10px 12px;
+  border-radius: 5px;
+  z-index: 5;
+  position: absolute;
+  top: 1;
+  left: 40;
+  right: 40;
+}
+
+.msg-ul-bad {
+  background-color: #e923234f;
+}
