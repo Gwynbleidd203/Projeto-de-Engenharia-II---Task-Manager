@@ -6,7 +6,7 @@
 
     {% if usuario: %}
 
-    <a href="#">{{ usuario._nome }}</a>
+    <a href="{{ url_for('perfil', id=usuario._id) }}">{{ usuario._nome }}</a>
 
     <a href="#" onclick="openForm()">Criar Task</a>
 

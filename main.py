@@ -166,6 +166,12 @@ def logout():
     return redirect('/')
 
 
+@app.route('/perfil/<int:id>')
+def perfil(id):
+    usuario = usuario_dao.buscar_usuario_por_id(id)
+    
+    return render_template('profile.html', usuario=usuario)
+
 @app.route('/status')
 def status():
 

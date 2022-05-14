@@ -255,5 +255,13 @@ class UsuarioDao:
         usuario = traduz_usuario(dados) if dados else None
         return usuario
     
+    
+    def buscar_usuario_por_id(self, id):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_BUSCA_USUARIO_POR_ID, (id,))
+        dados = cursor.fetchone()
+        usuario = traduz_usuario(dados) if dados else None
+        return usuario
+    
 def traduz_usuario(tupla):
     return Usuario(tupla[1], tupla[2], tupla[3], id=tupla[0])
