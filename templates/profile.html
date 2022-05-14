@@ -1,12 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Esse é o perfil do {{ usuario._nome }}</h1>
-</body>
-</html>
+{% extends "template.html" %}
+
+{% block menu_btn %}
+
+    <a href="{{ url_for('perfil', id=usuario._id) }}">{{usuario._nome}}</a>
+
+    <a href="{{ url_for('index') }}">Home</a>
+    
+    <a href="#" onclick="openForm()">Criar Task</a>
+
+    <a href="#">Progresso</a>
+
+    <a href="{{url_for('status')}}">Status</a>
+
+    <a href="{{url_for('sobre')}}">About</a>
+
+{% endblock %}
+
+
+        
+{% block task %}
+
+    <h2>Welcome to your profile, {{ usuario._nome }}</h2>
+
+{% endblock %}
