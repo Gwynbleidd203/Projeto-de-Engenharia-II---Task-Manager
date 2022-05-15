@@ -4,7 +4,7 @@ from dao import StatusDao, TarefaDao, TipoDao, UsuarioDao, PrioridadeDao
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from models import Prioridade, Tarefa, Usuario
+from models import Tarefa, Usuario
 
 import sqlite3
 
@@ -64,12 +64,12 @@ def novo():
 def criar():
     nome = request.form['nome']
     descricao = request.form['descricao']
-    tipo = request.form['tipo']
-    status = request.form['status']
-    prioridade = request.form['prioridade']
+    tipo_id = request.form['tipo']
+    status_id = request.form['status']
+    prioridade_id = request.form['prioridade']
     usuario_id = request.form['usuario_id']
 
-    tarefa = Tarefa(nome, descricao, tipo, status, prioridade, None, None, None, usuario_id)
+    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id)
     
     tarefa = tarefa_dao.salvar(tarefa)
 

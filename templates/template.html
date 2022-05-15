@@ -118,7 +118,7 @@
 
             {% if usuario: %}
 
-            <input type="hidden" name="usuario_id" value="{{ usuario._id }}">
+            <input type="hidden" name="usuario_id" id="usuario_id" value="{{ usuario._id }}">
 
             {% endif %}
 
@@ -184,6 +184,10 @@
             <a id="task-link-btn" href="{{url_for('tarefa_info', id=tarefa._id)}}">&plus;</a>
             <h3>{{ tarefa._nome }}</h3>
             <p>{{ tarefa._descricao }}</p>
+            <p>{{ tarefa._tipo_id}}</p>
+            <p>{{ tarefa._status_id }}</p>
+            <p>{{ tarefa._prioridade_id }}</p>
+            <p>{{ tarefa._usuario_id }}</p>
         </div>
         {% endfor %}
     </div>

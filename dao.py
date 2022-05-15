@@ -44,7 +44,7 @@ SQL_BUSCA_TAREFA = '''SELECT *, TIPO.NOME, TIPO.ID_STATUS, STATUS.NOME, STATUS.I
                       ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE'''
 
 # BUSCA TAREFA POR USER
-SQL_BUSCA_TAREFAS_DO_USUARIO = '''SELECT *,TIPO.NOME, TIPO.ID_TIPO, STATUS.NOME, STATUS.ID_STATUS, PRIORIDADE.NOME, PRIORIDADE.ID_PRIORIDADE
+SQL_BUSCA_TAREFAS_DO_USUARIO = '''SELECT *, TIPO.NOME, TIPO.ID_TIPO, STATUS.NOME, STATUS.ID_STATUS, PRIORIDADE.NOME, PRIORIDADE.ID_PRIORIDADE
                                   FROM TAREFA
                                   INNER JOIN TIPO
                                   ON TAREFA.TIPO_ID = TIPO.ID_TIPO
@@ -63,19 +63,24 @@ SQL_BUSCA_PRIORIDADE = 'SELECT * FROM PRIORIDADE'
 
 # Search ID
 
-SQL_BUSCA_TAREFA_POR_ID = '''SELECT *, STATUS.NOME, STATUS.ID_STATUS
-                             FROM TAREFA INNER JOIN STATUS
+SQL_BUSCA_TAREFA_POR_ID = '''SELECT *, TIPO.ID_TIPO, TIPO.NOME, STATUS.ID_STATUS, STATUS.NOME, PRIORIDADE.ID_PRIORIDADE, PRIORIDADE.NOME
+                             FROM TAREFA
+                             INNER JOIN TIPO
+                             ON TAREFA.TIPO_ID = TIPO.ID_TIPO
+                             INNER JOIN STATUS
                              ON TAREFA.STATUS_ID = STATUS.ID_STATUS
+                             INNER JOIN PRIORIDADE
+                             ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
                              WHERE TAREFA.ID = ?'''
 
-SQL_BUSCA_TAREFA_POR_USUARIO = '''SELECT *, STATUS.NOME, STATUS.ID_STATUS
-                                  FROM TAREFA 
+SQL_BUSCA_TAREFA_POR_USUARIO = '''SELECT *, TIPO.ID_TIPO, TIPO.NOME, STATUS.ID_STATUS, STATUS.NOME, PRIORIDADE.ID_PRIORIDADE, PRIORIDADE.NOME
+                                  FROM TAREFA
                                   INNER JOIN TIPO
                                   ON TAREFA.TIPO_ID = TIPO.ID_TIPO
                                   INNER JOIN STATUS
                                   ON TAREFA.STATUS_ID = STATUS.ID_STATUS
-                                  INNER JOIN USUARIO 
-                                  ON TAREFA.USUARIO_ID = USUARIO.ID
+                                  INNER JOIN PRIORIDADE
+                                  ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
                                   WHERE TAREFA.ID = ? AND USUARIO.ID = ?'''
 
 SQL_USUARIO_POR_EMAIL = 'SELECT * FROM USUARIO WHERE EMAIL = ?'
@@ -96,11 +101,10 @@ class TarefaDao:
         cursor = self.__db.cursor()
 
         if (tarefa._id):
-            cursor.execute(SQL_ATUALIZA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo_id, tarefa._status_id, tarefa._prioridade_id, tarefa._usuario_id, tarefa._id))
+            cursor.execute(SQL_ATUALIZA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo_id, tarefa._status_id, tarefa._prioridade_id, tarefa._id))
 
         else:
             cursor.execute(SQL_CRIA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo_id, tarefa._status_id, tarefa._prioridade_id, tarefa._usuario_id))
-            tarefa._id = cursor.lastrowid
             
         self.__db.commit()
         
