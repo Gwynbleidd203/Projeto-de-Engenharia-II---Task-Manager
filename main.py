@@ -83,7 +83,7 @@ def editar_tarefa(id):
     lista_status = status_dao.listar_status()
     lista_prioridade = prioridade_dao.listar_prioridades()
     
-    return render_template('/tarefa_edit.html', tarefa=tarefa, tipos=lista_tipo , status_list=lista_status, prioridades=lista_prioridade)
+    return render_template('/tarefa_edit.html', tarefa=tarefa, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridade)
 
 
 @app.route('/atualizar', methods=['POST', ])

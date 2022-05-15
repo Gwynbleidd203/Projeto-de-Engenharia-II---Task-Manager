@@ -5,7 +5,7 @@
                 
                 <input type="hidden" name="id" value="{{ tarefa._id }}">
 
-                <input type="hidden" name="usuario_id" value="{{ tarefa.usuario_id }}">
+                <input type="hidden" name="usuario_id" id="usuario_id" value="{{ tarefa._usuario_id }}">
 
                 <input type="text" name="nome" id="nome" value="{{ tarefa._nome }}" required> <br>
 
@@ -17,7 +17,7 @@
 
                     {% if tarefa._tipo_id == tipo._id %}
 
-                    <option value="{ tipo._id }}" selected>{{ tipo._nome }}</option>
+                    <option value="{{ tipo._id }}" selected>{{ tipo._nome }}</option>
 
                     {% else %}
 
