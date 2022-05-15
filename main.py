@@ -36,10 +36,11 @@ def index():
             print(session['usuario_logado'])
             proxima = request.args.get('proxima')
             lista = tarefa_dao.listar_tarefas_por_usuario(usuario._id)
+            lista_tipo = tipo_dao.listar_tipos()
             lista_status = status_dao.listar_status()
             lista_prioridades = prioridade_dao.listar_prioridades()
             
-            return render_template('index.html', proxima=proxima, status_list=lista_status, tarefas=lista, prioridades=lista_prioridades, usuario=usuario)
+            return render_template('index.html', proxima=proxima, tarefas=lista, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridades, usuario=usuario)
         
         except:
             proxima = request.args.get('proxima')
@@ -68,7 +69,7 @@ def criar():
     prioridade = request.form['prioridade']
     usuario_id = request.form['usuario_id']
 
-    tarefa = Tarefa(nome, descricao, tipo, status, prioridade, None, None, usuario_id)
+    tarefa = Tarefa(nome, descricao, tipo, status, prioridade, None, None, None, usuario_id)
     
     tarefa = tarefa_dao.salvar(tarefa)
 
@@ -78,11 +79,11 @@ def criar():
 @app.route('/editar_tarefa/<int:id>')
 def editar_tarefa(id):
     tarefa = tarefa_dao.busca_por_id(id)
-    tipos = tipo_dao.listar_tipos()
+    lista_tipo = tipo_dao.listar_tipos()
     lista_status = status_dao.listar_status()
     lista_prioridade = prioridade_dao.listar_prioridades()
     
-    return render_template('/tarefa_edit.html', tarefa=tarefa, tipos=tipos , status_list=lista_status, prioridades=lista_prioridade)
+    return render_template('/tarefa_edit.html', tarefa=tarefa, tipos=lista_tipo , status_list=lista_status, prioridades=lista_prioridade)
 
 
 @app.route('/atualizar', methods=['POST', ])
@@ -92,9 +93,10 @@ def atualizar():
     tipo_id = request.form['tipo']
     status_id = request.form['status']
     prioridade_id = request.form['prioridade']
+    usuario_id = request.form['usuario_id']
     id = request.form['id']
 
-    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, id)
+    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, id)
 
     tarefa_dao.salvar(tarefa)
 
