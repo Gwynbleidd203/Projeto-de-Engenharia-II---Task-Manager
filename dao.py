@@ -5,9 +5,10 @@ from colorama import Cursor
 
 from models import Tarefa, Usuario, Tipo, Status, Prioridade
 
-# SQL
+# ------------------------------------------------------ SQL --------------------------------------------------------------------------------------
 
-# Criação
+# Criação -----------------------------------------------------------------------------------------------------------------------------------------
+
 
 SQL_CRIA_TAREFA = 'INSERT into TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIORIDADE_ID, USUARIO_ID) values (?, ?, ?, ?, ?, ?)'
 
@@ -20,7 +21,8 @@ SQL_CRIA_STATUS = 'INSERT INTO STATUS (NOME) VALUES (?)'
 SQL_CRIA_PRIORIDADE = 'INSERT INTO PRIORIDADE (NOME) VALUES (?)'
 
 
-# Atualização
+# Atualização -----------------------------------------------------------------------------------------------------------------------------------------
+
 
 SQL_ATUALIZA_TAREFA = 'UPDATE TAREFA SET NOME = ?, DESCRICAO = ?, TIPO_ID = ?, STATUS_ID = ?, PRIORIDADE_ID = ? WHERE ID = ?'
 
@@ -32,7 +34,9 @@ SQL_ATUALIZA_STATUS = 'UPDATE STATUS SET NOME = ? WHERE ID = ?'
 
 SQL_ATUALIZA_PRIORIDADE = 'UPDATE PRIORIDADE SET NOME = ? WHERE ID = ?'
 
-# Search
+
+# Search -----------------------------------------------------------------------------------------------------------------------------------------
+
 
 SQL_BUSCA_TAREFA = '''SELECT *, TIPO.NOME, TIPO.ID_STATUS, STATUS.NOME, STATUS.ID_STATUS, PRIORIDADE.NOME, PRIORIDADE.ID_PRIORIDADE
                       FROM TAREFA
@@ -43,7 +47,10 @@ SQL_BUSCA_TAREFA = '''SELECT *, TIPO.NOME, TIPO.ID_STATUS, STATUS.NOME, STATUS.I
                       INNER JOIN PRIORIDADE 
                       ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE'''
 
-# BUSCA TAREFA POR USER
+
+# BUSCA TAREFA POR USER -----------------------------------------------------------------------------------------------------------------------------------------
+
+
 SQL_BUSCA_TAREFAS_DO_USUARIO = '''SELECT *, TIPO.NOME, TIPO.ID_TIPO, STATUS.NOME, STATUS.ID_STATUS, PRIORIDADE.NOME, PRIORIDADE.ID_PRIORIDADE
                                   FROM TAREFA
                                   INNER JOIN TIPO
@@ -61,7 +68,7 @@ SQL_BUSCA_STATUS = 'SELECT * FROM STATUS'
 SQL_BUSCA_PRIORIDADE = 'SELECT * FROM PRIORIDADE'
 
 
-# Search ID
+# Search ID -----------------------------------------------------------------------------------------------------------------------------------------
 
 SQL_BUSCA_TAREFA_POR_ID = '''SELECT *, TIPO.ID_TIPO, TIPO.NOME, STATUS.ID_STATUS, STATUS.NOME, PRIORIDADE.ID_PRIORIDADE, PRIORIDADE.NOME
                              FROM TAREFA
@@ -86,9 +93,22 @@ SQL_BUSCA_TAREFA_POR_USUARIO = '''SELECT *, TIPO.ID_TIPO, TIPO.NOME, STATUS.ID_S
 SQL_USUARIO_POR_EMAIL = 'SELECT * FROM USUARIO WHERE EMAIL = ?'
 
 SQL_BUSCA_USUARIO_POR_ID = 'SELECT * FROM USUARIO WHERE ID = ?'
-# Delete
+
+
+# Delete -----------------------------------------------------------------------------------------------------------------------------------------
+
 
 SQL_DELETA_TAREFA = 'DELETE FROM TAREFA WHERE ID = ?'
+
+# User Profile -----------------------------------------------------------------------------------------------------------------------------------------
+
+SQL_CONTA_TAREFAS = 'SELECT COUNT(TAREFA.ID) FROM TAREFA WHERE TAREFA.USUARIO_ID = ?'
+
+SQL_CONTA_TAREFAS_FEITAS = 'SELECT COUNT(TAREFA.ID) FROM TAREFA WHERE TAREFA.USUARIO_ID = ? AND TAREFA.STATUS_ID = 3'
+
+SQL_CONTA_TAREFAS_FAZENDO = 'SELECT COUNT(TAREFA.ID) FROM TAREFA WHERE TAREFA.USUARIO_ID = ? AND TAREFA.STATUS_ID = 2'
+
+SQL_CONTA_TAREFAS_FAZER = 'SELECT COUNT(TAREFA.ID) FROM TAREFA WHERE TAREFA.USUARIO_ID = ? AND TAREFA.STATUS_ID = 1'
 
 
 # ------------------- TAREFA -----------------------------------
@@ -138,7 +158,6 @@ class TarefaDao:
         tupla = cursor.fetchone()
         return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], tupla[8], tupla[9], id=tupla[0])
         
-    
     
     def deletar(self, id):
         self.__db.cursor().execute(SQL_DELETA_TAREFA, (id, ))
@@ -286,6 +305,46 @@ class UsuarioDao:
         dados = cursor.fetchone()
         usuario = traduz_usuario(dados) if dados else None
         return usuario
+    
+    # Tentar otimizar o resultado
+    def conta_tarefas(self, usuario_id):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_CONTA_TAREFAS, (usuario_id,))
+        tarefas_qnt = cursor.fetchone()
+        if tarefas_qnt:
+            return tarefas_qnt
+        else:
+            return 0
+        
+    
+    def conta_tarefas_prontas(self, usuario_id):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_CONTA_TAREFAS_FEITAS, (usuario_id,))
+        tarefas_prontas = cursor.fetchone()
+        if tarefas_prontas:
+            return tarefas_prontas
+        else:
+            return 0
+        
+    
+    def conta_tarefas_fazer(self, usuario_id):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_CONTA_TAREFAS_FAZER, (usuario_id,))
+        tarefas_fazer = cursor.fetchone()
+        if tarefas_fazer:
+            return tarefas_fazer
+        else:
+            return 0
+        
+    
+    def conta_tarefas_fazendo(self, usuario_id):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_CONTA_TAREFAS_FAZENDO, (usuario_id,))
+        tarefas_fazendo = cursor.fetchone()
+        if tarefas_fazendo:
+            return tarefas_fazendo
+        else:
+            return 0
     
 def traduz_usuario(tupla):
     return Usuario(tupla[1], tupla[2], tupla[3], id=tupla[0])

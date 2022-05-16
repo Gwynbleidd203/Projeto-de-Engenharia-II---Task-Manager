@@ -20,6 +20,14 @@
         
 {% block task %}
 
-    <h2>Welcome to your profile, {{ usuario._nome }}</h2>
+    <h2>Welcome to your profile, {{ usuario._nome }}</h2> <br>
+
+    <p>{{ usuario._nome }}, você tem {{ tarefas_qnt }} salvas.</p>
+
+    <p>Tarefas prontas: {{ tarefas_prontas }}</p>
+
+    <p>Tarefas a fazer: {{ tarefas_fazer }}</p>
+
+    <p>Tarefas sendo feitas: {{ tarefas_fazendo }}</p>
 
 {% endblock %}

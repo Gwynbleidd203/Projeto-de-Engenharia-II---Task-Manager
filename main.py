@@ -171,8 +171,12 @@ def logout():
 @app.route('/perfil/<int:id>')
 def perfil(id):
     usuario = usuario_dao.buscar_usuario_por_id(id)
+    tarefas_qnt = usuario_dao.conta_tarefas(id)
+    tarefas_prontas = usuario_dao.conta_tarefas_prontas(id)
+    tarefas_fazendo = usuario_dao.conta_tarefas_fazendo(id)
+    tarefas_fazer = usuario_dao.conta_tarefas_fazer(id)
     
-    return render_template('profile.html', usuario=usuario)
+    return render_template('profile.html', usuario=usuario, tarefas_qnt=tarefas_qnt, tarefas_prontas=tarefas_prontas, tarefas_fazendo=tarefas_fazendo, tarefas_fazer=tarefas_fazer)
 
 @app.route('/status')
 def status():
