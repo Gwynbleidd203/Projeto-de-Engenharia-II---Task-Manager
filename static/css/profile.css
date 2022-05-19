@@ -38,12 +38,33 @@ main {
 
 .profile-botttom {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: space-around;
     padding: 4px;
 }
 
 #profile-search {
-    width: 100%;
+    width: auto;
+}
+
+#maginifying-glass {
+    width: 32px;
+    height: 32px;
+}
+
+form {
+    height: fit-content;
+    width: fit-content;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 4px;
+}
+
+form > a {
+    width: fit-content;
+    height: fit-content;
 }

@@ -189,6 +189,10 @@ def sobre():
 
     return render_template('sobre.html')
 
+@app.route('/pesquisar')
+def pesquisar():
+    
+    return redirect('/')
 
 
 if __name__ == '__main__':

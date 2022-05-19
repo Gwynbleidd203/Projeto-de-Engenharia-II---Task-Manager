@@ -54,7 +54,10 @@
 
         <div class="profile-bottom">
 
-            <input type="text" name="profile-search" id="profile-search" placeholder="search...">
+            <form action="{{ url_for('pesquisar') }}" method="post">
+                <input type="text" name="profile-search" id="profile-search" placeholder="search task...">
+                <a href="{{url_for('pesquisar')}}"><img id="maginifying-glass" src="{{ url_for('static', filename='icons/magnifying.svg') }}" alt=""></a>
+            </form>
             
         </div>
     </main>
