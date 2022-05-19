@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/0fd2eddfe6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/css/profile.css">
+    <title>{{ usuario._nome }}</title>
+</head>
+
+<body>
+    <div id="mySidenav" class="sidenav">
+
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        <a href="{{ url_for('perfil', id=usuario._id) }}"></a>
+
+        <a href="{{url_for('index')}}">Index</a>
+
+        <a href="#">Progresso</a>
+
+        <a href="{{ url_for('status') }}">Status</a>
+
+        <a href="{{ url_for('sobre') }}">About</a>
+
+        <a href="{{ url_for('logout') }}">Logout</a>
+
+    </div>
+
+    <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="" onclick="openNav()">
+
+    <main>
+        <div class="profile-top">
+
+            <h2>Bem-vindo ao seu perfil, {{ usuario._nome }}</h2>
+
+        </div>
+
+        <div class="profile-center">
+            <div class="profile-left">
+                <p>Total de tarefas: </p>
+                <p>Tarefas feitas: </p>
+                <p>Tarefas em andamento: </p>
+                <p>Tarefas a serem feitas: </p>
+            </div>
+            <div class="profile-right">
+                <p>{{ tarefas_qnt }};</p>
+                <p>{{ tarefas_prontas }};</p>
+                <p>{{ tarefas_fazendo }};</p>
+                <p>{{ tarefas_fazer }}.</p>
+            </div>
+        </div>
+
+        <div class="profile-bottom">
+
+            <form action="{{ url_for('pesquisar') }}" method="post">
+                <input type="text" name="profile-search" id="profile-search" placeholder="search task...">
+                <a href="{{url_for('pesquisar')}}"><i class="fa-solid fa-magnifying-glass"></i></a>
+            </form>
+            
+        </div>
+    </main>
+
+    <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+    <script src="../static/script.js"></script>
+
+    <script src="{{url_for('static', filename='scripts/jquery-3.6.0.js')}}"></script>
+    <script src="../static/jquery-3.6.0.js"></script>
+</body>
+
+</html>
