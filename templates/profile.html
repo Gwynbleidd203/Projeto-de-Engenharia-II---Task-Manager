@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/0fd2eddfe6.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/css/profile.css">
     <title>{{ usuario._nome }}</title>
 </head>
@@ -56,7 +57,7 @@
 
             <form action="{{ url_for('pesquisar') }}" method="post">
                 <input type="text" name="profile-search" id="profile-search" placeholder="search task...">
-                <a href="{{url_for('pesquisar')}}"><img id="maginifying-glass" src="{{ url_for('static', filename='icons/magnifying.svg') }}" alt=""></a>
+                <a href="{{url_for('pesquisar')}}"><i class="fa-solid fa-magnifying-glass"></i></a>
             </form>
             
         </div>

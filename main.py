@@ -189,10 +189,15 @@ def sobre():
 
     return render_template('sobre.html')
 
-@app.route('/pesquisar')
+@app.route('/pesquisar', methods=['POST', ])
 def pesquisar():
+    nome = request.form['profile-search']
     
-    return redirect('/')
+    nome = tarefa_dao.busca_por_nome(nome)
+    
+    nome = tarefa_dao.listar()
+    
+    return nome
 
 
 if __name__ == '__main__':
