@@ -50,7 +50,7 @@ SQL_BUSCA_TAREFA = '''SELECT *, TIPO.NOME, TIPO.ID_STATUS, STATUS.NOME, STATUS.I
 SQL_BUSCA_TAREFA_NOME = '''SELECT *
                            FROM TAREFA
                            WHERE TAREFA.NOME
-                           LIKE '?%'
+                           LIKE '?'
                             '''
 
 # BUSCA TAREFA POR USER -----------------------------------------------------------------------------------------------------------------------------------------

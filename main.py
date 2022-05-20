@@ -192,12 +192,10 @@ def sobre():
 @app.route('/pesquisar', methods=['POST', ])
 def pesquisar():
     nome = request.form['profile-search']
+
+    lista_tarefas = tarefa_dao.busca_por_nome(nome)
     
-    nome = tarefa_dao.busca_por_nome(nome)
-    
-    nome = tarefa_dao.listar()
-    
-    return nome
+    return render_template('lista.html', tarefas=lista_tarefas)
 
 
 if __name__ == '__main__':
