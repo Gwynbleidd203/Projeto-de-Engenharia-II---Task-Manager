@@ -48,7 +48,7 @@
         <a href="#" onclick="openLogin()">Login</a>
 
         {% endblock %}
-        
+
         <a href="#" onclick="openForm()">Criar Task</a>
         <a href="#">Progresso</a>
         <a href="{{url_for('status')}}">Status</a>
@@ -180,17 +180,41 @@
     {% block task %}
 
     <div id="main">
+
         {% for tarefa in tarefas %}
+
         <div class="task-div">
-            <a id="task-link-btn" href="{{url_for('tarefa_info', id=tarefa._id)}}">&plus;</a>
-            <h3>{{ tarefa._nome }}</h3>
-            <p>{{ tarefa._descricao }}</p>
-            <p>{{ tarefa._tipo_id}}</p>
-            <p>{{ tarefa._status_id }}</p>
-            <p>{{ tarefa._prioridade_id }}</p>
-            <p>{{ tarefa._usuario_id }}</p>
+
+            <div class="task-div-inner-top">
+
+                <div class="task-link-container">
+
+                    <a id="task-link-btn" href="{{url_for('tarefa_info', id=tarefa._id)}}">&plus;</a>
+
+                </div>
+
+                <h3>{{ tarefa._nome }}</h3>
+
+                <p>{{ tarefa._descricao }}</p>
+
+            </div>
+
+            <div class="task-div-inner">
+
+                <p>{{ tarefa._tipo_id}}</p>
+
+                <p>{{ tarefa._status_id }}</p>
+
+                <p>{{ tarefa._prioridade_id }}</p>
+
+                <p>{{ tarefa._usuario_id }}</p>
+
+            </div>
+
         </div>
+
         {% endfor %}
+        
     </div>
 
     {% endblock %}

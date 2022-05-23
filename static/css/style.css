@@ -94,6 +94,9 @@ body {
 }
 
 .task-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   float: left;
   background-color: var(--cards-main);
   width: 20rem;
@@ -179,4 +182,30 @@ body {
 
 .msg-ul-bad {
   background-color: #e923234f;
+}
+
+.task-div-inner-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.task-link-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+  align-self: flex-end;
+}
+
+.task-div-inner {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  gap: 32px;
+}
+
+
+.task-link-btn {
+  float: right;
 }

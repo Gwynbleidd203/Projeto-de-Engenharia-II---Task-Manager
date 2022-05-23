@@ -6,6 +6,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from models import Tarefa, Usuario
 
+from functools import wraps
+
 import sqlite3
 
 
@@ -22,6 +24,24 @@ tipo_dao = TipoDao(db)
 status_dao = StatusDao(db)
 prioridade_dao = PrioridadeDao(db)
 
+# Login required function ------------------------------------------------
+
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'usuario_logado' not in session or session['usuario_logado'] == None:
+            
+            return f(*args, **kwargs)
+        
+        else:
+            flash("Você necessita de login para acessar essa página")
+            
+            return redirect('/login')
+        
+    return wrap
+
+# --------------------------------------------------------------------------
+
 
 @app.route('/')
 def index():
@@ -32,7 +52,7 @@ def index():
     
     if session:
         try:
-            usuario = usuario_dao.buscar_por_email_usu(session['usuario_logado'])
+            usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
             print(session['usuario_logado'])
             proxima = request.args.get('proxima')
             lista = tarefa_dao.listar_tarefas_por_usuario(usuario._id)
@@ -55,12 +75,14 @@ def index():
        
 
 @app.route('/novo')
+@login_required
 def novo():
 
     return render_template('novo.html')
 
 
 @app.route('/criar', methods=['POST', ])
+@login_required
 def criar():
     nome = request.form['nome']
     descricao = request.form['descricao']
@@ -77,6 +99,7 @@ def criar():
 
 
 @app.route('/editar_tarefa/<int:id>')
+@login_required
 def editar_tarefa(id):
     tarefa = tarefa_dao.busca_por_id(id)
     lista_tipo = tipo_dao.listar_tipos()
@@ -87,6 +110,7 @@ def editar_tarefa(id):
 
 
 @app.route('/atualizar', methods=['POST', ])
+@login_required
 def atualizar():
     nome = request.form['nome']
     descricao = request.form['descricao']
@@ -104,6 +128,7 @@ def atualizar():
 
 
 @app.route('/lista_de_tarefas')
+@login_required
 def lista_de_tarefas():
     lista = tarefa_dao.listar()
     
@@ -111,6 +136,7 @@ def lista_de_tarefas():
 
 
 @app.route('/tarefa_info/<int:id>')
+@login_required
 def tarefa_info(id):
     lista = tarefa_dao.busca_por_id(id)
     
@@ -118,6 +144,7 @@ def tarefa_info(id):
 
 
 @app.route('/deletar_tarefa/<int:id>')
+@login_required
 def deletar_tarefa(id):
     tarefa_dao.deletar(id)
     
@@ -151,8 +178,8 @@ def autenticar():
     usuario = usuario_dao.buscar_por_email_usu(request.form['email'])
     if usuario:
         if usuario._senha == request.form['senha']:
-            session['usuario_logado'] = request.form['email']
-            flash(request.form['email'] + 'Logou com sucesso')
+            session['usuario_logado'] = usuario._id
+            flash(usuario._nome + "" + 'logou com sucesso!')
             return redirect('/')
         
     flash('Erro ao logar! Tente novamente.')
@@ -161,6 +188,7 @@ def autenticar():
 
 
 @app.route('/logout')
+@login_required
 def logout():
     session['usuario_logado'] = None
     flash('Nenhum usuário logado')
@@ -169,6 +197,7 @@ def logout():
 
 
 @app.route('/perfil/<int:id>')
+@login_required
 def perfil(id):
     usuario = usuario_dao.buscar_usuario_por_id(id)
     tarefas_qnt = usuario_dao.conta_tarefas(id)
@@ -179,6 +208,7 @@ def perfil(id):
     return render_template('profile.html', usuario=usuario, tarefas_qnt=tarefas_qnt, tarefas_prontas=tarefas_prontas, tarefas_fazendo=tarefas_fazendo, tarefas_fazer=tarefas_fazer)
 
 @app.route('/status')
+@login_required
 def status():
 
     return render_template('status.html')
@@ -189,13 +219,16 @@ def sobre():
 
     return render_template('sobre.html')
 
-@app.route('/pesquisar', methods=['POST', ])
+@app.route('/pesquisar/<string:nome>', methods=['POST', ])
+@login_required
 def pesquisar():
     nome = request.form['profile-search']
 
     lista_tarefas = tarefa_dao.busca_por_nome(nome)
     
-    return render_template('lista.html', tarefas=lista_tarefas)
+    lista_tarefas = tarefa_dao.busca_por_nome(nome)
+    
+    return redirect('/lista', tarefas=lista_tarefas)
 
 
 if __name__ == '__main__':
