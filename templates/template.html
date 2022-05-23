@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='form.css')}}">
+    <script src="https://kit.fontawesome.com/0fd2eddfe6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
     <link rel="stylesheet" href="../static/style.css">
-    <title>{% block title %}NavBar Test {% endblock %}</title>
+    <title>{% block title %}NavBar Test{% endblock %}</title>
 </head>
 
 {% block content %}
@@ -17,8 +19,21 @@
 
     {% block menu %}
 
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul id="messages" class="msg msg-ul-bad">
+        {% for message in messages %}
+        <li class="msg msg-li">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+
+        {% block menu_btn %}
 
         {% block home %}
 
@@ -26,12 +41,23 @@
 
         {% endblock %}
 
+        <!--Bloco do Menu-->
+
+        {% block login_btn %}
+
         <a href="#" onclick="openLogin()">Login</a>
+
+        {% endblock %}
+        
         <a href="#" onclick="openForm()">Criar Task</a>
         <a href="#">Progresso</a>
         <a href="{{url_for('status')}}">Status</a>
         <a href="{{url_for('sobre')}}">About</a>
+
+        {% endblock %}
+
     </div>
+
 
     {% endblock %}
 
@@ -49,7 +75,7 @@
 
             <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
 
-            <input type="password" name="senha" id="senha" required placeholder="Password...">  <br>
+            <input type="password" name="senha" id="senha" required placeholder="Password..."> <br>
 
             <button class="submit-btn" type="submit">OK</button>
 
@@ -73,7 +99,7 @@
 
             <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
 
-            <input type="password" name="senha" id="senha" required placeholder="Password...">  <br>
+            <input type="password" name="senha" id="senha" required placeholder="Password..."> <br>
 
             <button class="submit-btn" type="submit">OK</button>
         </form>
@@ -91,46 +117,92 @@
 
             <h1>Crie Sua Tarefa</h1>
 
+            {% if usuario: %}
+
+            <input type="hidden" name="usuario_id" id="usuario_id" value="{{ usuario._id }}">
+
+            {% endif %}
+
             <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
 
             <input type="text" name="nome" id="nome" placeholder="Nome..." required> <br>
 
             <input type="text" name="descricao" id="descricao" placeholder="Descrição da Tarefa..."> <br>
 
-            <input type="text" name="tipo" id="tipo" placeholder="Tipo de Tarefa..." required> <br>
+            <select name="tipo" id="tipo">
 
-            <input type="text" name="status" id="status" placeholder="Status da Tarefa..."> <br>
+                <option value="" selected disabled>Tipo</option>
 
-            <input type="text" name="prioridade" id="prioridade" placeholder="Prioridade da Tarefa..."> <br>
+                {% for tipo in tipos %}
+
+                <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+
+                {% endfor %}
+
+            </select> <br>
+
+            <select name="status" id="status">
+
+                <option value="" selected disabled>Status</option>
+
+                {% for status in status_list %}
+
+                <option value="{{ status._id }}">{{ status._nome }}</option>
+
+                {% endfor %}
+
+            </select> <br>
+
+            <select name="prioridade" id="prioridade">
+
+                <option value="" selected disabled>Prioridade</option>
+
+                {% for prioridade in prioridades %}
+
+                <option value="{{ prioridade._id }}">{{ prioridade._nome }}</option>
+
+                {% endfor %}
+
+            </select> <br>
+
 
             <button class="submit-btn" type="submit">OK</button>
         </form>
     </div>
 
     {% endblock %}
-      
-      <!-- Use any element to open the sidenav -->
-      <img id="nav-btn-push" src="{{url_for('static', filename='list-btn-blk.png')}}" alt="" onclick="openNav()">
-      
-      <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+
+    <!-- Use any element to open the sidenav -->
+    <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="" onclick="openNav()">
+
+    <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 
     {% block task %}
 
-      <div id="main">
-    {% for tarefa in tarefas %}
-        <div class="task-div"> 
+    <div id="main">
+        {% for tarefa in tarefas %}
+        <div class="task-div">
             <a id="task-link-btn" href="{{url_for('tarefa_info', id=tarefa._id)}}">&plus;</a>
             <h3>{{ tarefa._nome }}</h3>
             <p>{{ tarefa._descricao }}</p>
+            <p>{{ tarefa._tipo_id}}</p>
+            <p>{{ tarefa._status_id }}</p>
+            <p>{{ tarefa._prioridade_id }}</p>
+            <p>{{ tarefa._usuario_id }}</p>
         </div>
-    {% endfor %}
-      </div>
+        {% endfor %}
+    </div>
 
     {% endblock %}
 
-    <script src="{{url_for('static', filename='script.js')}}"></script>
+    <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
     <script src="../static/script.js"></script>
+
+    <script src="{{url_for('static', filename='scripts/jquery-3.6.0.js')}}"></script>
+    <script src="../static/jquery-3.6.0.js"></script>
+
 </body>
 
 {% endblock %}
+
 </html>

@@ -1,2 +1,36 @@
 {% extends "template.html" %}
+
 {% block home %} {% endblock %}
+
+{% block menu_btn %}
+
+    {% if usuario: %}
+
+    <a href="{{ url_for('perfil', id=usuario._id) }}">{{ usuario._nome }}</a>
+
+    <a href="#" onclick="openForm()">Criar Task</a>
+
+    <a href="#">Progresso</a>
+
+    <a href="{{ url_for('status') }}">Status</a>
+
+    <a href="{{ url_for('sobre') }}">About</a>
+
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+    {% else %}
+
+    <a href="#" onclick="openLogin()">Login</a>
+
+    <a href="#" onclick="openForm()">Criar Task</a>
+
+    <a href="#">Progresso</a>
+
+    <a href="{{ url_for('status') }}">Status</a>
+
+    <a href="{{ url_for('sobre') }}">About</a>
+
+
+    {% endif %}
+
+{% endblock %}
