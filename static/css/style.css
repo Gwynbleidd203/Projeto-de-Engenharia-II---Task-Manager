@@ -170,6 +170,7 @@ body {
 
 .msg {
   width: 20rem;
+  list-style-type: none;
   height: fit-content;
   padding: 8px 56px;
   border-radius: 5px;
