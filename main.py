@@ -34,7 +34,7 @@ def login_required(f):
             return f(*args, **kwargs)
         
         else:
-            flash("Você necessita de login para acessar essa página")
+            flash(u"Você necessita de login para acessar essa página", "msg-ul-bad")
             
             return redirect('/login')
         
@@ -179,7 +179,7 @@ def autenticar():
     if usuario:
         if usuario._senha == request.form['senha']:
             session['usuario_logado'] = usuario._id
-            flash(usuario._nome + "" + 'logou com sucesso!')
+            flash(usuario._nome + "" + 'logou com sucesso!', 'msg-ul-good')
             return redirect('/')
         
     flash('Erro ao logar! Tente novamente.')

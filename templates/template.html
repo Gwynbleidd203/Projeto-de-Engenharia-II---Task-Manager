@@ -19,15 +19,15 @@
 
     {% block menu %}
 
-    {% with messages = get_flashed_messages() %}
+{% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <ul id="messages" class="msg msg-ul-bad">
-        {% for message in messages %}
-        <li class="msg msg-li">{{ message }}</li>
+    <ul id="messages" class="msg" >
+        {% for category, message in messages %}
+        <li class="msg {{ category }}">{{ message }}</li>
         {% endfor %}
     </ul>
     {% endif %}
-    {% endwith %}
+{% endwith %}
 
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -183,11 +183,11 @@
 
         {% for tarefa in tarefas %}
 
-        <div class="task-div">
+        <div class="task-div" onmouseenter="showItem()" onmouseout="hideItem()">
 
             <div class="task-div-inner-top">
 
-                <div class="task-link-container">
+                <div class="task-link-container" id="task-link-container">
 
                     <a id="task-link-btn" href="{{url_for('tarefa_info', id=tarefa._id)}}">&plus;</a>
 
