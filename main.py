@@ -75,14 +75,12 @@ def index():
        
 
 @app.route('/novo')
-@login_required
 def novo():
 
     return render_template('novo.html')
 
 
 @app.route('/criar', methods=['POST', ])
-@login_required
 def criar():
     nome = request.form['nome']
     descricao = request.form['descricao']
@@ -99,7 +97,6 @@ def criar():
 
 
 @app.route('/editar_tarefa/<int:id>')
-@login_required
 def editar_tarefa(id):
     tarefa = tarefa_dao.busca_por_id(id)
     lista_tipo = tipo_dao.listar_tipos()
@@ -110,7 +107,6 @@ def editar_tarefa(id):
 
 
 @app.route('/atualizar', methods=['POST', ])
-@login_required
 def atualizar():
     nome = request.form['nome']
     descricao = request.form['descricao']
@@ -128,7 +124,6 @@ def atualizar():
 
 
 @app.route('/lista_de_tarefas')
-@login_required
 def lista_de_tarefas():
     lista = tarefa_dao.listar()
     
@@ -136,7 +131,6 @@ def lista_de_tarefas():
 
 
 @app.route('/tarefa_info/<int:id>')
-@login_required
 def tarefa_info(id):
     lista = tarefa_dao.busca_por_id(id)
     
@@ -144,7 +138,6 @@ def tarefa_info(id):
 
 
 @app.route('/deletar_tarefa/<int:id>')
-@login_required
 def deletar_tarefa(id):
     tarefa_dao.deletar(id)
     
@@ -169,7 +162,7 @@ def criar_usuario():
 def login():
     proxima=request.args.get('proxima')
     if proxima == None:
-        proxima=''
+        proxima= ''
     return render_template('index.html', proxima=proxima)
 
 
@@ -179,7 +172,7 @@ def autenticar():
     if usuario:
         if usuario._senha == request.form['senha']:
             session['usuario_logado'] = usuario._id
-            flash(usuario._nome + "" + 'logou com sucesso!', 'msg-ul-good')
+            flash(usuario._nome + ' logou com sucesso!', 'msg-ul-good')
             return redirect('/')
         
     flash(u'Erro ao logar! Tente novamente.', 'msg-ul-bad')
@@ -188,7 +181,6 @@ def autenticar():
 
 
 @app.route('/logout')
-@login_required
 def logout():
     session['usuario_logado'] = None
     flash(u'Nenhum usuário logado', 'msg-ul-bad')
@@ -197,7 +189,6 @@ def logout():
 
 
 @app.route('/perfil/<int:id>')
-@login_required
 def perfil(id):
     usuario = usuario_dao.buscar_usuario_por_id(id)
     tarefas_qnt = usuario_dao.conta_tarefas(id)
@@ -208,7 +199,6 @@ def perfil(id):
     return render_template('profile.html', usuario=usuario, tarefas_qnt=tarefas_qnt, tarefas_prontas=tarefas_prontas, tarefas_fazendo=tarefas_fazendo, tarefas_fazer=tarefas_fazer)
 
 @app.route('/status')
-@login_required
 def status():
 
     return render_template('status.html')
@@ -220,7 +210,6 @@ def sobre():
     return render_template('sobre.html')
 
 @app.route('/pesquisar/<string:nome>', methods=['POST', ])
-@login_required
 def pesquisar():
     nome = request.form['profile-search']
 

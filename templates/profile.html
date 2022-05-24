@@ -52,15 +52,6 @@
                 <p>{{ tarefas_fazer }}.</p>
             </div>
         </div>
-
-        <div class="profile-bottom">
-
-            <form action="{{ url_for('pesquisar') }}" method="POST">
-                <input type="text" name="profile-search" id="profile-search" placeholder="search task...">
-                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </form>
-            
-        </div>
     </main>
 
     <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
