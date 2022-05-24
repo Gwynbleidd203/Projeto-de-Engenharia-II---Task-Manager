@@ -182,7 +182,7 @@ def autenticar():
             flash(usuario._nome + "" + 'logou com sucesso!', 'msg-ul-good')
             return redirect('/')
         
-    flash('Erro ao logar! Tente novamente.')
+    flash(u'Erro ao logar! Tente novamente.', 'msg-ul-bad')
     
     return  redirect('/')           
 
@@ -191,7 +191,7 @@ def autenticar():
 @login_required
 def logout():
     session['usuario_logado'] = None
-    flash('Nenhum usuário logado')
+    flash(u'Nenhum usuário logado', 'msg-ul-bad')
     
     return redirect('/')
 
