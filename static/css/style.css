@@ -247,6 +247,7 @@ body {
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
+
 @keyframes cssAnimation {
   to {
       width:0;
