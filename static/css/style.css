@@ -9,6 +9,8 @@
   user-select: none;
 }
 
+/* Color Palette*/
+
 :root {
   --bg-main: #8bb7e07d;
   --cards-main: #51a3f5bd;
@@ -16,6 +18,8 @@
   --menu-main: #2864A3;
   --menu-sec: #CAECF7;
 }
+
+/* -------------------------- */
 
 body {
   font-family:'Roboto', sans-serif;
@@ -168,11 +172,13 @@ body {
 
 }
 
+/* Message Start */
+
 .msg {
   width: 20rem;
   list-style-type: none;
   height: fit-content;
-  padding: 8px 56px;
+  padding: 24px 56px;
   border-radius: 5px;
   z-index: 5;
   position: absolute;
@@ -180,16 +186,18 @@ body {
   left: 40;
   right: 40;
   text-decoration: none;
-
+  text-align: center;
 }
 
 .msg-ul-bad {
-  background-color: #e923234f;
+  background-color: #e9232394;
 }
 
 .msg-ul-good {
-  background-color: rgba(0, 0, 255, 0.274);
+  background-color: #1a73e7b9;
 }
+
+/* Message End */
 
 .task-div-inner-top {
   display: flex;
@@ -228,6 +236,25 @@ body {
 }
 
 .icon {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
 }
+
+/* Message Animation Start*/
+
+#hideMe {
+  animation: cssAnimation 0s ease-in 5s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+  to {
+      width:0;
+      height:0;
+      overflow:hidden;
+      visibility: hidden;
+      display: none;
+  }
+}
+
+/* Message Animation End */
