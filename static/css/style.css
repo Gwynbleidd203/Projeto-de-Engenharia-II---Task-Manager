@@ -219,3 +219,15 @@ body {
 .task-link-container {
   display: hidden;
 }
+
+.task-inner-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+}
