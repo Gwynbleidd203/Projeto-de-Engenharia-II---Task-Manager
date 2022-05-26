@@ -234,9 +234,29 @@ body {
   gap: 32px;
 }
 
-.task-link-btn, .task-link-btn:visited {
+#task-link-btn, #task-link-btn:visited {
   float: right;
+  color: var(--menu-sec);
+}
+
+#task-link-btn:hover {
   color: whitesmoke;
+}
+
+#task-link-btn:active {
+  animation: rotation;
+  animation-duration: 300ms;
+  animation-iteration-count: 1;
+  color: var(--link-main);
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
 }
 
 .task-link-container {
