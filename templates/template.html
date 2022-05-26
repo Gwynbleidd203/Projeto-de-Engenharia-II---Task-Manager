@@ -66,21 +66,27 @@
     <!--Modal para o login e autenticação-->
 
     <div id="login-form" class="pop-up">
-        <form method="POST" action="{{url_for('autenticar')}}">
-            <span id="close-btn" onclick="closeLogin()">X</span>
 
-            <h1>Faça Seu Login Aqui</h1>
+        <div class="modal-login">
 
-            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+            <a class="modal-close-btn" href="javascript:void(0)" onclick="closeLogin()">&times;</a>
 
-            <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+            <form class="modal-form" method="POST" action="{{url_for('autenticar')}}">
 
-            <input type="password" name="senha" id="senha" required placeholder="Password..."> <br>
+                <h1>Faça Seu Login Aqui.</h1>
 
-            <button class="submit-btn" type="submit">OK</button>
+                <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
 
-            <p>Ainda não tem uma conta? Clique <a onclick="openCreateAccount()" href="#">aqui</a></p>
-        </form>
+                <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+
+                <input type="password" name="senha" id="senha" required placeholder="Password..."> <br>
+
+                <button class="submit-btn" type="submit">OK</button>
+
+                <p id="create-account-text">Ainda não tem uma conta? Clique <a id="create-account-link" onclick="openCreateAccount(), closeLogin()" href="javascript:void(0)">aqui</a></p>
+                
+            </form>
+        </div>
     </div>
 
     {% endblock %}
@@ -88,21 +94,29 @@
     {% block conta %}
 
     <div id="create-account" class="pop-up">
-        <form method="POST" action="{{url_for('criar_usuario')}}">
-            <span id="close-btn" onclick="closeCreateAccount()">X</span>
 
-            <h1>Faça Seu Login Aqui</h1>
+        <div class="modal-create-user">
 
-            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+            <a class="modal-close-btn" href="javascript:void(0)" onclick="closeCreateAccount()">&times;</a>
 
-            <input type="text" name="username" id="username" required placeholder="Nome de Usuário..."> <br>
+            <form class="modal-form" method="POST" action="{{url_for('criar_usuario')}}">
 
-            <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+                <h1>Crie seu usuário aqui.</h1>
 
-            <input type="password" name="senha" id="senha" required placeholder="Password..."> <br>
+                <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
 
-            <button class="submit-btn" type="submit">OK</button>
-        </form>
+                <input type="text" name="username" id="username" required placeholder="Nome de Usuário..."> <br>
+
+                <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+
+                <input type="password" name="senha" id="senha" required placeholder="Password..."> <br>
+
+                <button class="submit-btn" type="submit">OK</button>
+
+            </form>
+
+        </div>
+
     </div>
 
     {% endblock %}
@@ -112,62 +126,69 @@
     <!--Modal para a criação de tarefas-->
 
     <div id="create-form" class="pop-up">
-        <form method="POST" action="{{url_for('criar')}}">
-            <span id="close-btn" onclick="closeForm()">X</span>
 
-            <h1>Crie Sua Tarefa</h1>
+        <div class="modal-create">
 
-            {% if usuario: %}
+            <a class="modal-close-btn" href="javascript:void(0)" onclick="closeForm()">&times;</a>
 
-            <input type="hidden" name="usuario_id" id="usuario_id" value="{{ usuario._id }}">
+            <form method="POST" action="{{url_for('criar')}}">
 
-            {% endif %}
+                <h1>Crie Sua Tarefa</h1>
 
-            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+                {% if usuario: %}
 
-            <input type="text" name="nome" id="nome" placeholder="Nome..." required> <br>
+                <input type="hidden" name="usuario_id" id="usuario_id" value="{{ usuario._id }}">
 
-            <input type="text" name="descricao" id="descricao" placeholder="Descrição da Tarefa..."> <br>
+                {% endif %}
 
-            <select name="tipo" id="tipo">
+                <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
 
-                <option value="" selected disabled>Tipo</option>
+                <input type="text" name="nome" id="nome" placeholder="Nome..." required> <br>
 
-                {% for tipo in tipos %}
+                <input type="text" name="descricao" id="descricao" placeholder="Descrição da Tarefa..."> <br>
 
-                <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+                <select name="tipo" id="tipo">
 
-                {% endfor %}
+                    <option value="" selected disabled>Tipo</option>
 
-            </select> <br>
+                    {% for tipo in tipos %}
 
-            <select name="status" id="status">
+                    <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
 
-                <option value="" selected disabled>Status</option>
+                    {% endfor %}
 
-                {% for status in status_list %}
+                </select> <br>
 
-                <option value="{{ status._id }}">{{ status._nome }}</option>
+                <select name="status" id="status">
 
-                {% endfor %}
+                    <option value="" selected disabled>Status</option>
 
-            </select> <br>
+                    {% for status in status_list %}
 
-            <select name="prioridade" id="prioridade">
+                    <option value="{{ status._id }}">{{ status._nome }}</option>
 
-                <option value="" selected disabled>Prioridade</option>
+                    {% endfor %}
 
-                {% for prioridade in prioridades %}
+                </select> <br>
 
-                <option value="{{ prioridade._id }}">{{ prioridade._nome }}</option>
+                <select name="prioridade" id="prioridade">
 
-                {% endfor %}
+                    <option value="" selected disabled>Prioridade</option>
 
-            </select> <br>
+                    {% for prioridade in prioridades %}
 
+                    <option value="{{ prioridade._id }}">{{ prioridade._nome }}</option>
 
-            <button class="submit-btn" type="submit">OK</button>
-        </form>
+                    {% endfor %}
+
+                </select> <br>
+
+                <button class="submit-btn" type="submit">OK</button>
+
+            </form>
+
+        </div>
+
     </div>
 
     {% endblock %}

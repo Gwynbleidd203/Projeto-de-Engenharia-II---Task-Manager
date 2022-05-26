@@ -17,6 +17,9 @@
   --cards-sec: #3a9afa;
   --menu-main: #2864A3;
   --menu-sec: #CAECF7;
+  --link-main: #a7e1f5;
+  --red-warning: #e90202;
+  --red-warning-2: #b10202;
 }
 
 /* -------------------------- */
@@ -70,6 +73,18 @@ body {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+}
+
+.modal-close-btn {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+}
+
+.modal-form {
+  width: fit-content;
+  height: fit-content;
+  border-radius: 12px;
 }
 
 #nav-btn-push {
@@ -153,23 +168,22 @@ body {
 
 .btn_edit {
   background-color: #04d331;
-    border: none;
-    color: white;
-    padding: 09px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 8px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    margin: 12px;
+  border: none;
+  color: white;
+  padding: 09px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  margin: 12px;
 }
 
 .btn_edit:hover {
   background-color: #76ce7a;
   color: rgb(2, 1, 1);
-
 }
 
 /* Message Start */
@@ -220,8 +234,9 @@ body {
   gap: 32px;
 }
 
-.task-link-btn {
+.task-link-btn, .task-link-btn:visited {
   float: right;
+  color: whitesmoke;
 }
 
 .task-link-container {
@@ -270,3 +285,54 @@ body {
 }
 
 /* Message Animation End */
+
+/* Modal Start */
+
+.modal-login, .modal-create, .modal-create-user {
+  background-color: var(--menu-main);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  height: fit-content;
+  margin: 0 auto;
+  padding: 24px 56px;
+  border-radius: 16px;
+}
+
+.modal-close-btn, .modal-close-btn:visited {
+  color: whitesmoke;
+  font-size: 24px;
+  text-decoration: none;
+  display: flex;
+  align-self: flex-end;
+}
+
+.modal-close-btn:hover {
+  color: var(--red-warning);
+}
+
+.modal-close-btn:active {
+  color: var(--red-warning-2);
+}
+
+#create-account-text {
+  color: whitesmoke;
+}
+
+#create-account-link, #create-account-link:visited {
+  color: var(--link-main);
+  text-decoration: none;
+}
+
+#create-account-link:hover {
+  color: white;
+}
+
+#create-account-link:active {
+  color: var(--cards-sec);
+}
+
+
+/* Modal End */
