@@ -1,18 +1,22 @@
 {% extends "template.html" %}
 {% block task %}
 
-    <div class="task-div">
+    <div class="task-div-info">
+
+            <div class="task-top-buttons">
+
+                <a href="{{ url_for('deletar_tarefa', id=tarefa._id) }}" class="btn-custom"><img onmouseover="deleteAnimation()" id="icon-delete" class="icon" src="{{ url_for('static', filename='icons/delete.svg')}}" alt=""></a>
+
+                <a href="{{ url_for('editar_tarefa', id=tarefa._id) }}" class="btn-custom"><img id="icon-edit" class="icon" src="{{ url_for('static', filename='icons/pencil-empty.svg') }}" alt=""></a>
+
+            </div>
+
             <h1>{{tarefa._nome}}</h1>
 
             <p>{{tarefa._descricao}}</p>
 
             <p>{{tarefa._prioridade}}</p>
 
-            <div class="task-inner-buttons">
-                <a href="{{ url_for('deletar_tarefa', id=tarefa._id) }}" class="btn_del"><img class="icon" src="{{ url_for('static', filename='icons/delete.svg')}}" alt=""></a>
-                
-                <a href="{{ url_for('editar_tarefa', id=tarefa._id) }}" class="btn_edit"><img class="icon" src="{{ url_for('static', filename='icons/edit.svg') }}" alt=""></a>
-            </div>
     </div>
 
 {% endblock %}
