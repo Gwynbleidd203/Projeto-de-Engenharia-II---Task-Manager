@@ -51,7 +51,6 @@
 
         <a href="#" onclick="openForm()">Criar Task</a>
         <a href="#">Progresso</a>
-        <a href="{{url_for('status')}}">Status</a>
         <a href="{{url_for('sobre')}}">About</a>
 
         {% endblock %}
@@ -221,14 +220,42 @@
             </div>
 
             <div class="task-div-inner">
-
+   
                 <p>{{ tarefa._tipo_id}}</p>
 
-                <p>{{ tarefa._status_id }}</p>
+            {% if tarefa._status_id == 1: %} 
 
-                <p>{{ tarefa._prioridade_id }}</p>
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/ampersand-empty.svg')}}" alt="">
+            
 
-                <p>{{ tarefa._usuario_id }}</p>
+            {% elif tarefa._status_id == 2: %} 
+
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/ampersand-top.svg')}}" alt="">
+            
+
+            {% else: %}
+
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/ampersand-full.svg')}}" alt="">
+            
+            {% endif %}
+
+            {% if tarefa._prioridade_id == 1: %} 
+
+                <img src="{{url_for('static', filename = '/icons/ampersand-empty.svg')}}" alt="">
+            
+
+            {% elif tarefa._prioridade_id == 2: %} 
+
+                <img src="{{url_for('static', filename = '/icons/.svg')}}" alt="">
+            
+
+            {% else: %}
+
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/fire.svg')}}" alt="">
+            
+            {% endif %}
+             
+
 
             </div>
 

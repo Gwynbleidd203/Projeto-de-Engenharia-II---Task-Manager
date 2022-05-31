@@ -13,7 +13,7 @@ class Tarefa:
        
 
 class Usuario:
-    def __init__(self, nome, email, senha, id):
+    def __init__(self, nome, email, senha, id=None):
         self._id = id
         self._nome = nome
         self._email = email
@@ -21,8 +21,9 @@ class Usuario:
 
 
 class Tipo:
-    def __init__(self, nome, id=None):
+    def __init__(self, nome, id=None, usuario_id=None):
         self._id = id
+        self._usuario_id = usuario_id
         self._nome = nome
 
 
