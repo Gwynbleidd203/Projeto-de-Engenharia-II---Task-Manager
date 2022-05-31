@@ -241,17 +241,17 @@
 
             {% if tarefa._prioridade_id == 1: %} 
 
-                <img src="{{url_for('static', filename = '/icons/ampersand-empty.svg')}}" alt="">
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/priority_3.svg')}}" alt="">
             
 
             {% elif tarefa._prioridade_id == 2: %} 
 
-                <img src="{{url_for('static', filename = '/icons/.svg')}}" alt="">
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/priority.svg')}}" alt="">
             
 
             {% else: %}
 
-                <img class="icon-2" src="{{url_for('static', filename = '/icons/fire.svg')}}" alt="">
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/priority_2.svg')}}" alt="">
             
             {% endif %}
              
