@@ -30,6 +30,7 @@
 {% endwith %}
 
     <div id="mySidenav" class="sidenav">
+
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
 
@@ -50,7 +51,9 @@
         {% endblock %}
 
         <a href="#" onclick="openForm()">Criar Task</a>
+
         <a href="#">Progresso</a>
+
         <a href="{{url_for('sobre')}}">About</a>
 
         {% endblock %}
@@ -130,7 +133,7 @@
 
             <a class="modal-close-btn" href="javascript:void(0)" onclick="closeForm()">&times;</a>
 
-            <form method="POST" action="{{url_for('criar')}}">
+            <form class="modal-form" method="POST" action="{{url_for('criar')}}">
 
                 <h1>Crie Sua Tarefa</h1>
 

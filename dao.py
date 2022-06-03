@@ -190,7 +190,7 @@ class TipoDao:
         self.__db = db
         
     
-    def salvar_tipo(self, tipo):
+    def salvar_tipo(self, tipo:Tipo):
         cursor = self.__db.cursor()
         
         if (tipo._id):
