@@ -96,6 +96,7 @@ def criar():
     return redirect('/')
 
 
+
 @app.route('/editar_tarefa/<int:id>')
 def editar_tarefa(id):
     tarefa = tarefa_dao.busca_por_id(id)
@@ -218,6 +219,30 @@ def pesquisar():
     lista_tarefas = tarefa_dao.busca_por_nome(nome)
     
     return redirect('/lista', tarefas=lista_tarefas)
+
+
+#Criar tipo
+
+@app.route('/criar_tipo', methods=['POST', ])
+def criar_tipo():
+    nome = request.form['nome']
+    usuario_id = request.form['usuario_id']
+
+    tipo = Tarefa(nome, usuario_id)
+    
+    tipo = tipo_dao.salvar_tipo(tipo)
+
+    return redirect('/')
+
+@app.route('/editar_tipo/<int:id>')
+def editar_tipo(id):
+    tipo = tipo_dao.busca_por_id(id)
+    
+    
+    return render_template('/tarefa_edit.html')
+
+
+
 
 
 if __name__ == '__main__':

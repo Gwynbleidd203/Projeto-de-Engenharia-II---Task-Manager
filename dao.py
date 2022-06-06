@@ -85,6 +85,8 @@ SQL_BUSCA_TAREFA_POR_ID = '''SELECT *, TIPO.ID_TIPO, TIPO.NOME, STATUS.ID_STATUS
                              ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
                              WHERE TAREFA.ID = ?'''
 
+SQL_BUSCA_TIPO_POR_ID= '''SELECT * FROM TIPO WHERE ID = ? '''
+
 SQL_BUSCA_TAREFA_POR_USUARIO = '''SELECT *, TIPO.ID_TIPO, TIPO.NOME, STATUS.ID_STATUS, STATUS.NOME, PRIORIDADE.ID_PRIORIDADE, PRIORIDADE.NOME
                                   FROM TAREFA
                                   INNER JOIN TIPO
@@ -210,6 +212,12 @@ class TipoDao:
         cursor.execute(SQL_BUSCA_TIPO)
         tipo = traduz_tipo(cursor.fetchall())
         return tipo
+
+    def busca_por_id(self, id):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_BUSCA_TIPO_POR_ID, (id, ))
+        tupla = cursor.fetchone()
+        return Tarefa(tupla[1], id=tupla[0])
  
 
 def traduz_tipo(tipo):
