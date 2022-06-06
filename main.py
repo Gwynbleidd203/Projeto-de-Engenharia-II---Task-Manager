@@ -241,6 +241,18 @@ def editar_tipo(id):
     
     return render_template('/tarefa_edit.html')
 
+@app.route('/atualizar_tipo', methods=['POST', ])
+def atualizar_tipo():
+    nome = request.form['nome']
+    usuario_id = request.form['usuario_id']
+    id = request.form['id']
+
+    tipo = Tarefa(nome, usuario_id, id)
+
+    tarefa_dao.salvar(tarefa)
+
+    return redirect('/')
+
 
 
 
