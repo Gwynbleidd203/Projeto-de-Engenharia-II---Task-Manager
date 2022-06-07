@@ -231,7 +231,7 @@ body {
   height: fit-content;
   padding: 24px 56px;
   border-radius: 5px;
-  z-index: 5;
+  z-index: 10;
   position: absolute;
   top: 1;
   left: 40;

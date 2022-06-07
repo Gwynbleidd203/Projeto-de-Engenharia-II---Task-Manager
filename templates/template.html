@@ -153,11 +153,13 @@
 
                     <option value="" selected disabled>Tipo</option>
 
-                    <option value=""><a href="#" onclick="openCreateTipo()"></a></option>
-
                     {% for tipo in tipos %}
 
+                    {% if tipo._usuario_id == usuario._id or tipo._usuario_id == 0: %}
+
                     <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+
+                    {% endif %}
 
                     {% endfor %}
 
