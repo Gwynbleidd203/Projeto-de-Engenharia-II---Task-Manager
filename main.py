@@ -4,7 +4,7 @@ from dao import StatusDao, TarefaDao, TipoDao, UsuarioDao, PrioridadeDao
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from models import Tarefa, Usuario
+from models import Tarefa, Usuario, Tipo
 
 from functools import wraps
 
@@ -210,12 +210,15 @@ def sobre():
 
     return render_template('sobre.html')
 
+@app.route('/progresso')
+def progresso():
+
+    return render_template('progresso.html')
+
 @app.route('/pesquisar/<string:nome>', methods=['POST', ])
 def pesquisar():
     nome = request.form['profile-search']
 
-    lista_tarefas = tarefa_dao.busca_por_nome(nome)
-    
     lista_tarefas = tarefa_dao.busca_por_nome(nome)
     
     return redirect('/lista', tarefas=lista_tarefas)
@@ -228,7 +231,7 @@ def criar_tipo():
     nome = request.form['nome']
     usuario_id = request.form['usuario_id']
 
-    tipo = Tarefa(nome, usuario_id)
+    tipo = Tipo(nome, usuario_id)
     
     tipo = tipo_dao.salvar_tipo(tipo)
 
@@ -238,8 +241,8 @@ def criar_tipo():
 def editar_tipo(id):
     tipo = tipo_dao.busca_por_id(id)
     
-    
-    return render_template('/tarefa_edit.html')
+    return render_template('/tarefa_edit.html', tipo=tipo)
+
 
 @app.route('/atualizar_tipo', methods=['POST', ])
 def atualizar_tipo():
@@ -247,13 +250,17 @@ def atualizar_tipo():
     usuario_id = request.form['usuario_id']
     id = request.form['id']
 
-    tipo = Tarefa(nome, usuario_id, id)
+    tipo = Tipo(nome, usuario_id, id)
 
-    tarefa_dao.salvar(tarefa)
+    tipo_dao.salvar_tipo(tipo)
 
     return redirect('/')
 
-
+@app.route('/deletar_tipo/<int:id>')
+def deletar_tipo(id):
+    tipo_dao.deletar_tipo(id)
+    
+    return redirect('/')
 
 
 

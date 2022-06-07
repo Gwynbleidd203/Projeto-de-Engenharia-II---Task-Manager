@@ -38,6 +38,16 @@ function closeCreateAccount () {
   document.getElementById("create-account").style.display = 'none'
 }
 
+/* MODAL CREATE TYPE */
+
+function openCreateTipo () {
+  document.getElementById("create-tipo").style.display = 'block'
+}
+
+function closeCreateTipo () {
+  document.getElementById("create-tipo").style.display = 'none'
+}
+
 /* AJAX */
 
 function showNewTask() {

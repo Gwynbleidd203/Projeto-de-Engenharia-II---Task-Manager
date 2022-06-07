@@ -33,7 +33,6 @@
 
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-
         {% block menu_btn %}
 
         {% block home %}
@@ -53,6 +52,7 @@
         <a href="#" onclick="openForm()">Criar Task</a>
 
         <a href="#">Progresso</a>
+
 
         <a href="{{url_for('sobre')}}">About</a>
 
@@ -153,6 +153,8 @@
 
                     <option value="" selected disabled>Tipo</option>
 
+                    <option value=""><a href="#" onclick="openCreateTipo()"></a></option>
+
                     {% for tipo in tipos %}
 
                     <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
@@ -194,6 +196,28 @@
     </div>
 
     {% endblock %}
+
+    <div id="create-tipo" class="pop-up">
+        <div class="modal-tipo">
+
+            <a class="modal-close-btn" href="javascript:void(0)" onclick="closeCreateTipo()">&times;</a>
+
+            <form action="{{url_for('criar_tipo')}}" class="modal-form" method="POST">
+
+                {% if usuario: %}
+
+                <input type="hidden" name="usuario_id" id="usuario_id" value="{{ usuario._id }}">
+
+                {% endif %}
+
+                <input type="text" name="nome" placeholder="Nome que o tipo receberá..." required>
+
+                <button class="submit-btn" type="submit">OK</button>
+
+            </form>
+
+        </div>
+    </div>
 
     <!-- Use any element to open the sidenav -->
     <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="" onclick="openNav()">

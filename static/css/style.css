@@ -201,7 +201,6 @@ body {
 .btn_del:hover {
   background-color: #f85555;
   color: rgb(2, 1, 1);
-
 }
 
 .btn_edit {
@@ -367,7 +366,7 @@ body {
 
 /* Modal Start */
 
-.modal-login, .modal-create, .modal-create-user {
+.modal-login, .modal-create, .modal-create-user, .modal-tipo {
   background-color: var(--menu-main);
   display: flex;
   flex-direction: column;

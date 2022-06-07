@@ -14,7 +14,7 @@ SQL_CRIA_TAREFA = 'INSERT into TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIO
 
 SQL_CRIA_USUARIO = 'INSERT into USUARIO (USERNAME, EMAIL, SENHA) values (?, ?, ?)'
 
-SQL_CRIA_TIPO = 'INSERT INTO TIPO (NOME) VALUES (?)'
+SQL_CRIA_TIPO = 'INSERT INTO TIPO (NOME, USUARIO_ID) VALUES (?, ?)'
 
 SQL_CRIA_STATUS = 'INSERT INTO STATUS (NOME) VALUES (?)'
 
@@ -28,7 +28,7 @@ SQL_ATUALIZA_TAREFA = 'UPDATE TAREFA SET NOME = ?, DESCRICAO = ?, TIPO_ID = ?, S
 
 SQL_ATUALIZA_USUARIO = 'UPDATE USUARIO SET USERNAME = ?, EMAIL = ?, SENHA = ? where ID = ?'
 
-SQL_ATUALIZA_TIPO = 'UPDATE TIPO SET NOME = ? WHERE ID = ?'
+SQL_ATUALIZA_TIPO = 'UPDATE TIPO SET NOME = ? WHERE ID_TIPO = ?'
 
 SQL_ATUALIZA_STATUS = 'UPDATE STATUS SET NOME = ? WHERE ID = ?'
 
@@ -85,7 +85,7 @@ SQL_BUSCA_TAREFA_POR_ID = '''SELECT *, TIPO.ID_TIPO, TIPO.NOME, STATUS.ID_STATUS
                              ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
                              WHERE TAREFA.ID = ?'''
 
-SQL_BUSCA_TIPO_POR_ID= '''SELECT * FROM TIPO WHERE ID = ? '''
+SQL_BUSCA_TIPO_POR_ID= 'SELECT * FROM TIPO WHERE TIPO.TIPO_ID = ?'
 
 SQL_BUSCA_TAREFA_POR_USUARIO = '''SELECT *, TIPO.ID_TIPO, TIPO.NOME, STATUS.ID_STATUS, STATUS.NOME, PRIORIDADE.ID_PRIORIDADE, PRIORIDADE.NOME
                                   FROM TAREFA
@@ -106,6 +106,9 @@ SQL_BUSCA_USUARIO_POR_ID = 'SELECT * FROM USUARIO WHERE ID = ?'
 
 
 SQL_DELETA_TAREFA = 'DELETE FROM TAREFA WHERE ID = ?'
+
+SQL_DELETA_TIPO = 'DELETE FROM TIPO WHERE ID_TIPO = ?'
+
 
 # User Profile -----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -196,10 +199,10 @@ class TipoDao:
         cursor = self.__db.cursor()
         
         if (tipo._id):
-            cursor.execute(SQL_ATUALIZA_TIPO, (tipo._nome, tipo._id))
+            cursor.execute(SQL_ATUALIZA_TIPO, (tipo._nome, tipo._usuario_id, tipo._id))
             
         else:
-            cursor.execute(SQL_CRIA_TIPO, [tipo._nome])
+            cursor.execute(SQL_CRIA_TIPO, (tipo._nome, tipo._usuario_id))
             tipo._id = cursor.lastrowid
             
         self.__db.commit()
@@ -217,12 +220,16 @@ class TipoDao:
         cursor = self.__db.cursor()
         cursor.execute(SQL_BUSCA_TIPO_POR_ID, (id, ))
         tupla = cursor.fetchone()
-        return Tarefa(tupla[1], id=tupla[0])
+        return Tipo(tupla[1], tupla[2], id=tupla[0])
+
+    def deletar_tipo(self, id):
+        self.__db.cursor().execute(SQL_DELETA_TIPO, (id, ))
+        self.__db.commit()
  
 
 def traduz_tipo(tipo):
     def cria_tipo_com_tupla(tupla):
-        return Tipo(tupla[1], tupla[0])
+        return Tipo(tupla[1], tupla[2], tupla[0])
     return list(map(cria_tipo_com_tupla, tipo))
 
 # --------------------- STATUS -----------------------------
