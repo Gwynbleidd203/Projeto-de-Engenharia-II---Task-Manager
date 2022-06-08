@@ -21,7 +21,7 @@ class Usuario:
 
 
 class Tipo:
-    def __init__(self, nome, id=None, usuario_id=None):
+    def __init__(self, nome, usuario_id, id=None):
         self._id = id
         self._nome = nome
         self._usuario_id = usuario_id
