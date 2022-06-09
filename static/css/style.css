@@ -412,6 +412,42 @@ body {
   color: var(--cards-sec);
 }
 
+#home-btn {
+  width: 48px;
+  height: 48px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.about-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-shrink: initial;
+}
+
+.about-us-description {
+  text-align: center;
+  word-wrap: break-word;
+  word-spacing: 0.02rem;
+  width: calc(50vw + 100px);
+  max-width: 600px;
+  min-width: 200px;
+  margin: 56px auto;
+  border-radius: 20px;
+  padding: 56px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.about-us-contact {
+  padding: 56px;
+  border-radius: 20px;
+  max-width: 600px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
 
 /* Modal End */
 
