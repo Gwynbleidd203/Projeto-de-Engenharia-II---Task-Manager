@@ -245,6 +245,10 @@ body {
   background-color: #e9232394;
 }
 
+.msg-ul-bad-solid {
+  background-color: #e92323de;
+}
+
 .msg-ul-good {
   background-color: #1a73e7b9;
 }

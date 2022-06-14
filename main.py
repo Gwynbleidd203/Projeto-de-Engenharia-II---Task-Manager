@@ -82,16 +82,21 @@ def novo():
 
 @app.route('/criar', methods=['POST', ])
 def criar():
-    nome = request.form['nome']
-    descricao = request.form['descricao']
-    tipo_id = request.form['tipo']
-    status_id = request.form['status']
-    prioridade_id = request.form['prioridade']
-    usuario_id = request.form['usuario_id']
+    try:
+        nome = request.form['nome']
+        descricao = request.form['descricao']
+        tipo_id = request.form['tipo']
+        status_id = request.form['status']
+        prioridade_id = request.form['prioridade']
+        usuario_id = request.form['usuario_id']
 
-    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id)
+        tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id)
     
-    tarefa = tarefa_dao.salvar(tarefa)
+        tarefa = tarefa_dao.salvar(tarefa)
+
+    except:
+
+        flash(u"Houve um erro ao criar a tarefa. Tente preencher os campos novamente ou recarregue a página", "msg-ul-bad-solid")
 
     return redirect('/')
 
