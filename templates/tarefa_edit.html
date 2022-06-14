@@ -11,20 +11,27 @@
         <input type="text" name="nome" id="nome" value="{{ tarefa._nome }}" required> <br>
         <input type="text" name="descricao" id="descricao" value="{{ tarefa._descricao }}"> <br>
         <select name="tipo" id="tipo">
+
             {% for tipo in tipos %}
 
-            {% if tarefa._tipo_id == tipo._id %}
+                {% if tipo._usuario_id == usuario._id or tipo._usuario_id == 0: %}
+
+                <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+
+                {% endif %}
+
+                {% if tarefa._tipo_id == tipo._id %}
 
             <option value="{{ tipo._id }}" selected>{{ tipo._nome }}</option>
 
-            {% else %}
+                {% else %}
 
             <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
 
-            {% endif %}
+                {% endif %}
 
             {% endfor %}
-            
+
         </select> <br>
         <select name="status" id="status">
             {% for status in status_list %}

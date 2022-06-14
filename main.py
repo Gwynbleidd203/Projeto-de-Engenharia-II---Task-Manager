@@ -104,12 +104,13 @@ def criar():
 
 @app.route('/editar_tarefa/<int:id>')
 def editar_tarefa(id):
+    usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
     tarefa = tarefa_dao.busca_por_id(id)
     lista_tipo = tipo_dao.listar_tipos()
     lista_status = status_dao.listar_status()
     lista_prioridade = prioridade_dao.listar_prioridades()
     
-    return render_template('/tarefa_edit.html', tarefa=tarefa, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridade)
+    return render_template('/tarefa_edit.html', tarefa=tarefa, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridade, usuario=usuario)
 
 
 @app.route('/atualizar', methods=['POST', ])
@@ -215,10 +216,12 @@ def sobre():
 
     return render_template('sobre.html')
 
+
 @app.route('/progresso')
 def progresso():
 
     return render_template('progresso.html')
+
 
 @app.route('/pesquisar/<string:nome>', methods=['POST', ])
 def pesquisar():
@@ -242,6 +245,7 @@ def criar_tipo():
 
     return redirect('/')
 
+
 @app.route('/editar_tipo/<int:id>')
 def editar_tipo(id):
     tipo = tipo_dao.busca_por_id(id)
@@ -260,6 +264,7 @@ def atualizar_tipo():
     tipo_dao.salvar_tipo(tipo)
 
     return redirect('/')
+
 
 @app.route('/deletar_tipo/<int:id>')
 def deletar_tipo(id):
