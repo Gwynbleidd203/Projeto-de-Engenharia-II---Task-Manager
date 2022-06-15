@@ -79,7 +79,7 @@ def novo():
 
     return render_template('novo.html')
 
-
+# Recebe os valores passados via formulário HTML
 @app.route('/criar', methods=['POST', ])
 def criar():
     nome = request.form['nome']
@@ -96,7 +96,7 @@ def criar():
     return redirect('/')
 
 
-
+# Função que recebe o id da tarefa desejada e recebe seus respectivos valores do banco de dados
 @app.route('/editar_tarefa/<int:id>')
 def editar_tarefa(id):
     tarefa = tarefa_dao.busca_por_id(id)
@@ -107,6 +107,7 @@ def editar_tarefa(id):
     return render_template('/tarefa_edit.html', tarefa=tarefa, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridade)
 
 
+# Altera os valores da tarefa desejada, através da função atualizar que é chamada ao editar uma tarefa, a qual já tem seu Id selecionado devido ao HTML de editar
 @app.route('/atualizar', methods=['POST', ])
 def atualizar():
     nome = request.form['nome']
@@ -124,6 +125,7 @@ def atualizar():
     return redirect('/')
 
 
+# Cria uma grande lista com todas as tarefas
 @app.route('/lista_de_tarefas')
 def lista_de_tarefas():
     lista = tarefa_dao.listar()
@@ -131,6 +133,7 @@ def lista_de_tarefas():
     return render_template('index.html', tarefas=lista)
 
 
+# Faz praticamente o mesmo que o "editar", exceto que na há alterações no banco
 @app.route('/tarefa_info/<int:id>')
 def tarefa_info(id):
     lista = tarefa_dao.busca_por_id(id)
@@ -138,6 +141,7 @@ def tarefa_info(id):
     return render_template('tarefa_info.html', tarefa=lista)
 
 
+# Remove uma tarefa por seu id
 @app.route('/deletar_tarefa/<int:id>')
 def deletar_tarefa(id):
     tarefa_dao.deletar(id)
@@ -146,6 +150,7 @@ def deletar_tarefa(id):
 
 # USUARIO
 
+# Adiciona um novo usuário no banco através do formulário HTML
 @app.route('/criar_usuario', methods=['POST', ])
 def criar_usuario():
     username = request.form['username']
@@ -159,6 +164,7 @@ def criar_usuario():
     return redirect('/')
 
 
+# Cria uma sessão para o usuário que fez o login corretamente
 @app.route('/login')
 def login():
     proxima=request.args.get('proxima')
@@ -167,6 +173,7 @@ def login():
     return render_template('index.html', proxima=proxima)
 
 
+# Verifica se os dados de login estão corretos e se correto,cria uma sessão para o usuário, se não, pede para que o usuário tente fazer login novamente 
 @app.route('/autenticar', methods=['POST',])
 def autenticar():
     usuario = usuario_dao.buscar_por_email_usu(request.form['email'])
@@ -181,6 +188,7 @@ def autenticar():
     return  redirect('/')           
 
 
+# Remove o usuário da sessão
 @app.route('/logout')
 def logout():
     session['usuario_logado'] = None
@@ -189,6 +197,7 @@ def logout():
     return redirect('/')
 
 
+# Acessa o perfil do usuário, retornando estatísticas de seu progresso
 @app.route('/perfil/<int:id>')
 def perfil(id):
     usuario = usuario_dao.buscar_usuario_por_id(id)
@@ -224,8 +233,8 @@ def pesquisar():
     return redirect('/lista', tarefas=lista_tarefas)
 
 
-#Criar tipo
-
+# -------------------------------- Criar tipo ---------------------------
+# Cria um novo tipo através de um formulário HTML
 @app.route('/criar_tipo', methods=['POST', ])
 def criar_tipo():
     nome = request.form['nome']
@@ -236,6 +245,8 @@ def criar_tipo():
     tipo = tipo_dao.salvar_tipo(tipo)
 
     return redirect('/')
+
+
 
 @app.route('/editar_tipo/<int:id>')
 def editar_tipo(id):
@@ -256,6 +267,8 @@ def atualizar_tipo():
 
     return redirect('/')
 
+
+# Deleta um tipo do banco de dados
 @app.route('/deletar_tipo/<int:id>')
 def deletar_tipo(id):
     tipo_dao.deletar_tipo(id)
