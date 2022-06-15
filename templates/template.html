@@ -29,6 +29,8 @@
     {% endif %}
 {% endwith %}
 
+    {% block push_menu %}
+
     <div id="mySidenav" class="sidenav">
 
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -51,14 +53,14 @@
 
         <a href="#" onclick="openForm()">Criar Task</a>
 
-        <a href="#">Progresso</a>
-
 
         <a href="{{url_for('sobre')}}">About</a>
 
         {% endblock %}
 
     </div>
+
+    {% endblock %}
 
 
     {% endblock %}
@@ -149,9 +151,9 @@
 
                 <input type="text" name="descricao" id="descricao" placeholder="Descrição da Tarefa..."> <br>
 
-                <select name="tipo" id="tipo">
+                <select name="tipo" id="tipo" required>
 
-                    <option value="" selected disabled>Tipo</option>
+                    <option value="0" selected disabled>Tipo</option>
 
                     {% for tipo in tipos %}
 
@@ -167,7 +169,7 @@
 
                 <select name="status" id="status">
 
-                    <option value="" selected disabled>Status</option>
+                    <option value="0" selected disabled >Status</option>
 
                     {% for status in status_list %}
 
@@ -177,9 +179,9 @@
 
                 </select> <br>
 
-                <select name="prioridade" id="prioridade">
+                <select name="prioridade" id="prioridade" required>
 
-                    <option value="" selected disabled>Prioridade</option>
+                    <option value="0" selected disabled>Prioridade</option>
 
                     {% for prioridade in prioridades %}
 

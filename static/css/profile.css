@@ -5,6 +5,7 @@ body {
     flex-direction: column;
     justify-content: space-around;
     min-height: 100vh;
+    padding: 10px;
 }
 
 main {
@@ -17,6 +18,7 @@ main {
     box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.2);
     border-radius: 16px;
     padding: 56px 112px;
+    min-width: 250px;
 }
 
 .profile-center {

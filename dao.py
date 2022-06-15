@@ -120,6 +120,19 @@ SQL_CONTA_TAREFAS_FAZENDO = 'SELECT COUNT(TAREFA.ID) FROM TAREFA WHERE TAREFA.US
 
 SQL_CONTA_TAREFAS_FAZER = 'SELECT COUNT(TAREFA.ID) FROM TAREFA WHERE TAREFA.USUARIO_ID = ? AND TAREFA.STATUS_ID = 1'
 
+# -------------------- Trigger Try -----------------------------
+
+SQL_DELETA_USER_ALL = '''DELIMITER //
+                         CREATE TRIGGER deleteAll
+                         AFTER DELETE ON USARIO
+                         FOR EACH ROW
+                         BEGIN
+                         DELETE FROM TAREFA WHERE USUARIO_ID = OLD.ID
+                         DELETE FROM TIPO WHERE USUARIO_ID = OLD.ID
+                         END
+                         //
+                         DELIMITER ;'''
+
 
 # ------------------- TAREFA -----------------------------------
 

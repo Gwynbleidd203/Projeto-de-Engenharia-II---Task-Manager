@@ -82,16 +82,21 @@ def novo():
 # Recebe os valores passados via formulário HTML
 @app.route('/criar', methods=['POST', ])
 def criar():
-    nome = request.form['nome']
-    descricao = request.form['descricao']
-    tipo_id = request.form['tipo']
-    status_id = request.form['status']
-    prioridade_id = request.form['prioridade']
-    usuario_id = request.form['usuario_id']
+    try:
+        nome = request.form['nome']
+        descricao = request.form['descricao']
+        tipo_id = request.form['tipo']
+        status_id = request.form['status']
+        prioridade_id = request.form['prioridade']
+        usuario_id = request.form['usuario_id']
 
-    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id)
+        tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id)
     
-    tarefa = tarefa_dao.salvar(tarefa)
+        tarefa = tarefa_dao.salvar(tarefa)
+
+    except:
+
+        flash(u"Houve um erro ao criar a tarefa. Tente preencher os campos novamente ou recarregue a página", "msg-ul-bad-solid")
 
     return redirect('/')
 
@@ -99,12 +104,13 @@ def criar():
 # Função que recebe o id da tarefa desejada e recebe seus respectivos valores do banco de dados
 @app.route('/editar_tarefa/<int:id>')
 def editar_tarefa(id):
+    usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
     tarefa = tarefa_dao.busca_por_id(id)
     lista_tipo = tipo_dao.listar_tipos()
     lista_status = status_dao.listar_status()
     lista_prioridade = prioridade_dao.listar_prioridades()
     
-    return render_template('/tarefa_edit.html', tarefa=tarefa, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridade)
+    return render_template('/tarefa_edit.html', tarefa=tarefa, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridade, usuario=usuario)
 
 
 # Altera os valores da tarefa desejada, através da função atualizar que é chamada ao editar uma tarefa, a qual já tem seu Id selecionado devido ao HTML de editar
@@ -219,10 +225,12 @@ def sobre():
 
     return render_template('sobre.html')
 
+
 @app.route('/progresso')
 def progresso():
 
     return render_template('progresso.html')
+
 
 @app.route('/pesquisar/<string:nome>', methods=['POST', ])
 def pesquisar():
@@ -245,7 +253,6 @@ def criar_tipo():
     tipo = tipo_dao.salvar_tipo(tipo)
 
     return redirect('/')
-
 
 
 @app.route('/editar_tipo/<int:id>')
