@@ -157,11 +157,7 @@
 
                     {% for tipo in tipos %}
 
-                    {% if tipo._usuario_id == usuario._id or tipo._usuario_id == 0: %}
-
                     <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
-
-                    {% endif %}
 
                     {% endfor %}
 

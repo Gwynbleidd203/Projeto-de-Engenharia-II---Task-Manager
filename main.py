@@ -56,7 +56,7 @@ def index():
             print(session['usuario_logado'])
             proxima = request.args.get('proxima')
             lista = tarefa_dao.listar_tarefas_por_usuario(usuario._id)
-            lista_tipo = tipo_dao.listar_tipos()
+            lista_tipo = tipo_dao.listar_tipo_usuario(usuario._id)
             lista_status = status_dao.listar_status()
             lista_prioridades = prioridade_dao.listar_prioridades()
             
