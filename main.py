@@ -106,7 +106,7 @@ def criar():
 def editar_tarefa(id):
     usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
     tarefa = tarefa_dao.busca_por_id(id)
-    lista_tipo = tipo_dao.listar_tipos()
+    lista_tipo = tipo_dao.listar_tipo_usuario(usuario._id)
     lista_status = status_dao.listar_status()
     lista_prioridade = prioridade_dao.listar_prioridades()
     

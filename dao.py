@@ -68,6 +68,8 @@ SQL_BUSCA_TAREFAS_DO_USUARIO = '''SELECT *, TIPO.NOME, TIPO.ID_TIPO, STATUS.NOME
 
 SQL_BUSCA_TIPO = 'SELECT * FROM TIPO'
 
+SQL_BUSCA_TIPO_POR_USUARIO = 'SELECT * FROM TIPO WHERE USUARIO_ID = ? OR USUARIO_ID = 0'
+
 SQL_BUSCA_STATUS = 'SELECT * FROM STATUS'
 
 SQL_BUSCA_PRIORIDADE = 'SELECT * FROM PRIORIDADE'
@@ -226,6 +228,13 @@ class TipoDao:
     def listar_tipos(self):
         cursor = self.__db.cursor()
         cursor.execute(SQL_BUSCA_TIPO)
+        tipo = traduz_tipo(cursor.fetchall())
+        return tipo
+
+
+    def listar_tipo_usuario(self, usuario_id):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_BUSCA_TIPO_POR_USUARIO, (usuario_id, ))
         tipo = traduz_tipo(cursor.fetchall())
         return tipo
 
