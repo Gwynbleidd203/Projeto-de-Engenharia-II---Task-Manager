@@ -1,0 +1,70 @@
+@import url(style.css);
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.2);
+    border-radius: 16px;
+    padding: 56px 112px;
+    margin-top: 15rem;
+}
+
+.profile-center {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: fit-content;
+    margin: 8px;
+}
+
+.profile-left, .profile-right {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 8px;
+}
+
+.profile-botttom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 4px;
+}
+
+#profile-search {
+    width: auto;
+}
+
+#maginifying-glass {
+    width: 32px;
+    height: 32px;
+}
+
+form {
+    height: fit-content;
+    width: fit-content;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 4px;
+}
+
+form > a {
+    width: fit-content;
+    height: fit-content;
+}

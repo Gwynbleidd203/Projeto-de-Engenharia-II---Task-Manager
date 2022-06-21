@@ -1,99 +1,36 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='form.css')}}">
-    <link rel="stylesheet" href="../static/style.css">
-    <title>NavBar Test</title>
-</head>
-<body>
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#" onclick="openLogin()">Login</a>
-        <a href="#" onclick="openForm()">Criar Task</a>
-        <a href="#">Progresso</a>
-        <a href="{{url_for('status')}}">Status</a>
-        <a href="{{url_for('sobre')}}">About</a>
-    </div>
+{% extends "template.html" %}
 
-    <!--Modal para o login e autenticação-->
+{% block home %} {% endblock %}
 
-    <div id="login-form" class="pop-up">
-        <form method="POST" action="{{url_for('autenticar')}}">
-            <span id="close-btn" onclick="closeLogin()">X</span>
+{% block menu_btn %}
 
-            <h1>Faça Seu Login Aqui</h1>
+    {% if usuario: %}
 
-            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+    <a href="{{ url_for('perfil', id=usuario._id) }}">{{ usuario._nome }}</a>
 
-            <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+    <a href="#" onclick="openForm()">Criar Task</a>
 
-            <input type="password" name="senha" id="senha" required placeholder="Password...">  <br>
+    <a href="#">Progresso</a>
 
-            <button class="submit-btn" type="submit">OK</button>
-        </form>
-    </div>
+    <a href="{{ url_for('status') }}">Status</a>
 
-    <!--Modal para a criação de tarefas-->
+    <a href="{{ url_for('sobre') }}">About</a>
 
-    <div id="create-form" class="pop-up">
-        <form method="POST" action="{{url_for('criar')}}">
-            <span id="close-btn" onclick="closeForm()">X</span>
+    <a href="{{ url_for('logout') }}">Logout</a>
 
-            <h1>Crie Sua Tarefa</h1>
+    {% else %}
 
-            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+    <a href="#" onclick="openLogin()">Login</a>
 
-            <input type="text" name="nome" id="nome" placeholder="Nome..." required> <br>
+    <a href="#" onclick="openForm()">Criar Task</a>
 
-            <input type="text" name="descricao" id="descricao" placeholder="Descrição da Tarefa..."> <br>
+    <a href="#">Progresso</a>
 
-            <input type="text" name="tipo" id="tipo" placeholder="Tipo de Tarefa..." required> <br>
+    <a href="{{ url_for('status') }}">Status</a>
 
-            <input type="text" name="status" id="status" placeholder="Status da Tarefa..."> <br>
+    <a href="{{ url_for('sobre') }}">About</a>
 
-            <input type="text" name="prioridade" id="prioridade" placeholder="Prioridade da Tarefa..."> <br>
 
-            <button class="submit-btn" type="submit">OK</button>
-        </form>
-    </div>
-      
-      <!-- Use any element to open the sidenav -->
-      <img id="nav-btn-push" src="{{url_for('static', filename='list-btn-blk.png')}}" alt="" onclick="openNav()">
-      
-      <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-      <div id="main">
-        <div class="task-div">
-            {% for tarefa in tarefas %}
+    {% endif %}
 
-                <p>{{tarefa._nome}} - <span style="color:red;">{{tarefa._categoria}}</span></p>
-
-            {% endfor %}
-        </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
-        <div class="task-div">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod incidunt ipsam, dignissimos possimus, id placeat adipisci voluptates, deleniti eaque reiciendis at velit. Recusandae dolor, impedit esse rem similique officiis dignissimos.</p>
-        </div>
-
-      </div>
-
-    <script src="{{url_for('static', filename='script.js')}}"></script>
-    <script src="../static/script.js"></script>
-</body>
-</html>
+{% endblock %}
