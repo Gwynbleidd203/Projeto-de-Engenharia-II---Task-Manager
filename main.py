@@ -63,6 +63,9 @@ def index():
             return render_template('index.html', proxima=proxima, tarefas=lista, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridades, usuario=usuario)
         
         except:
+
+            flash(u'Erro ao processar o login! Tente novamente mais tarde.', "msg-ul-bad-solid")
+
             proxima = request.args.get('proxima')
     
             return render_template('landing.html', proxima=proxima)
@@ -82,22 +85,17 @@ def novo():
 # Recebe os valores passados via formulário HTML
 @app.route('/criar', methods=['POST', ])
 def criar():
-    try:
-        nome = request.form['nome']
-        descricao = request.form['descricao']
-        tipo_id = request.form['tipo']
-        status_id = request.form['status']
-        prioridade_id = request.form['prioridade']
-        usuario_id = request.form['usuario_id']
-        data_prevista = request.form['data_prevista']
+    nome = request.form['nome']
+    descricao = request.form['descricao']
+    tipo_id = request.form['tipo']
+    status_id = request.form['status']
+    prioridade_id = request.form['prioridade']
+    usuario_id = request.form['usuario_id']
+    data_prevista = request.form['data_prevista']
 
-        tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, None)
-    
-        tarefa = tarefa_dao.salvar(tarefa)
+    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, None)
 
-    except:
-
-        flash(u"Houve um erro ao criar a tarefa. Tente preencher os campos novamente ou recarregue a página", "msg-ul-bad-solid")
+    tarefa = tarefa_dao.salvar(tarefa)
 
     return redirect('/')
 

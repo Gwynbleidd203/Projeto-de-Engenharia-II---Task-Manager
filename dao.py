@@ -10,7 +10,7 @@ from models import Tarefa, Usuario, Tipo, Status, Prioridade
 # Criação -----------------------------------------------------------------------------------------------------------------------------------------
 
 
-SQL_CRIA_TAREFA = 'INSERT into TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIORIDADE_ID, USUARIO_ID, DATA_INICIO, DATA_TERMINO, DATA_PREVISTA) values (?, ?, ?, ?, ?, ?, NOW(), ?, ?)'
+SQL_CRIA_TAREFA = 'INSERT into TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIORIDADE_ID, USUARIO_ID, DATA_CRIACAO, DATA_TERMINO, DATA_PREVISTA) values (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)'
 
 SQL_CRIA_USUARIO = 'INSERT into USUARIO (USERNAME, EMAIL, SENHA) values (?, ?, ?)'
 
@@ -149,7 +149,7 @@ class TarefaDao:
             cursor.execute(SQL_ATUALIZA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo_id, tarefa._status_id, tarefa._prioridade_id, tarefa._id))
 
         else:
-            cursor.execute(SQL_CRIA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo_id, tarefa._status_id, tarefa._prioridade_id, tarefa._usuario_id, tarefa._data_inicio, tarefa._data_termino, tarefa._data_prevista))
+            cursor.execute(SQL_CRIA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo_id, tarefa._status_id, tarefa._prioridade_id, tarefa._usuario_id, tarefa._data_criacao, tarefa._data_prevista))
             
         self.__db.commit()
         
@@ -199,7 +199,7 @@ class TarefaDao:
     
 def traduz_tarefas(tarefas):
     def cria_tarefas_com_tupla(tupla):
-        return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], tupla[8], tupla[9], id=tupla[0])
+        return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], tupla[8], tupla[9], tupla[10], tupla[11], tupla[12], id=tupla[0])
     return list(map(cria_tarefas_com_tupla, tarefas))
 
 
