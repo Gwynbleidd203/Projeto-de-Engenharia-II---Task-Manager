@@ -91,7 +91,7 @@ def criar():
         usuario_id = request.form['usuario_id']
         data_prevista = request.form['data_prevista']
 
-        tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista)
+        tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, None)
     
         tarefa = tarefa_dao.salvar(tarefa)
 
@@ -103,7 +103,6 @@ def criar():
 
 
 # Função que recebe o id da tarefa desejada e recebe seus respectivos valores do banco de dados
-
 @app.route('/editar_tarefa/<int:id>')
 def editar_tarefa(id):
     usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
@@ -116,7 +115,6 @@ def editar_tarefa(id):
 
 
 # Altera os valores da tarefa desejada, através da função atualizar que é chamada ao editar uma tarefa, a qual já tem seu Id selecionado devido ao HTML de editar
-
 @app.route('/atualizar', methods=['POST', ])
 def atualizar():
     nome = request.form['nome']

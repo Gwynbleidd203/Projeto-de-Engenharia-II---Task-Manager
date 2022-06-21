@@ -1,5 +1,12 @@
+class Usuario:
+    def __init__(self, nome, email, senha, id=None):
+        self._id = id
+        self._nome = nome
+        self._email = email
+        self._senha = senha
+
 class Tarefa:
-    def __init__(self, nome, descricao, tipo_id, status_id, prioridade_id, tipo, status, prioridade, usuario_id, data_prevista, data_inicio=None, data_termino=None, id=None):
+    def __init__(self, nome, descricao, tipo_id, status_id, prioridade_id, tipo, status, prioridade, usuario_id, data_prevista, data_inicio, data_termino=None, id=None):
         self._id = id
         self._nome = nome
         self._descricao = descricao
@@ -13,14 +20,6 @@ class Tarefa:
         self._data_inicio = data_inicio
         self._data_termino = data_termino
         self._data_prevista = data_prevista
-       
-
-class Usuario:
-    def __init__(self, nome, email, senha, id=None):
-        self._id = id
-        self._nome = nome
-        self._email = email
-        self._senha = senha
 
 
 class Tipo:

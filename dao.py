@@ -10,7 +10,7 @@ from models import Tarefa, Usuario, Tipo, Status, Prioridade
 # Criação -----------------------------------------------------------------------------------------------------------------------------------------
 
 
-SQL_CRIA_TAREFA = 'INSERT into TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIORIDADE_ID, USUARIO_ID, DATA_INICIO, DATA_TERMINO, DATA_PREVISTA) values (?, ?, ?, ?, ?, ?, NOW, NOW ?)'
+SQL_CRIA_TAREFA = 'INSERT into TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIORIDADE_ID, USUARIO_ID, DATA_INICIO, DATA_TERMINO, DATA_PREVISTA) values (?, ?, ?, ?, ?, ?, NOW(), ?, ?)'
 
 SQL_CRIA_USUARIO = 'INSERT into USUARIO (USERNAME, EMAIL, SENHA) values (?, ?, ?)'
 
