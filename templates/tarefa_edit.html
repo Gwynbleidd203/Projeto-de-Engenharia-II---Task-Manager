@@ -1,4 +1,17 @@
 {% extends "template.html" %}
+
+{% block menu_btn %}
+
+    <a href="{{url_for('index')}}">Home</a>
+
+    <a href="{{url_for('perfil', id=usuario._id)}}">{{ usuario._nome }}</a>
+
+    <a href="{{url_for('progresso')}}">Progresso</a>
+
+    <a href="{{ url_for('sobre') }}">About</a>
+
+{% endblock %}
+
 {% block task %}
 
 <div class="task-div-edit">

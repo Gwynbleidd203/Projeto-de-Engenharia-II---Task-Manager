@@ -2,31 +2,13 @@
 
 {% block menu_btn %}
 
-    {% if usuario: %}
+<a href="{{url_for('index')}}">Home</a>
 
-    <a href="{{ url_for('perfil', id=usuario._id) }}">{{ usuario._nome }}</a>
+<a href="{{url_for('perfil', id=usuario._id)}}">{{ usuario._nome }}</a>
 
-    <a href="#" onclick="openForm()">Criar Task</a>
+<a href="{{url_for('progresso')}}">Progresso</a>
 
-    <a href="#" onclick="openCreateTipo()">Criar Tipo</a>
-
-    <a href="{{url_for('progresso')}}">Progresso</a>
-
-    <a href="{{ url_for('sobre') }}">About</a>
-
-    <a href="{{ url_for('logout') }}">Logout</a>
-
-    {% else %}
-
-    <a href="#" onclick="openLogin()">Login</a>
-
-    <a href="#" onclick="openForm()">Criar Task</a>
-
-    <a href="#">Progresso</a>
-
-    <a href="{{ url_for('sobre') }}">About</a>
-
-    {% endif %}
+<a href="{{ url_for('sobre') }}">About</a>
 
 {% endblock %}
 

@@ -142,9 +142,10 @@ def lista_de_tarefas():
 # Faz praticamente o mesmo que o "editar", exceto que na há alterações no banco
 @app.route('/tarefa_info/<int:id>')
 def tarefa_info(id):
+    usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
     lista = tarefa_dao.busca_por_id(id)
     
-    return render_template('tarefa_info.html', tarefa=lista)
+    return render_template('tarefa_info.html', tarefa=lista, usuario=usuario)
 
 
 # Remove uma tarefa por seu id
