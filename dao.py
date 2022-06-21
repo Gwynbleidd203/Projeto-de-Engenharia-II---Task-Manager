@@ -24,7 +24,7 @@ SQL_CRIA_PRIORIDADE = 'INSERT INTO PRIORIDADE (NOME) VALUES (?)'
 # Atualização -----------------------------------------------------------------------------------------------------------------------------------------
 
 
-SQL_ATUALIZA_TAREFA = 'UPDATE TAREFA SET NOME = ?, DESCRICAO = ?, TIPO_ID = ?, STATUS_ID = ?, PRIORIDADE_ID = ?, DATA_PREVISTA = ? WHERE ID = ?'
+SQL_ATUALIZA_TAREFA = 'UPDATE TAREFA SET NOME = ?, DESCRICAO = ?, TIPO_ID = ?, STATUS_ID = ?, PRIORIDADE_ID = ?, DATA_PREVISTA = ?, WHERE ID = ?'
 
 SQL_ATUALIZA_USUARIO = 'UPDATE USUARIO SET USERNAME = ?, EMAIL = ?, SENHA = ? where ID = ?'
 
@@ -97,7 +97,7 @@ SQL_BUSCA_TAREFA_POR_USUARIO = '''SELECT *, TIPO.ID_TIPO, TIPO.NOME, STATUS.ID_S
                                   ON TAREFA.STATUS_ID = STATUS.ID_STATUS
                                   INNER JOIN PRIORIDADE
                                   ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
-                                  WHERE TAREFA.ID = ? AND USUARIO.ID = ?'''
+                                  WHERE TAREFA.ID = ? AND TAREFA.USUARIO_ID = ?'''
 
 SQL_USUARIO_POR_EMAIL = 'SELECT * FROM USUARIO WHERE EMAIL = ?'
 

@@ -64,8 +64,6 @@ def index():
         
         except:
 
-            flash(u'Erro ao processar o login! Tente novamente mais tarde.', "msg-ul-bad-solid")
-
             proxima = request.args.get('proxima')
     
             return render_template('landing.html', proxima=proxima)
@@ -85,17 +83,22 @@ def novo():
 # Recebe os valores passados via formulário HTML
 @app.route('/criar', methods=['POST', ])
 def criar():
-    nome = request.form['nome']
-    descricao = request.form['descricao']
-    tipo_id = request.form['tipo']
-    status_id = request.form['status']
-    prioridade_id = request.form['prioridade']
-    usuario_id = request.form['usuario_id']
-    data_prevista = request.form['data_prevista']
+    try:
+        nome = request.form['nome']
+        descricao = request.form['descricao']
+        tipo_id = request.form['tipo']
+        status_id = request.form['status']
+        prioridade_id = request.form['prioridade']
+        usuario_id = request.form['usuario_id']
+        data_prevista = request.form['data_prevista']
 
-    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, None)
+        tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, None)
 
-    tarefa = tarefa_dao.salvar(tarefa)
+        tarefa = tarefa_dao.salvar(tarefa)
+
+    except:
+
+        flash(u'Parece que houve ao criar sua tarefa. Tente preencher os campos novamente ou recarregue a página.', "msg-ul-bad-solid")
 
     return redirect('/')
 
@@ -115,22 +118,30 @@ def editar_tarefa(id):
 # Altera os valores da tarefa desejada, através da função atualizar que é chamada ao editar uma tarefa, a qual já tem seu Id selecionado devido ao HTML de editar
 @app.route('/atualizar', methods=['POST', ])
 def atualizar():
-    nome = request.form['nome']
-    descricao = request.form['descricao']
-    tipo_id = request.form['tipo']
-    status_id = request.form['status']
-    prioridade_id = request.form['prioridade']
-    usuario_id = request.form['usuario_id']
-    id = request.form['id']
+    try:
+        nome = request.form['nome']
+        descricao = request.form['descricao']
+        tipo_id = request.form['tipo']
+        status_id = request.form['status']
+        prioridade_id = request.form['prioridade']
+        usuario_id = request.form['usuario_id']
+        id = request.form['id']
 
-    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, id)
+        tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, id)
 
-    tarefa_dao.salvar(tarefa)
+        tarefa_dao.salvar(tarefa)
 
-    return redirect('/')
+        flash(u'Tarefa atualizada com sucesso! :)', "msg-ul-good")
+
+    except:
+
+        flash(u'Infelizmente, obtivemos um erro ao atualizar os dados da tarefa. Tente novamente mais tarde.', "msg-ul-bad-solid")
+
+    return redirect(f'/tarefa_info/{id}')
 
 
 # Cria uma grande lista com todas as tarefas
+
 @app.route('/lista_de_tarefas')
 def lista_de_tarefas():
     lista = tarefa_dao.listar()
@@ -139,15 +150,20 @@ def lista_de_tarefas():
 
 
 # Faz praticamente o mesmo que o "editar", exceto que na há alterações no banco
+
 @app.route('/tarefa_info/<int:id>')
 def tarefa_info(id):
     usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
     lista = tarefa_dao.busca_por_id(id)
+    lista_tipo = tipo_dao.listar_tipo_usuario(usuario._id)
+    lista_status = status_dao.listar_status()
+    lista_prioridade = prioridade_dao.listar_prioridades()
     
-    return render_template('tarefa_info.html', tarefa=lista, usuario=usuario)
+    return render_template('tarefa_info.html', tarefa=lista, usuario=usuario, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridade)
 
 
 # Remove uma tarefa por seu id
+
 @app.route('/deletar_tarefa/<int:id>')
 def deletar_tarefa(id):
     tarefa_dao.deletar(id)
@@ -157,8 +173,10 @@ def deletar_tarefa(id):
 # USUARIO
 
 # Adiciona um novo usuário no banco através do formulário HTML
+
 @app.route('/criar_usuario', methods=['POST', ])
 def criar_usuario():
+
     username = request.form['username']
     email = request.form['email']
     senha = request.form['senha']
@@ -171,19 +189,27 @@ def criar_usuario():
 
 
 # Cria uma sessão para o usuário que fez o login corretamente
+
 @app.route('/login')
 def login():
+
     proxima=request.args.get('proxima')
+
     if proxima == None:
         proxima= ''
+
     return render_template('index.html', proxima=proxima)
 
 
 # Verifica se os dados de login estão corretos e se correto,cria uma sessão para o usuário, se não, pede para que o usuário tente fazer login novamente 
+
 @app.route('/autenticar', methods=['POST',])
 def autenticar():
+
     usuario = usuario_dao.buscar_por_email_usu(request.form['email'])
+
     if usuario:
+
         if usuario._senha == request.form['senha']:
             session['usuario_logado'] = usuario._id
             flash(usuario._nome + ' logou com sucesso!', 'msg-ul-good')
@@ -197,8 +223,16 @@ def autenticar():
 # Remove o usuário da sessão
 @app.route('/logout')
 def logout():
-    session['usuario_logado'] = None
-    flash(u'Nenhum usuário logado', 'msg-ul-bad')
+
+    if session['usuario_logado'] == None:
+
+        flash(u'Você não está logado para poder deslogar :p', "msg-ul-bad")
+
+    else:
+
+        session['usuario_logado'] = None
+
+        flash(u'Nenhum usuário logado', 'msg-ul-bad')
     
     return redirect('/')
 
@@ -206,6 +240,7 @@ def logout():
 # Acessa o perfil do usuário, retornando estatísticas de seu progresso
 @app.route('/perfil/<int:id>')
 def perfil(id):
+
     usuario = usuario_dao.buscar_usuario_por_id(id)
     tarefas_qnt = usuario_dao.conta_tarefas(id)
     tarefas_prontas = usuario_dao.conta_tarefas_prontas(id)
@@ -213,6 +248,7 @@ def perfil(id):
     tarefas_fazer = usuario_dao.conta_tarefas_fazer(id)
     
     return render_template('profile.html', usuario=usuario, tarefas_qnt=tarefas_qnt, tarefas_prontas=tarefas_prontas, tarefas_fazendo=tarefas_fazendo, tarefas_fazer=tarefas_fazer)
+
 
 @app.route('/status')
 def status():
@@ -245,7 +281,9 @@ def pesquisar():
 # Cria um novo tipo através de um formulário HTML
 @app.route('/criar_tipo', methods=['POST', ])
 def criar_tipo():
+    
     nome = request.form['nome']
+
     usuario_id = request.form['usuario_id']
 
     tipo = Tipo(nome, usuario_id)
@@ -257,6 +295,7 @@ def criar_tipo():
 
 @app.route('/editar_tipo/<int:id>')
 def editar_tipo(id):
+
     tipo = tipo_dao.busca_por_id(id)
     
     return render_template('/tarefa_edit.html', tipo=tipo)
@@ -264,8 +303,11 @@ def editar_tipo(id):
 
 @app.route('/atualizar_tipo', methods=['POST', ])
 def atualizar_tipo():
+
     nome = request.form['nome']
+
     usuario_id = request.form['usuario_id']
+    
     id = request.form['id']
 
     tipo = Tipo(nome, usuario_id, id)
