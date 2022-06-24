@@ -40,3 +40,10 @@ class Prioridade:
     def __init__(self, nome, id=None):
         self._id = id
         self._nome = nome
+
+
+class System:
+    def __init__(self, data, hora, id=None):
+        self._id = id
+        self._data = data
+        self._hora = hora

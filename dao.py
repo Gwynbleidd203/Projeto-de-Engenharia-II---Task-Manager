@@ -1,9 +1,4 @@
-from msilib.schema import Class
-import sqlite3
-
-from colorama import Cursor
-
-from models import Tarefa, Usuario, Tipo, Status, Prioridade
+from models import Tarefa, Usuario, Tipo, Status, Prioridade, System
 
 # ------------------------------------------------------ SQL --------------------------------------------------------------------------------------
 
@@ -25,6 +20,8 @@ SQL_CRIA_PRIORIDADE = 'INSERT INTO PRIORIDADE (NOME) VALUES (?)'
 
 
 SQL_ATUALIZA_TAREFA = 'UPDATE TAREFA SET NOME = ?, DESCRICAO = ?, TIPO_ID = ?, STATUS_ID = ?, PRIORIDADE_ID = ?, DATA_PREVISTA = ?, WHERE ID = ?'
+
+SQL_FINALIZA_TAREFA = 'UPDATE TAREFA SET STATUS_ID = 3, DATA_TERMINO = CURRENT_TIMESTAMP WHERE ID = ?'
 
 SQL_ATUALIZA_USUARIO = 'UPDATE USUARIO SET USERNAME = ?, EMAIL = ?, SENHA = ? where ID = ?'
 
@@ -190,6 +187,15 @@ class TarefaDao:
         tarefas = traduz_tarefas(cursor.fetchall())
         
         return tarefas
+
+
+    def finaliza_tarefa(self, tarefa:Tarefa):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_FINALIZA_TAREFA, (tarefa._data_termino, tarefa._id))
+
+        self.__db.commit()
+
+        return tarefa
         
         
     def deletar(self, id):

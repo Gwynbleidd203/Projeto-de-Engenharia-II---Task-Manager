@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, jsonify
 
 from dao import StatusDao, TarefaDao, TipoDao, UsuarioDao, PrioridadeDao
 
@@ -100,7 +100,7 @@ def criar():
 
         flash(u'Parece que houve ao criar sua tarefa. Tente preencher os campos novamente ou recarregue a página.', "msg-ul-bad-solid")
 
-    return redirect('/')
+    return jsonify(tarefa)
 
 
 # Função que recebe o id da tarefa desejada e recebe seus respectivos valores do banco de dados

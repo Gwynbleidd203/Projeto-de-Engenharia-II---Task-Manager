@@ -135,7 +135,7 @@
 
             <a class="modal-close-btn" href="javascript:void(0)" onclick="closeForm()">&times;</a>
 
-            <form class="modal-form" method="POST" action="{{url_for('criar')}}">
+            <form id="form-task" class="modal-form" method="POST" action="{{url_for('criar')}}">
 
                 <h1>Crie Sua Tarefa</h1>
 
@@ -187,7 +187,7 @@
 
                 </select> <br>
 
-                <input type="datetime-local" name="data_prevista">
+                <input type="date" id="data_prevista" name="data_prevista">
 
                 <button class="submit-btn" type="submit">OK</button>
 
@@ -204,7 +204,7 @@
 
             <a class="modal-close-btn" href="javascript:void(0)" onclick="closeCreateTipo()">&times;</a>
 
-            <form action="{{url_for('criar_tipo')}}" class="modal-form" method="POST">
+            <form id="form-tipo" action="{{url_for('criar_tipo')}}" class="modal-form" method="POST">
 
                 {% if usuario: %}
 
@@ -295,11 +295,13 @@
     <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
     <script src="../static/script.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{url_for('static', filename='scripts/jquery-3.6.0.js')}}"></script>
     <script src="../static/jquery-3.6.0.js"></script>
     
     <script src="{{url_for('static', filename='scripts/animation.js')}}"></script>
     <script src="../static/animation.js}}"></script>
+
 </body>
 
 {% endblock %}
