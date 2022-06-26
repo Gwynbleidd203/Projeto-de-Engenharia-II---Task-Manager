@@ -22,9 +22,17 @@
         <h1>Edite sua tarefa aqui.</h1>
 
         <input type="hidden" name="id" value="{{ tarefa._id }}">
+
+        <input type="hidden" name="data_criacao" value="{{ tarefa._data_criacao }}">
+
+        <input type="hidden" name="data_prevista" value="{{ tarefa._data_prevista }}">
+
         <input type="hidden" name="usuario_id" id="usuario_id" value="{{ tarefa._usuario_id }}">
+
         <input type="text" name="nome" id="nome" value="{{ tarefa._nome }}" required> <br>
+
         <input type="text" name="descricao" id="descricao" value="{{ tarefa._descricao }}"> <br>
+
         <select name="tipo" id="tipo">
 
             {% for tipo in tipos %}
@@ -62,6 +70,7 @@
         </select> <br>
         <button class="submit-btn" type="submit">OK</button>
     </form>
+
 </div>
 
 {% endblock %}

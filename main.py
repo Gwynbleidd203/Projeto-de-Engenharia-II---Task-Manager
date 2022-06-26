@@ -1,3 +1,4 @@
+import json
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
 
 from dao import StatusDao, TarefaDao, TipoDao, UsuarioDao, PrioridadeDao
@@ -81,7 +82,7 @@ def novo():
     return render_template('novo.html')
 
 # Recebe os valores passados via formulário HTML
-@app.route('/criar', methods=['POST', ])
+@app.route('/criar', methods=['POST',])
 def criar():
     try:
         nome = request.form['nome']
@@ -100,7 +101,7 @@ def criar():
 
         flash(u'Parece que houve ao criar sua tarefa. Tente preencher os campos novamente ou recarregue a página.', "msg-ul-bad-solid")
 
-    return jsonify(tarefa)
+    return redirect('/')
 
 
 # Função que recebe o id da tarefa desejada e recebe seus respectivos valores do banco de dados
@@ -118,24 +119,22 @@ def editar_tarefa(id):
 # Altera os valores da tarefa desejada, através da função atualizar que é chamada ao editar uma tarefa, a qual já tem seu Id selecionado devido ao HTML de editar
 @app.route('/atualizar', methods=['POST', ])
 def atualizar():
-    try:
-        nome = request.form['nome']
-        descricao = request.form['descricao']
-        tipo_id = request.form['tipo']
-        status_id = request.form['status']
-        prioridade_id = request.form['prioridade']
-        usuario_id = request.form['usuario_id']
-        id = request.form['id']
+    
+    nome = request.form['nome']
+    descricao = request.form['descricao']
+    tipo_id = request.form['tipo']
+    status_id = request.form['status']
+    prioridade_id = request.form['prioridade']
+    usuario_id = request.form['usuario_id']
+    data_criacao = request.form['data_criacao']
+    data_prevista = request.form['data_prevista']
+    id = request.form['id']
 
-        tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, id)
+    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, data_criacao, data_prevista, id)
 
-        tarefa_dao.salvar(tarefa)
+    tarefa_dao.salvar(tarefa)
 
-        flash(u'Tarefa atualizada com sucesso! :)', "msg-ul-good")
-
-    except:
-
-        flash(u'Infelizmente, obtivemos um erro ao atualizar os dados da tarefa. Tente novamente mais tarde.', "msg-ul-bad-solid")
+    flash(u'Tarefa atualizada com sucesso! :)', "msg-ul-good")
 
     return redirect(f'/tarefa_info/{id}')
 
