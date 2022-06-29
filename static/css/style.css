@@ -36,6 +36,8 @@ body {
   align-self: center;
   align-content: center;
   gap: 2rem;
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 /* The side navigation menu */
@@ -259,6 +261,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 16px;
 }
 
 .task-link-container {

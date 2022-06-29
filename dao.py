@@ -5,9 +5,9 @@ from models import Tarefa, Usuario, Tipo, Status, Prioridade, System
 # Criação -----------------------------------------------------------------------------------------------------------------------------------------
 
 
-SQL_CRIA_TAREFA = 'INSERT into TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIORIDADE_ID, USUARIO_ID, DATA_CRIACAO, DATA_TERMINO, DATA_PREVISTA) values (?, ?, ?, ?, ?, ?, CURRENT_DATE, ?, ?)'
+SQL_CRIA_TAREFA = 'INSERT INTO TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIORIDADE_ID, USUARIO_ID, DATA_CRIACAO, DATA_TERMINO, DATA_PREVISTA) values (?, ?, ?, ?, ?, ?, CURRENT_DATE, ?, ?)'
 
-SQL_CRIA_USUARIO = 'INSERT into USUARIO (USERNAME, EMAIL, SENHA) values (?, ?, ?)'
+SQL_CRIA_USUARIO = 'INSERT INTO USUARIO (USERNAME, EMAIL, SENHA) values (?, ?, ?)'
 
 SQL_CRIA_TIPO = 'INSERT INTO TIPO (NOME, USUARIO_ID) VALUES (?, ?)'
 
@@ -19,9 +19,11 @@ SQL_CRIA_PRIORIDADE = 'INSERT INTO PRIORIDADE (NOME) VALUES (?)'
 # Atualização -----------------------------------------------------------------------------------------------------------------------------------------
 
 
-SQL_ATUALIZA_TAREFA = 'UPDATE TAREFA SET NOME = ?, DESCRICAO = ?, TIPO_ID = ?, STATUS_ID = ?, PRIORIDADE_ID = ?, DATA_PREVISTA = ? WHERE ID = ?'
+SQL_ATUALIZA_TAREFA = 'UPDATE TAREFA SET NOME = ?, DESCRICAO = ?, TIPO_ID = ?, STATUS_ID = ?, PRIORIDADE_ID = ? WHERE ID = ?'
 
-SQL_FINALIZA_TAREFA = 'UPDATE TAREFA SET STATUS_ID = 3, DATA_TERMINO = CURRENT_TIMESTAMP WHERE ID = ?'
+SQL_FINALIZA_TAREFA = 'UPDATE TAREFA SET STATUS_ID = 3, DATA_TERMINO = CURRENT_DATE WHERE ID = ?'
+
+SQL_DATA_TERMINO = 'UPDATEE TAREFA SET DATA_TERMINO = CURRENT_DATE WHERE TAREFA.ID = ?'
 
 SQL_ATUALIZA_USUARIO = 'UPDATE USUARIO SET USERNAME = ?, EMAIL = ?, SENHA = ? where ID = ?'
 
@@ -35,14 +37,16 @@ SQL_ATUALIZA_PRIORIDADE = 'UPDATE PRIORIDADE SET NOME = ? WHERE ID = ?'
 # Search -----------------------------------------------------------------------------------------------------------------------------------------
 
 
-SQL_BUSCA_TAREFA = '''SELECT *, TIPO.NOME, TIPO.ID_STATUS, STATUS.NOME, STATUS.ID_STATUS, PRIORIDADE.NOME, PRIORIDADE.ID_PRIORIDADE
-                      FROM TAREFA
-                      INNER JOIN TIPO
-                      ON TAREFA.TIPO_ID = TIPO.ID_TIPO
-                      INNER JOIN STATUS
-                      ON TAREFA.STATUS_ID = STATUS.ID_STATUS
-                      INNER JOIN PRIORIDADE 
-                      ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE'''
+SQL_BUSCA_TAREFA = '''
+SELECT TAREFA.ID, TAREFA.NOME, TAREFA.DESCRICAO, TAREFA.TIPO_ID, TAREFA.STATUS_ID, TAREFA.PRIORIDADE_ID, TAREFA.USUARIO_ID, TIPO.NOME, STATUS.NOME, PRIORIDADE.NOME,  TAREFA.DATA_CRIACAO, TAREFA.DATA_TERMINO, TAREFA.DATA_PREVISTA
+FROM TAREFA
+INNER JOIN TIPO
+ON TAREFA.TIPO_ID = TIPO.ID_TIPO
+INNER JOIN STATUS
+ON TAREFA.STATUS_ID = STATUS.ID_STATUS
+INNER JOIN PRIORIDADE 
+ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADES
+'''
                       
 SQL_BUSCA_TAREFA_NOME = '''SELECT *
                            FROM TAREFA
@@ -53,22 +57,34 @@ SQL_BUSCA_TAREFA_NOME = '''SELECT *
 # BUSCA TAREFA POR USER -----------------------------------------------------------------------------------------------------------------------------------------
 
 
-SQL_BUSCA_TAREFAS_DO_USUARIO = '''SELECT *, TIPO.NOME, STATUS.NOME, PRIORIDADE.NOME
-                                  FROM TAREFA
-                                  INNER JOIN TIPO
-                                  ON TAREFA.TIPO_ID = TIPO.ID_TIPO
-                                  INNER JOIN STATUS
-                                  ON TAREFA.STATUS_ID = STATUS.ID_STATUS
-                                  INNER JOIN PRIORIDADE
-                                  ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
-                                  WHERE TAREFA.USUARIO_ID = ? AND STATUS.ID_STATUS <> 3'''
+SQL_BUSCA_TAREFAS_DO_USUARIO = '''
+SELECT TAREFA.ID, TAREFA.NOME, TAREFA.DESCRICAO, TAREFA.TIPO_ID, TAREFA.STATUS_ID, TAREFA.PRIORIDADE_ID, TAREFA.USUARIO_ID, TIPO.NOME, STATUS.NOME, PRIORIDADE.NOME,  TAREFA.DATA_CRIACAO, TAREFA.DATA_TERMINO, TAREFA.DATA_PREVISTA
+FROM TAREFA
+INNER JOIN TIPO
+ON TAREFA.TIPO_ID = TIPO.ID_TIPO
+INNER JOIN STATUS
+ON TAREFA.STATUS_ID = STATUS.ID_STATUS
+INNER JOIN PRIORIDADE
+ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
+WHERE TAREFA.USUARIO_ID = ? AND STATUS.ID_STATUS <> 3
+'''
 
+    
 
-SQL_BUSCA_TAREFAS_FEITAS = '''SELECT *, TIPO.NOME, '''
+SQL_BUSCA_TAREFAS_FEITAS = '''
+SELECT TAREFA.ID, TAREFA.NOME, TAREFA.DESCRICAO, TAREFA.TIPO_ID, TAREFA.STATUS_ID, TAREFA.PRIORIDADE_ID, TAREFA.USUARIO_ID, TIPO.NOME, STATUS.NOME, PRIORIDADE.NOME,  TAREFA.DATA_CRIACAO, TAREFA.DATA_TERMINO, TAREFA.DATA_PREVISTA
+FROM TAREFA
+INNER JOIN TIPO
+ON TIPO.ID_TIPO = TAREFA.TIPO_ID
+INNER JOIN PRIORIDADE
+ON PRIORIDADE.ID_PRIORIDADE = TAREFA.PRIORIDADE_ID
+WHERE TAREFA.USUARIO_ID = ? AND STATUS.ID_STATUS = 3'''
 
 SQL_BUSCA_TIPO = 'SELECT * FROM TIPO'
 
 SQL_BUSCA_TIPO_POR_USUARIO = 'SELECT * FROM TIPO WHERE USUARIO_ID = ? OR USUARIO_ID = 0'
+
+SQL_BUSCA_TIPOS_DO_USUARIO = 'SELECT * FROM TIPO WHERE TIPO.USUARIO_ID = ?'
 
 SQL_BUSCA_STATUS = 'SELECT * FROM STATUS'
 
@@ -77,27 +93,31 @@ SQL_BUSCA_PRIORIDADE = 'SELECT * FROM PRIORIDADE'
 
 # Search ID -----------------------------------------------------------------------------------------------------------------------------------------
 
-SQL_BUSCA_TAREFA_POR_ID = '''SELECT *, TIPO.NOME, STATUS.NOME, PRIORIDADE.NOME
-                             FROM TAREFA
-                             INNER JOIN TIPO
-                             ON TAREFA.TIPO_ID = TIPO.ID_TIPO
-                             INNER JOIN STATUS
-                             ON TAREFA.STATUS_ID = STATUS.ID_STATUS
-                             INNER JOIN PRIORIDADE
-                             ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
-                             WHERE TAREFA.ID = ?'''
+SQL_BUSCA_TAREFA_POR_ID = '''
+SELECT TAREFA.ID, TAREFA.NOME, TAREFA.DESCRICAO, TAREFA.TIPO_ID, TAREFA.STATUS_ID, TAREFA.PRIORIDADE_ID, TAREFA.USUARIO_ID, TIPO.NOME, STATUS.NOME, PRIORIDADE.NOME,  TAREFA.DATA_CRIACAO, TAREFA.DATA_TERMINO, TAREFA.DATA_PREVISTA
+FROM TAREFA
+INNER JOIN TIPO
+ON TAREFA.TIPO_ID = TIPO.ID_TIPO
+INNER JOIN STATUS
+ON TAREFA.STATUS_ID = STATUS.ID_STATUS
+INNER JOIN PRIORIDADE
+ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
+WHERE TAREFA.ID = ?
+'''
 
-SQL_BUSCA_TIPO_POR_ID= 'SELECT * FROM TIPO WHERE TIPO.TIPO_ID = ?'
+SQL_BUSCA_TIPO_POR_ID= 'SELECT * FROM TIPO WHERE TIPO.ID_TIPO = ?'
 
-SQL_BUSCA_TAREFA_POR_USUARIO = '''SELECT *, TIPO.NOME, STATUS.NOME, PRIORIDADE.NOME
-                                  FROM TAREFA
-                                  INNER JOIN TIPO
-                                  ON TAREFA.TIPO_ID = TIPO.ID_TIPO
-                                  INNER JOIN STATUS
-                                  ON TAREFA.STATUS_ID = STATUS.ID_STATUS
-                                  INNER JOIN PRIORIDADE
-                                  ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
-                                  WHERE TAREFA.ID = ? AND TAREFA.USUARIO_ID = ?'''
+SQL_BUSCA_TAREFA_POR_USUARIO = '''
+SELECT TAREFA.ID, TAREFA.NOME, TAREFA.DESCRICAO, TAREFA.TIPO_ID, TAREFA.STATUS_ID, TAREFA.PRIORIDADE_ID, TAREFA.USUARIO_ID, TIPO.NOME, STATUS.NOME, PRIORIDADE.NOME,  TAREFA.DATA_CRIACAO, TAREFA.DATA_TERMINO, TAREFA.DATA_PREVISTA
+FROM TAREFA
+INNER JOIN TIPO
+ON TAREFA.TIPO_ID = TIPO.ID_TIPO
+INNER JOIN STATUS
+ON TAREFA.STATUS_ID = STATUS.ID_STATUS
+INNER JOIN PRIORIDADE
+ON TAREFA.PRIORIDADE_ID = PRIORIDADE.ID_PRIORIDADE
+WHERE TAREFA.ID = ? AND TAREFA.USUARIO_ID = ?
+'''
 
 SQL_USUARIO_POR_EMAIL = 'SELECT * FROM USUARIO WHERE EMAIL = ?'
 
@@ -146,7 +166,7 @@ class TarefaDao:
         cursor = self.__db.cursor()
 
         if (tarefa._id):
-            cursor.execute(SQL_ATUALIZA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo_id, tarefa._status_id, tarefa._prioridade_id, tarefa._data_prevista, tarefa._id))
+            cursor.execute(SQL_ATUALIZA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo_id, tarefa._status_id, tarefa._prioridade_id, tarefa._id))
 
         else:
             cursor.execute(SQL_CRIA_TAREFA, (tarefa._nome, tarefa._descricao, tarefa._tipo_id, tarefa._status_id, tarefa._prioridade_id, tarefa._usuario_id, tarefa._data_criacao, tarefa._data_prevista))
@@ -174,14 +194,14 @@ class TarefaDao:
         cursor = self.__db.cursor()
         cursor.execute(SQL_BUSCA_TAREFA_POR_ID, (id, ))
         tupla = cursor.fetchone()
-        return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], tupla[8], tupla[9], tupla[10], tupla[11], tupla[12], id=tupla[0])
+        return Tarefa(nome=tupla[1], descricao=tupla[2], tipo_id=tupla[3], status_id=tupla[4], prioridade_id=tupla[5], usuario_id=tupla[6], tipo=tupla[7], status=tupla[8], prioridade=tupla[9], data_criacao=tupla[10], data_termino=tupla[11], data_prevista=tupla[12], id=tupla[0])
     
     
     def busca_por_usuario(self, id, usuario_id):
         cursor = self.__db.cursor()
         cursor.execute(SQL_BUSCA_TAREFA_POR_USUARIO, (id, usuario_id))
         tupla = cursor.fetchone()
-        return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], tupla[8], tupla[9], tupla[10], tupla[11], tupla[12], id=tupla[0])
+        return Tarefa(nome=tupla[1], descricao=tupla[2], tipo_id=tupla[3], status_id=tupla[4], prioridade_id=tupla[5], usuario_id=tupla[6], tipo=tupla[7], status=tupla[8], prioridade=tupla[9], data_criacao=tupla[10], data_termino=tupla[11], data_prevista=tupla[12], id=tupla[0])
     
     
     def busca_por_nome(self, nome):
@@ -208,7 +228,7 @@ class TarefaDao:
     
 def traduz_tarefas(tarefas):
     def cria_tarefas_com_tupla(tupla):
-        return Tarefa(tupla[1], tupla[2], tupla[3], tupla[4], tupla[5], tupla[6], tupla[7], tupla[8], tupla[9], tupla[10], tupla[11], tupla[12], id=tupla[0])
+        return Tarefa(nome=tupla[1], descricao=tupla[2], tipo_id=tupla[3], status_id=tupla[4], prioridade_id=tupla[5], usuario_id=tupla[6], tipo=tupla[7], status=tupla[8], prioridade=tupla[9], data_criacao=tupla[10], data_termino=tupla[11], data_prevista=tupla[12], id=tupla[0])
     return list(map(cria_tarefas_com_tupla, tarefas))
 
 
@@ -223,7 +243,7 @@ class TipoDao:
         cursor = self.__db.cursor()
         
         if (tipo._id):
-            cursor.execute(SQL_ATUALIZA_TIPO, (tipo._nome, tipo._usuario_id, tipo._id))
+            cursor.execute(SQL_ATUALIZA_TIPO, (tipo._nome, tipo._id))
             
         else:
             cursor.execute(SQL_CRIA_TIPO, (tipo._nome, tipo._usuario_id))
@@ -247,11 +267,20 @@ class TipoDao:
         tipo = traduz_tipo(cursor.fetchall())
         return tipo
 
+    
+    def listar_tipos_do_usuario(self, usuario_id):
+        cursor = self.__db.cursor()
+        cursor.execute(SQL_BUSCA_TIPOS_DO_USUARIO, (usuario_id, ))
+        tipo = traduz_tipo(cursor.fetchall())
+        return tipo
+
+
     def busca_por_id(self, id):
         cursor = self.__db.cursor()
         cursor.execute(SQL_BUSCA_TIPO_POR_ID, (id, ))
         tupla = cursor.fetchone()
         return Tipo(tupla[1], tupla[2], id=tupla[0])
+
 
     def deletar_tipo(self, id):
         self.__db.cursor().execute(SQL_DELETA_TIPO, (id, ))

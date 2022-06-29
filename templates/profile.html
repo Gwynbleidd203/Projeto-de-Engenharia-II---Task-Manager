@@ -17,13 +17,12 @@
 
         <a href="{{ url_for('perfil', id=usuario._id) }}"></a>
 
-        <a href="{{url_for('index')}}">Index</a>
+        <a href="{{url_for('index')}}">Home</a>
 
-        <a href="#">Progresso</a>
 
-        <a href="{{ url_for('sobre') }}">About</a>
+        <a href="{{ url_for('sobre') }}">Sobre</a>
 
-        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('logout') }}">Sair</a>
 
     </div>
 
@@ -52,10 +51,33 @@
         </div>
     </main>
 
+    <div class="tipo-container">
+
+        <div class="tipo-list-container">
+
+            <h2>Tipos criados por {{ usuario._nome }}.</h2>
+            
+            <ul class="tipo-list">
+
+                {% for tipo in tipos %}
+
+                <li><a href="{{ url_for('editar_tipo', id=tipo._id) }}">{{ tipo._nome }}</a></li>
+
+                {% endfor %}
+                
+            </ul>
+
+        </div>
+
+    </div>
+
     <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
     <script src="../static/script.js"></script>
 
     <script src="{{url_for('static', filename='scripts/jquery-3.6.0.js')}}"></script>
+
+    <script src="..//static/scripts/ajax.js"></script>
+
     <script src="../static/jquery-3.6.0.js"></script>
 </body>
 

@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
     <link rel="stylesheet" href="../static/style.css">
-    <title>{% block title %}NavBar Test{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="/static/icons/favicon-16x16.png">
+    <title>{% block title %}Post It Virtual{% endblock %}</title>
 </head>
 
 {% block content %}
@@ -39,7 +40,7 @@
 
         {% block home %}
 
-        <a href="{{url_for('index')}}">Index</a>
+        <a href="{{url_for('index')}}">Home</a>
 
         {% endblock %}
 
@@ -54,7 +55,7 @@
         <a href="#" onclick="openForm()">Criar Task</a>
 
 
-        <a href="{{url_for('sobre')}}">About</a>
+        <a href="{{url_for('sobre')}}">Sobre</a>
 
         {% endblock %}
 
@@ -206,6 +207,8 @@
 
             <form id="form-tipo" action="{{url_for('criar_tipo')}}" class="modal-form" method="POST">
 
+                <h1>Crie um tipo/gênero aqui.</h1>
+
                 {% if usuario: %}
 
                 <input type="hidden" name="usuario_id" id="usuario_id" value="{{ usuario._id }}">
@@ -245,6 +248,8 @@
                 <h3>{{ tarefa._nome }}</h3>
 
                 <p>{{ tarefa._descricao }}</p>
+
+                <p>{{ tarefa._tipo }}</p>
 
             </div>
 

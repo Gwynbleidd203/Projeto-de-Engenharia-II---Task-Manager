@@ -4,14 +4,14 @@
 
     <a href="#" onclick="openLogin()">Login</a>
 
-    <a href="#" onclick="openLogin()">Criar Task</a>
-
-    <a href="{{ url_for('sobre') }}">About</a>
+    <a href="{{ url_for('sobre') }}">Sobre</a>
 
 {% endblock %}
 
 {% block task %}
 
 <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="" onclick="openNav()">
+
+<img id="logo" src="{{url_for('static', filename='imgs/logo.png')}}" alt="Post It Virtual Logo">
 
 {% endblock %}

@@ -8,7 +8,7 @@ body {
     padding: 10px;
 }
 
-main {
+main, .tipo-list-container {
     display: flex;
     flex-direction: column;
     flex-shrink: calc(1.0);
@@ -71,4 +71,46 @@ form {
 form > a {
     width: fit-content;
     height: fit-content;
+}
+
+.tipo-list-container > h2 {
+    padding: 16px 0px;
+    border-bottom: 2px solid black;
+}
+
+.tipo-list-container > ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 16px auto;  
+}
+
+.tipo-list-container > li, a {
+    color: var(--menu-main);
+    text-decoration: none;
+    padding: 8px auto;  
+}
+
+.tipo-list-container a:hover {
+    text-decoration: underline;
+}
+
+.form-tipo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: space-around;
+}
+
+.tipo-container-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.tipo-container-buttons button {
+    color:  whitesmoke;
 }
