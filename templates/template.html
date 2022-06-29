@@ -19,19 +19,21 @@
 
     {% block menu %}
 
-    {% with messages = get_flashed_messages() %}
+{% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <ul id="messages" class="msg msg-ul-bad">
-        {% for message in messages %}
-        <li class="msg msg-li">{{ message }}</li>
+    <ul id="messages" class="msg" >
+        {% for category, message in messages %}
+        <li id="hideMe" class="msg {{ category }}">{{ message }}</li>
         {% endfor %}
     </ul>
     {% endif %}
-    {% endwith %}
+{% endwith %}
+
+    {% block push_menu %}
 
     <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
         {% block menu_btn %}
 
@@ -48,15 +50,17 @@
         <a href="#" onclick="openLogin()">Login</a>
 
         {% endblock %}
-        
+
         <a href="#" onclick="openForm()">Criar Task</a>
-        <a href="#">Progresso</a>
-        <a href="{{url_for('status')}}">Status</a>
+
+
         <a href="{{url_for('sobre')}}">About</a>
 
         {% endblock %}
 
     </div>
+
+    {% endblock %}
 
 
     {% endblock %}
@@ -66,21 +70,27 @@
     <!--Modal para o login e autenticação-->
 
     <div id="login-form" class="pop-up">
-        <form method="POST" action="{{url_for('autenticar')}}">
-            <span id="close-btn" onclick="closeLogin()">X</span>
 
-            <h1>Faça Seu Login Aqui</h1>
+        <div class="modal-login">
 
-            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+            <a class="modal-close-btn" href="javascript:void(0)" onclick="closeLogin()">&times;</a>
 
-            <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+            <form class="modal-form" method="POST" action="{{url_for('autenticar')}}">
 
-            <input type="password" name="senha" id="senha" required placeholder="Password..."> <br>
+                <h1>Faça Seu Login Aqui.</h1>
 
-            <button class="submit-btn" type="submit">OK</button>
+                <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
 
-            <p>Ainda não tem uma conta? Clique <a onclick="openCreateAccount()" href="#">aqui</a></p>
-        </form>
+                <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+
+                <input type="password" name="senha" id="senha" required placeholder="Password..."> <br>
+
+                <button class="submit-btn" type="submit">OK</button>
+
+                <p id="create-account-text">Ainda não tem uma conta? Clique <a id="create-account-link" onclick="openCreateAccount(), closeLogin()" href="javascript:void(0)">aqui</a></p>
+                
+            </form>
+        </div>
     </div>
 
     {% endblock %}
@@ -88,21 +98,29 @@
     {% block conta %}
 
     <div id="create-account" class="pop-up">
-        <form method="POST" action="{{url_for('criar_usuario')}}">
-            <span id="close-btn" onclick="closeCreateAccount()">X</span>
 
-            <h1>Faça Seu Login Aqui</h1>
+        <div class="modal-create-user">
 
-            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+            <a class="modal-close-btn" href="javascript:void(0)" onclick="closeCreateAccount()">&times;</a>
 
-            <input type="text" name="username" id="username" required placeholder="Nome de Usuário..."> <br>
+            <form class="modal-form" method="POST" action="{{url_for('criar_usuario')}}">
 
-            <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+                <h1>Crie seu usuário aqui.</h1>
 
-            <input type="password" name="senha" id="senha" required placeholder="Password..."> <br>
+                <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
 
-            <button class="submit-btn" type="submit">OK</button>
-        </form>
+                <input type="text" name="username" id="username" required placeholder="Nome de Usuário..."> <br>
+
+                <input type="email" name="email" id="email" required placeholder="E-mail..."> <br>
+
+                <input type="password" name="senha" id="senha" required placeholder="Password..."> <br>
+
+                <button class="submit-btn" type="submit">OK</button>
+
+            </form>
+
+        </div>
+
     </div>
 
     {% endblock %}
@@ -112,65 +130,96 @@
     <!--Modal para a criação de tarefas-->
 
     <div id="create-form" class="pop-up">
-        <form method="POST" action="{{url_for('criar')}}">
-            <span id="close-btn" onclick="closeForm()">X</span>
 
-            <h1>Crie Sua Tarefa</h1>
+        <div class="modal-create">
 
-            {% if usuario: %}
+            <a class="modal-close-btn" href="javascript:void(0)" onclick="closeForm()">&times;</a>
 
-            <input type="hidden" name="usuario_id" id="usuario_id" value="{{ usuario._id }}">
+            <form id="form-task" class="modal-form" method="POST" action="{{url_for('criar')}}">
 
-            {% endif %}
+                <h1>Crie Sua Tarefa</h1>
 
-            <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+                {% if usuario: %}
 
-            <input type="text" name="nome" id="nome" placeholder="Nome..." required> <br>
+                <input type="hidden" name="usuario_id" id="usuario_id" value="{{ usuario._id }}">
 
-            <input type="text" name="descricao" id="descricao" placeholder="Descrição da Tarefa..."> <br>
+                {% endif %}
 
-            <select name="tipo" id="tipo">
+                <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
 
-                <option value="" selected disabled>Tipo</option>
+                <input type="text" name="nome" id="nome" placeholder="Nome..." required> <br>
 
-                {% for tipo in tipos %}
+                <input type="text" name="descricao" id="descricao" placeholder="Descrição da Tarefa..."> <br>
 
-                <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+                <select name="tipo" id="tipo" required>
 
-                {% endfor %}
+                    <option value="0" selected disabled>Tipo</option>
 
-            </select> <br>
+                    {% for tipo in tipos %}
 
-            <select name="status" id="status">
+                    <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
 
-                <option value="" selected disabled>Status</option>
+                    {% endfor %}
 
-                {% for status in status_list %}
+                </select> <br>
 
-                <option value="{{ status._id }}">{{ status._nome }}</option>
+                <select name="status" id="status">
 
-                {% endfor %}
+                    <option value="0" selected disabled >Status</option>
 
-            </select> <br>
+                    {% for status in status_list %}
 
-            <select name="prioridade" id="prioridade">
+                    <option value="{{ status._id }}">{{ status._nome }}</option>
 
-                <option value="" selected disabled>Prioridade</option>
+                    {% endfor %}
 
-                {% for prioridade in prioridades %}
+                </select> <br>
 
-                <option value="{{ prioridade._id }}">{{ prioridade._nome }}</option>
+                <select name="prioridade" id="prioridade" required>
 
-                {% endfor %}
+                    <option value="0" selected disabled>Prioridade</option>
 
-            </select> <br>
+                    {% for prioridade in prioridades %}
 
+                    <option value="{{ prioridade._id }}">{{ prioridade._nome }}</option>
 
-            <button class="submit-btn" type="submit">OK</button>
-        </form>
+                    {% endfor %}
+
+                </select> <br>
+
+                <input type="date" id="data_prevista" name="data_prevista">
+
+                <button class="submit-btn" type="submit">OK</button>
+
+            </form>
+
+        </div>
+
     </div>
 
     {% endblock %}
+
+    <div id="create-tipo" class="pop-up">
+        <div class="modal-tipo">
+
+            <a class="modal-close-btn" href="javascript:void(0)" onclick="closeCreateTipo()">&times;</a>
+
+            <form id="form-tipo" action="{{url_for('criar_tipo')}}" class="modal-form" method="POST">
+
+                {% if usuario: %}
+
+                <input type="hidden" name="usuario_id" id="usuario_id" value="{{ usuario._id }}">
+
+                {% endif %}
+
+                <input type="text" name="nome" placeholder="Nome que o tipo receberá..." required>
+
+                <button class="submit-btn" type="submit">OK</button>
+
+            </form>
+
+        </div>
+    </div>
 
     <!-- Use any element to open the sidenav -->
     <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="" onclick="openNav()">
@@ -180,17 +229,65 @@
     {% block task %}
 
     <div id="main">
+
         {% for tarefa in tarefas %}
-        <div class="task-div">
-            <a id="task-link-btn" href="{{url_for('tarefa_info', id=tarefa._id)}}">&plus;</a>
-            <h3>{{ tarefa._nome }}</h3>
-            <p>{{ tarefa._descricao }}</p>
-            <p>{{ tarefa._tipo_id}}</p>
-            <p>{{ tarefa._status_id }}</p>
-            <p>{{ tarefa._prioridade_id }}</p>
-            <p>{{ tarefa._usuario_id }}</p>
+
+        <div class="task-div" onmouseenter="showItem()" onmouseout="hideItem()">
+
+            <div class="task-div-inner-top">
+
+                <div class="task-link-container" id="task-link-container">
+
+                    <a id="task-link-btn" href="{{url_for('tarefa_info', id=tarefa._id)}}">&plus;</a>
+
+                </div>
+
+                <h3>{{ tarefa._nome }}</h3>
+
+                <p>{{ tarefa._descricao }}</p>
+
+            </div>
+
+            <div class="task-div-inner">
+
+            {% if tarefa._status_id == 1: %} 
+
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/ampersand-empty.svg')}}" alt="">
+            
+
+            {% elif tarefa._status_id == 2: %} 
+
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/ampersand-top.svg')}}" alt="">
+            
+
+            {% else: %}
+
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/ampersand-full.svg')}}" alt="">
+            
+            {% endif %}
+
+            {% if tarefa._prioridade_id == 1: %} 
+
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/priority_3.svg')}}" alt="">
+            
+
+            {% elif tarefa._prioridade_id == 2: %} 
+
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/priority.svg')}}" alt="">
+            
+
+            {% else: %}
+
+                <img class="icon-2" src="{{url_for('static', filename = '/icons/priority_2.svg')}}" alt="">
+            
+            {% endif %}
+             
+            </div>
+
         </div>
+
         {% endfor %}
+        
     </div>
 
     {% endblock %}
@@ -198,8 +295,12 @@
     <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
     <script src="../static/script.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{url_for('static', filename='scripts/jquery-3.6.0.js')}}"></script>
     <script src="../static/jquery-3.6.0.js"></script>
+    
+    <script src="{{url_for('static', filename='scripts/animation.js')}}"></script>
+    <script src="../static/animation.js}}"></script>
 
 </body>
 

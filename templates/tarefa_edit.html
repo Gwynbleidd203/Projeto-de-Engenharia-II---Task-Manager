@@ -1,71 +1,76 @@
 {% extends "template.html" %}
+
+{% block menu_btn %}
+
+    <a href="{{url_for('index')}}">Home</a>
+
+    <a href="{{url_for('perfil', id=usuario._id)}}">{{ usuario._nome }}</a>
+
+    <a href="{{url_for('progresso')}}">Progresso</a>
+
+    <a href="{{ url_for('sobre') }}">About</a>
+
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+{% endblock %}
+
 {% block task %}
 
-            <form action="/atualizar" method="POST">
-                
-                <input type="hidden" name="id" value="{{ tarefa._id }}">
+<div class="task-div-edit">
+    <form class="modal-form" action="/atualizar" method="POST">
 
-                <input type="hidden" name="usuario_id" id="usuario_id" value="{{ tarefa._usuario_id }}">
+        <h1>Edite sua tarefa aqui.</h1>
 
-                <input type="text" name="nome" id="nome" value="{{ tarefa._nome }}" required> <br>
+        <input type="hidden" name="id" value="{{ tarefa._id }}">
 
-                <input type="text" name="descricao" id="descricao" value="{{ tarefa._descricao }}"> <br>
+        <input type="hidden" name="data_criacao" value="{{ tarefa._data_criacao }}">
 
-                <select name="tipo" id="tipo">
+        <input type="hidden" name="data_prevista" value="{{ tarefa._data_prevista }}">
 
-                {% for tipo in tipos %}
+        <input type="hidden" name="usuario_id" id="usuario_id" value="{{ tarefa._usuario_id }}">
 
-                    {% if tarefa._tipo_id == tipo._id %}
+        <input type="text" name="nome" id="nome" value="{{ tarefa._nome }}" required> <br>
 
-                    <option value="{{ tipo._id }}" selected>{{ tipo._nome }}</option>
+        <input type="text" name="descricao" id="descricao" value="{{ tarefa._descricao }}"> <br>
 
-                    {% else %}
+        <select name="tipo" id="tipo">
 
-                    <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+            {% for tipo in tipos %}
 
-                    {% endif %}
-    
-                {% endfor %}
-    
-                </select> <br>
+                {% if tarefa._tipo_id == tipo._id %}
 
-                <select name="status" id="status">
-        
-                {% for status in status_list %}
+                <option value="{{ tipo._id }}" selected>{{ tipo._nome }}</option>
 
-                    {% if tarefa._status_id == status._id %}
+                {% else %}
 
-                    <option value="{{ status._id }}" selected>{{ status._nome }}</option>
-
-                    {% else %}
-
-                    <option value="{{ status._id }}">{{ status._nome }}</option>
-
-                    {% endif %}
-
-                {% endfor %}
-
-                </select> <br>
-
-                <select name="prioridade" id="prioridade">
-   
-                {% for prioridade in prioridades %}
-
-                    {% if tarefa._prioridade_id == prioridade._id %}
-
-                    <option value="{{ prioridade._id }}" selected>{{ prioridade._nome }}</option>
-
-                    {% else %}
-
-                    <option value="{{ prioridade._id }}">{{ prioridade._nome }}</option>
+                <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
 
                 {% endif %}
 
             {% endfor %}
 
-                </select> <br>
+        </select> <br>
+        <select name="status" id="status">
+            {% for status in status_list %}
+            {% if tarefa._status_id == status._id %}
+            <option value="{{ status._id }}" selected>{{ status._nome }}</option>
+            {% else %}
+            <option value="{{ status._id }}">{{ status._nome }}</option>
+            {% endif %}
+            {% endfor %}
+        </select> <br>
+        <select name="prioridade" id="prioridade">
+            {% for prioridade in prioridades %}
+            {% if tarefa._prioridade_id == prioridade._id %}
+            <option value="{{ prioridade._id }}" selected>{{ prioridade._nome }}</option>
+            {% else %}
+            <option value="{{ prioridade._id }}">{{ prioridade._nome }}</option>
+            {% endif %}
+            {% endfor %}
+        </select> <br>
+        <button class="submit-btn" type="submit">OK</button>
+    </form>
 
-                <button type="submit">OK</button>
-            </form>
+</div>
 
 {% endblock %}

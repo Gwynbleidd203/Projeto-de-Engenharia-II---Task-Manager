@@ -1,3 +1,46 @@
 {% extends "template.html" %}
 
-{% block content %} {% endblock %}
+{% block content %} 
+
+    <a href="{{ url_for('index') }}"><img id="home-btn" src="..//static/icons/home_white_24dp.svg" alt=""></a>
+
+    <div class="about-us">
+       <div class="about-us-description">
+           <h1 id="m_tit1">Sobre nós</h1>
+           <p id="m_pag1">Post-it virtual é um projeto para a disciplina de Engenharia de Software II
+               do Curso de Ciencia da Computaçaõ do Intituto Federal do Sul de Minas Campus Muzambinho,
+               desenvolvido  por 3 alunos da turma CCOMP5 são eles Matheus Palmeira de Oliveira,
+               Otavio Augusto Barbieri e Wallace Felipe Teixeira </p>
+       </div>
+
+        <h2 id="m_tit2">Contato tira dúvidas e sugestões: </h2>
+
+        <div class="about-us-contact">
+            <div class="contact">
+                <h4>Matheus Palmeira</h4>
+
+                <div class="contact-media">
+                    <a href="mailto:12201000760@muz.ifsuldeminas.edu.br" target="_blank"><img src="..//static/icons/email.svg" alt=""></a>
+                </div>
+            </div>
+
+            <div class="contact">
+                <h4>Otávio Augusto</h4>
+
+                <div class="contact-media">
+                    <a href="mailto:12201000759@muz.ifsuldeminas.edu.br" target="_blank"><img src="..//static/icons/email.svg" alt=""></a>
+                </div>
+            </div>
+
+            <div class="contact">
+                <h4>Wallace Teixeira</h4>
+
+                <div class="contact-media">
+                    <a href="mailto:12201000421@muz.ifsuldeminas.edu.br" target="_blank"><img src="..//static/icons/email.svg" alt=""></a>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+{% endblock %}

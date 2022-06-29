@@ -1,14 +1,53 @@
 {% extends "template.html" %}
+
+{% block menu_btn %}
+
+<a href="{{url_for('index')}}">Home</a>
+
+<a href="{{url_for('perfil', id=usuario._id)}}">{{ usuario._nome }}</a>
+
+<a href="{{url_for('progresso')}}">Progresso</a>
+
+<a href="{{ url_for('sobre') }}">About</a>
+
+<a href="{{ url_for('logout') }}">Logout</a>
+
+{% endblock %}
+
 {% block task %}
 
-    <div class="task-div">
-            <h1>{{tarefa._nome}}</h1>
-            <p>{{tarefa._descricao}}</p>
-            <p>{{tarefa._prioridade}}</p>
 
-            
-            <a href="{{ url_for('deletar_tarefa', id=tarefa._id) }}" class="btn_del"><img class="icon" src="{{ url_for('static', filename='icons/logout.svg')}}" alt=""></a>
-            <a href="{{ url_for('editar_tarefa', id=tarefa._id) }}" class="btn_edit"> Editar</a>
-        </div>
+    <div class="task-div-info">
+
+            <div class="task-top-buttons">
+
+                <a href="{{ url_for('deletar_tarefa', id=tarefa._id) }}" class="btn-custom"><img onmouseover="deleteAnimation()" id="icon-delete" class="icon" src="{{ url_for('static', filename='icons/delete.svg')}}" alt=""></a>
+
+                <a href="{{ url_for('editar_tarefa', id=tarefa._id) }}" class="btn-custom"><img id="icon-edit" class="icon" src="{{ url_for('static', filename='icons/pencil-empty.svg') }}" alt=""></a>
+
+            </div>
+
+            <h1>{{tarefa._nome}}</h1>
+
+            <p>{{tarefa._descricao}}</p>
+
+            <p>{{tarefa._data_criacao}}</p>
+
+    </div>
+
+    <div>
+        <p>{{ tarefa._nome }}</p>
+        <p>{{ tarefa._descricao }}</p>
+        <p>{{ tarefa._tipo_id }}</p>
+        <p>{{ tarefa._status_id }}</p>
+        <p>{{ tarefa._prioridade_id }}</p>
+        <p>{{ tarefa._tipo }}</p>
+        <p>{{ tarefa._status }}</p>
+        <p>{{ tarefa._prioridade }}</p>
+        <p>{{ tarefa._usuario_id }}</p>
+        <p>{{ tarefa._data_criacao }}</p>
+        <p>{{ tarefa._data_termino }}</p>
+        <p>{{ tarefa._data_prevista }}</p>
+    </div>
 
 {% endblock %}

@@ -21,8 +21,6 @@
 
         <a href="#">Progresso</a>
 
-        <a href="{{ url_for('status') }}">Status</a>
-
         <a href="{{ url_for('sobre') }}">About</a>
 
         <a href="{{ url_for('logout') }}">Logout</a>
@@ -34,7 +32,7 @@
     <main>
         <div class="profile-top">
 
-            <h2>Bem-vindo ao seu perfil, {{ usuario._nome }}</h2>
+            <h2>Bem-vindo ao seu perfil, {{ usuario._nome }}.</h2>
 
         </div>
 
@@ -51,15 +49,6 @@
                 <p>{{ tarefas_fazendo }};</p>
                 <p>{{ tarefas_fazer }}.</p>
             </div>
-        </div>
-
-        <div class="profile-bottom">
-
-            <form action="{{ url_for('pesquisar') }}" method="post">
-                <input type="text" name="profile-search" id="profile-search" placeholder="search task...">
-                <a href="{{url_for('pesquisar')}}"><i class="fa-solid fa-magnifying-glass"></i></a>
-            </form>
-            
         </div>
     </main>
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="..//static/css/style.css">
+    <title></title>
+</head>
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+    <ul id="messages" class="msg" >
+            {% for category, message in messages %}
+        <li id="hideMe" class="msg {{ category }}">{{ message }}</li>
+            {% endfor %}
+    </ul>
+        {% endif %}
+    {% endwith %}
+
+    <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="" onclick="openNav()">
+
+    <div id="mySidenav" class="sidenav">
+
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        {% block menu %}
+
+        <a href="{{url_for('index')}}">Index</a>
+
+        <a href="#" onclick="openLogin()">Login</a>
+
+        <a href="#" onclick="openForm()">Criar Task</a>
+
+        <a href="{{url_for('sobre')}}">About</a>
+
+        {% endblock %}
+
+    </div>
+
+    <main>
+
+        {% block content %} {% endblock %}
+
+    </main>
+
+    <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+    <script src="../static/script.js"></script>
+
+    <script src="{{url_for('static', filename='scripts/jquery-3.6.0.js')}}"></script>
+    <script src="../static/jquery-3.6.0.js"></script>
+    
+    <script src="{{url_for('static', filename='scripts/animation.js')}}"></script>
+    <script src="../static/animation.js}}"></script>
+</body>
+</html>
