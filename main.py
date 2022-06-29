@@ -245,8 +245,9 @@ def perfil(id):
     tarefas_prontas = usuario_dao.conta_tarefas_prontas(id)
     tarefas_fazendo = usuario_dao.conta_tarefas_fazendo(id)
     tarefas_fazer = usuario_dao.conta_tarefas_fazer(id)
+    tipos = tipo_dao.listar_tipos_do_usuario(id)
     
-    return render_template('profile.html', usuario=usuario, tarefas_qnt=tarefas_qnt, tarefas_prontas=tarefas_prontas, tarefas_fazendo=tarefas_fazendo, tarefas_fazer=tarefas_fazer)
+    return render_template('profile.html', usuario=usuario, tarefas_qnt=tarefas_qnt, tarefas_prontas=tarefas_prontas, tarefas_fazendo=tarefas_fazendo, tarefas_fazer=tarefas_fazer, tipos=tipos)
 
 
 @app.route('/status')
