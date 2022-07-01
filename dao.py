@@ -7,7 +7,8 @@ from models import Tarefa, Usuario, Tipo, Status, Prioridade, System
 SQL_PRAGMA = 'PRAGMA foreign_keys=ON'
 
 SQL_CRIA_TAREFA = '''
-INSERT INTO TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIORIDADE_ID, USUARIO_ID, DATA_CRIACAO, DATA_TERMINO, DATA_PREVISTA) values (?, ?, ?, ?, ?, ?, CURRENT_DATE, ?, ?);
+INSERT INTO TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIORIDADE_ID, USUARIO_ID, DATA_CRIACAO, DATA_TERMINO, DATA_PREVISTA)
+VALUES (?, ?, ?, ?, ?, ?, CURRENT_DATE, ?, ?);
 '''
 
 SQL_CRIA_USUARIO = 'INSERT INTO USUARIO (USERNAME, EMAIL, SENHA) values (?, ?, ?)'
@@ -360,7 +361,7 @@ class PrioridadeDao:
     
 def traduz_prioridade(prioridade):
     def cria_prioridade_com_tupla(tupla):
-        return Prioridade(tupla[1], tupla[0])
+        return Prioridade(tupla[1], id=tupla[0])
     return list(map(cria_prioridade_com_tupla, prioridade))
     
 

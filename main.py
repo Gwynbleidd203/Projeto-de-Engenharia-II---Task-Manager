@@ -1,4 +1,3 @@
-import json
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
 
 from dao import StatusDao, TarefaDao, TipoDao, UsuarioDao, PrioridadeDao
@@ -16,6 +15,8 @@ app = Flask(__name__)
 app.secret_key = 'ENGII'
 
 db = sqlite3.connect('database.db', check_same_thread=False)
+
+db.execute("PRAGMA foreign_keys=ON")
 
 
 # dao
@@ -68,12 +69,6 @@ def index():
             proxima = request.args.get('proxima')
     
             return render_template('landing.html', proxima=proxima)
-    
-    else:
-        
-        proxima = request.args.get('proxima')
-    
-        return render_template('landing.html', proxima=proxima)
        
 
 @app.route('/novo')
@@ -86,22 +81,17 @@ def novo():
 @app.route('/criar', methods=['POST',])
 @login_required
 def criar():
-    try:
-        nome = request.form['nome']
-        descricao = request.form['descricao']
-        tipo_id = request.form['tipo']
-        status_id = request.form['status']
-        prioridade_id = request.form['prioridade']
-        usuario_id = request.form['usuario_id']
-        data_prevista = request.form['data_prevista']
+    nome = request.form['nome']
+    descricao = request.form['descricao']
+    tipo_id = request.form['tipo']
+    status_id = request.form['status']
+    prioridade_id = request.form['prioridade']
+    usuario_id = request.form['usuario_id']
+    data_prevista = request.form['data_prevista']
 
-        tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, None)
+    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, None)
 
-        tarefa = tarefa_dao.salvar(tarefa)
-
-    except:
-
-        flash(u'Parece que houve ao criar sua tarefa. Tente preencher os campos novamente ou recarregue a página.', "msg-ul-bad-solid")
+    tarefa = tarefa_dao.salvar(tarefa)
 
     return redirect('/')
 
