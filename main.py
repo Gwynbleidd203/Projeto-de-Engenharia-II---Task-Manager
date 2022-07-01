@@ -112,7 +112,7 @@ def criar():
 def editar_tarefa(id):
     usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
     tarefa = tarefa_dao.busca_por_id(id)
-    lista_tipo = tipo_dao.listar_tipo_usuario(usuario._id)
+    lista_tipo = tipo_dao.listar_tipos_do_usuario(session['usuario_logado'])
     lista_status = status_dao.listar_status()
     lista_prioridade = prioridade_dao.listar_prioridades()
     
@@ -299,9 +299,11 @@ def criar_tipo():
 @login_required
 def editar_tipo(id):
 
+    usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
+
     tipo = tipo_dao.busca_por_id(id)
     
-    return render_template('/tarefa_edit.html', tipo=tipo)
+    return render_template('/tipo.html', tipo=tipo, usuario=usuario)
 
 
 @app.route('/atualizar_tipo', methods=['POST', ])

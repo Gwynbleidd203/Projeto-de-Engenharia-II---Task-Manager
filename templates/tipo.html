@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/profile.css">
+    <link rel="stylesheet" href="../static/css/form.css">
+    <title></title>
+</head>
+<body>
+    <main>
+        <form class="form-tipo" action="/atualizar_tipo" method="post">
+
+            <h2>Altere o nome do tipo criado.</h2>
+            <input type="hidden" name="id" value="{{ tipo._id }}">
+            <input type="hidden" name="usuario_id" value="{{ usuario._id }}">
+            <input type="text" name="nome" value="{{ tipo._nome }}">
+            <div class="tipo-container-buttons">
+                <button class="submit-btn">OK</button>
+                <a href="{{ url_for('deletar_tipo', id=tipo._id) }}"><img class="icon" src="../static/icons/delete.svg" alt=""></a>
+            </div>
+
+        </form>
+    </main>
+</body>
+</html>
