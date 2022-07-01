@@ -15,7 +15,7 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = 'ENGII'
 
-db = sqlite3.connect('banco.db', check_same_thread=False)
+db = sqlite3.connect('database.db', check_same_thread=False)
 
 # dao
 
