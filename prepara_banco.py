@@ -1,4 +1,9 @@
--- SQLite
+import sqlite3
+
+
+conn = sqlite3.connect('banco.db', check_same_thread=False)
+
+criar_tabelas =  '''
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS USUARIO (
@@ -63,4 +68,6 @@ CREATE TABLE IF NOT EXISTS PRIORIDADE (
         ON DELETE CASCADE
         ON UPDATE CASCADE;
 );
+'''
 
+conn.commit()
