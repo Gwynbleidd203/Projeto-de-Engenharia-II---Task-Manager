@@ -18,7 +18,6 @@ db = sqlite3.connect('database.db', check_same_thread=False)
 
 db.execute("PRAGMA foreign_keys=ON")
 
-
 # dao
 
 tarefa_dao = TarefaDao(db)
