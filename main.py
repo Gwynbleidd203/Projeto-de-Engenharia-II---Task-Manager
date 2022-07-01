@@ -31,14 +31,13 @@ prioridade_dao = PrioridadeDao(db)
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        if ('usuario_logado' not in session) or session['usuario_logado'] == None:
+
+            flash(u"Você necessita de login para acessar essa página.", "msg-ul-bad")
+
+            return redirect('/')
             
-            return f(*args, **kwargs)
-        
-        else:
-            flash(u"Você necessita de login para acessar essa página", "msg-ul-bad")
-            
-            return redirect('/login')
+        return f(*args, **kwargs)    
         
     return wrap
 
@@ -78,12 +77,14 @@ def index():
        
 
 @app.route('/novo')
+@login_required
 def novo():
 
     return render_template('novo.html')
 
 # Recebe os valores passados via formulário HTML
 @app.route('/criar', methods=['POST',])
+@login_required
 def criar():
     try:
         nome = request.form['nome']
@@ -107,6 +108,7 @@ def criar():
 
 # Função que recebe o id da tarefa desejada e recebe seus respectivos valores do banco de dados
 @app.route('/editar_tarefa/<int:id>')
+@login_required
 def editar_tarefa(id):
     usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
     tarefa = tarefa_dao.busca_por_id(id)
@@ -119,6 +121,7 @@ def editar_tarefa(id):
 
 # Altera os valores da tarefa desejada, através da função atualizar que é chamada ao editar uma tarefa, a qual já tem seu Id selecionado devido ao HTML de editar
 @app.route('/atualizar', methods=['POST', ])
+@login_required
 def atualizar():
     
     nome = request.form['nome']
@@ -152,6 +155,7 @@ def lista_de_tarefas():
 # Faz praticamente o mesmo que o "editar", exceto que na há alterações no banco
 
 @app.route('/tarefa_info/<int:id>')
+@login_required
 def tarefa_info(id):
     usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
     lista = tarefa_dao.busca_por_id(id)
@@ -165,6 +169,7 @@ def tarefa_info(id):
 # Remove uma tarefa por seu id
 
 @app.route('/deletar_tarefa/<int:id>')
+@login_required
 def deletar_tarefa(id):
     tarefa_dao.deletar(id)
     
@@ -222,23 +227,18 @@ def autenticar():
 
 # Remove o usuário da sessão
 @app.route('/logout')
+@login_required
 def logout():
+    session['usuario_logado'] = None
 
-    if session['usuario_logado'] == None:
-
-        flash(u'Você não está logado para poder deslogar :p', "msg-ul-bad")
-
-    else:
-
-        session['usuario_logado'] = None
-
-        flash(u'Nenhum usuário logado', 'msg-ul-bad')
+    flash(u'Nenhum usuário logado', 'msg-ul-bad')
     
     return redirect('/')
 
 
 # Acessa o perfil do usuário, retornando estatísticas de seu progresso
 @app.route('/perfil/<int:id>')
+@login_required
 def perfil(id):
 
     usuario = usuario_dao.buscar_usuario_por_id(id)
@@ -281,6 +281,7 @@ def pesquisar():
 # -------------------------------- Criar tipo ---------------------------
 # Cria um novo tipo através de um formulário HTML
 @app.route('/criar_tipo', methods=['POST', ])
+@login_required
 def criar_tipo():
     
     nome = request.form['nome']
@@ -295,6 +296,7 @@ def criar_tipo():
 
 
 @app.route('/editar_tipo/<int:id>')
+@login_required
 def editar_tipo(id):
 
     tipo = tipo_dao.busca_por_id(id)
@@ -303,6 +305,7 @@ def editar_tipo(id):
 
 
 @app.route('/atualizar_tipo', methods=['POST', ])
+@login_required
 def atualizar_tipo():
 
     nome = request.form['nome']
@@ -320,6 +323,7 @@ def atualizar_tipo():
 
 # Deleta um tipo do banco de dados
 @app.route('/deletar_tipo/<int:id>')
+@login_required
 def deletar_tipo(id):
     tipo_dao.deletar_tipo(id)
     

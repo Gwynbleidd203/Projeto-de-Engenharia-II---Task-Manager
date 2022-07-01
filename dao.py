@@ -4,9 +4,9 @@ from models import Tarefa, Usuario, Tipo, Status, Prioridade, System
 
 # Criação -----------------------------------------------------------------------------------------------------------------------------------------
 
+SQL_PRAGMA = 'PRAGMA foreign_keys=ON'
 
 SQL_CRIA_TAREFA = '''
-PRAGMA foreign_keys=ON;
 INSERT INTO TAREFA (NOME, DESCRICAO, TIPO_ID, STATUS_ID, PRIORIDADE_ID, USUARIO_ID, DATA_CRIACAO, DATA_TERMINO, DATA_PREVISTA) values (?, ?, ?, ?, ?, ?, CURRENT_DATE, ?, ?);
 '''
 
