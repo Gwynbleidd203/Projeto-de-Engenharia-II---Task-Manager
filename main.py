@@ -17,6 +17,7 @@ app.secret_key = 'ENGII'
 
 db = sqlite3.connect('database.db', check_same_thread=False)
 
+
 # dao
 
 tarefa_dao = TarefaDao(db)
