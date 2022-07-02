@@ -403,9 +403,13 @@ class UsuarioDao:
         cursor = self.__db.cursor()
         cursor.execute(SQL_CONTA_TAREFAS, (usuario_id,))
         tarefas_qnt = cursor.fetchone()
+
         if tarefas_qnt:
+
             return tarefas_qnt
+
         else:
+            
             return 0
         
     
@@ -413,9 +417,13 @@ class UsuarioDao:
         cursor = self.__db.cursor()
         cursor.execute(SQL_CONTA_TAREFAS_FEITAS, (usuario_id,))
         tarefas_prontas = cursor.fetchone()
+
         if tarefas_prontas:
+
             return tarefas_prontas
+
         else:
+
             return 0
         
     
@@ -423,7 +431,9 @@ class UsuarioDao:
         cursor = self.__db.cursor()
         cursor.execute(SQL_CONTA_TAREFAS_FAZER, (usuario_id,))
         tarefas_fazer = cursor.fetchone()
+
         if tarefas_fazer:
+
             return tarefas_fazer
         else:
             return 0
@@ -433,9 +443,12 @@ class UsuarioDao:
         cursor = self.__db.cursor()
         cursor.execute(SQL_CONTA_TAREFAS_FAZENDO, (usuario_id,))
         tarefas_fazendo = cursor.fetchone()
+
         if tarefas_fazendo:
+
             return tarefas_fazendo
         else:
+
             return 0
     
 def traduz_usuario(tupla):
