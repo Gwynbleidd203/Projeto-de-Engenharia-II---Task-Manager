@@ -220,13 +220,24 @@ def autenticar():
 
     if usuario:
 
-        if usuario._senha == request.form['senha']:
+        if usuario._senha == request.form['senha'] and usuario._email == request.form['email']:
             
             session['usuario_logado'] = usuario._id
             flash(usuario._nome + ' logou com sucesso!', 'msg-ul-good')
+
             return redirect('/')
+
+        if usuario._senha == request.form['senha'] and usuario._email == request.form['email']:
+
+            flash(u'Senha incorreta.', 'msg-ul-bad')
+
+        if usuario._email != request.form['email'] and usuario._senha == request.form['email']:
+
+            flash(u'Os endereços de email não batem.', 'msg-ul-bad')
+
+        else:
         
-    flash(u'Erro ao logar! Tente novamente.', 'msg-ul-bad')
+            flash(u'Erro ao logar! Tente novamente.', 'msg-ul-bad')
     
     return  redirect('/')           
 

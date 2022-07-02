@@ -27,7 +27,6 @@ class Tipo:
         self._id = id
         self._nome = nome
         self._usuario_id = usuario_id
-        
 
 
 class Status:
