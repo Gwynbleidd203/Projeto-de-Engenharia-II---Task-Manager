@@ -10,13 +10,10 @@ from functools import wraps
 
 import sqlite3
 
-
 app = Flask(__name__)
 app.secret_key = 'ENGII'
 
 db = sqlite3.connect('database.db', check_same_thread=False)
-
-db.execute("PRAGMA foreign_keys=ON")
 
 # dao
 
@@ -27,6 +24,12 @@ status_dao = StatusDao(db)
 prioridade_dao = PrioridadeDao(db)
 
 # Login required function ------------------------------------------------
+
+@app.before_request
+def before_request_fkey():
+
+    db.execute("PRAGMA foreign_keys=ON")
+
 
 def login_required(f):
     @wraps(f)
@@ -47,6 +50,7 @@ def login_required(f):
 @app.route('/')
 def index():
     if session == None or session == "":
+
         proxima = request.args.get('proxima')
     
         return render_template('landing.html', proxima=proxima)
@@ -214,20 +218,14 @@ def login():
 @app.route('/autenticar', methods=['POST',])
 def autenticar():
 
-    try:
-
-        usuario = usuario_dao.buscar_por_email_usu(request.form['email'])
-
-    except Exception: 
-
-        flash(u'Houve um problema ao buscar o usuário', 'msg-ul-bad')
-
+    usuario = usuario_dao.buscar_por_email_usu(request.form['email'])
 
     if usuario:
 
         if usuario._senha == request.form['senha'] and usuario._email == request.form['email']:
             
             session['usuario_logado'] = usuario._id
+
             flash(usuario._nome + ' logou com sucesso!', 'msg-ul-good')
 
             return redirect('/')
@@ -236,13 +234,14 @@ def autenticar():
 
             flash(u'Erro ao fazer login. Analise os dados e tente novamente', 'msg-ul-bad')
 
-    return  redirect('/')           
+        return  redirect('/')           
 
 
 # Remove o usuário da sessão
 @app.route('/logout')
 @login_required
 def logout():
+
     session['usuario_logado'] = None
 
     flash(u'Nenhum usuário logado', 'msg-ul-bad')
@@ -285,6 +284,7 @@ def progresso():
 
 @app.route('/pesquisar/<string:nome>', methods=['POST', ])
 def pesquisar():
+
     nome = request.form['profile-search']
 
     lista_tarefas = tarefa_dao.busca_por_nome(nome)
