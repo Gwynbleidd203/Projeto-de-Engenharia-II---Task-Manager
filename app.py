@@ -25,7 +25,7 @@ prioridade_dao = PrioridadeDao(db)
 
 # Login required function ------------------------------------------------
 
-@app.before_request
+@app.before_first_request
 def before_request_fkey():
 
     db.execute("PRAGMA foreign_keys=ON")
