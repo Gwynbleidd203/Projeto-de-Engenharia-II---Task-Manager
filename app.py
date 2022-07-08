@@ -1,5 +1,3 @@
-from http.client import BAD_REQUEST
-from types import NoneType
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
 
 from dao import StatusDao, TarefaDao, TipoDao, UsuarioDao, PrioridadeDao
@@ -216,7 +214,14 @@ def login():
 @app.route('/autenticar', methods=['POST',])
 def autenticar():
 
-    usuario = usuario_dao.buscar_por_email_usu(request.form['email'])
+    try:
+
+        usuario = usuario_dao.buscar_por_email_usu(request.form['email'])
+
+    except Exception: 
+
+        flash(u'Houve um problema ao buscar o usuário', 'msg-ul-bad')
+
 
     if usuario:
 
@@ -226,19 +231,11 @@ def autenticar():
             flash(usuario._nome + ' logou com sucesso!', 'msg-ul-good')
 
             return redirect('/')
-
-        if usuario._senha == request.form['senha'] and usuario._email == request.form['email']:
-
-            flash(u'Senha incorreta.', 'msg-ul-bad')
-
-        if usuario._email != request.form['email'] and usuario._senha == request.form['email']:
-
-            flash(u'Os endereços de email não batem.', 'msg-ul-bad')
-
-        else:
         
-            flash(u'Erro ao logar! Tente novamente.', 'msg-ul-bad')
-    
+        else:
+
+            flash(u'Erro ao fazer login. Analise os dados e tente novamente', 'msg-ul-bad')
+
     return  redirect('/')           
 
 

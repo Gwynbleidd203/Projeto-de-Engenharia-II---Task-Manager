@@ -435,7 +435,9 @@ class UsuarioDao:
         if tarefas_fazer:
 
             return tarefas_fazer
+            
         else:
+
             return 0
         
     
