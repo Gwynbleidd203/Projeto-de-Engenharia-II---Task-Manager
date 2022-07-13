@@ -31,6 +31,26 @@ def before_request_fkey():
     db.execute("PRAGMA foreign_keys=ON")
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+
+    error_img = '../static/imgs/404.gif'
+    error_number = '404'
+    error_description = 'Page not found.'
+
+    return render_template('error.html', error_img=error_img, error_number=error_number, error_description=error_description), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    
+    error_img = '../static/imgs/500.gif'
+    error_number = '500'
+    error_description = 'Internal server error.'
+
+    return render_template('error.html', error_img=error_img, error_number=error_number, error_description=error_description), 500
+
+
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
