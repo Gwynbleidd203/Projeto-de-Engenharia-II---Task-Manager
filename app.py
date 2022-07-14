@@ -23,13 +23,37 @@ tipo_dao = TipoDao(db)
 status_dao = StatusDao(db)
 prioridade_dao = PrioridadeDao(db)
 
-# Login required function ------------------------------------------------
+# ------------------ head ------------------------------------------
+
+error_template = 'error.html'
+index_template = 'index.html'
+landing_template = 'landing.html'
 
 @app.before_first_request
 def before_request_fkey():
 
     db.execute("PRAGMA foreign_keys=ON")
 
+# --------------------- Error Handler ------------------------------------
+
+@app.errorhandler(400)
+def bad_request(e):
+
+    error_img = '../static/imgs/400.gif'
+    error_number = '400'
+    error_description = 'Bad request.'
+
+    return render_template(error_template, error_img=error_img, error_number=error_number, error_description=error_description), 400
+
+
+@app.errorhandler(403)
+def bad_request(e):
+
+    error_img = '../static/imgs/403.gif'
+    error_number = '403'
+    error_description = 'Forbidden.'
+
+    return render_template(error_template, error_img=error_img, error_number=error_number, error_description=error_description), 403
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -38,7 +62,7 @@ def page_not_found(e):
     error_number = '404'
     error_description = 'Page not found.'
 
-    return render_template('error.html', error_img=error_img, error_number=error_number, error_description=error_description), 404
+    return render_template(error_template, error_img=error_img, error_number=error_number, error_description=error_description), 404
 
 
 @app.errorhandler(500)
@@ -48,9 +72,9 @@ def internal_server_error(e):
     error_number = '500'
     error_description = 'Internal server error.'
 
-    return render_template('error.html', error_img=error_img, error_number=error_number, error_description=error_description), 500
+    return render_template(error_template, error_img=error_img, error_number=error_number, error_description=error_description), 500
 
-
+# ------------------------------------------------------------------------
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -73,9 +97,9 @@ def index():
 
         proxima = request.args.get('proxima')
     
-        return render_template('landing.html', proxima=proxima)
+        return render_template(landing_template, proxima=proxima)
     
-    if session:
+    elif session:
 
         try:
             usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
@@ -86,19 +110,13 @@ def index():
             lista_status = status_dao.listar_status()
             lista_prioridades = prioridade_dao.listar_prioridades()
             
-            return render_template('index.html', proxima=proxima, tarefas=lista, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridades, usuario=usuario)
+            return render_template(index_template, proxima=proxima, tarefas=lista, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridades, usuario=usuario)
         
         except Exception:
 
             proxima = request.args.get('proxima')
     
-            return render_template('landing.html', proxima=proxima)
-
-    else:
-
-        proxima = request.args.get('proxima')
-
-        return render_template('landing.html', proxima=proxima)
+            return render_template(landing_template, proxima=proxima)
        
 
 @app.route('/novo')
@@ -126,7 +144,7 @@ def criar():
     
     except Exception:
 
-        flash(u'Um erro inesperado ocorreu, tente criar uma tarefa novamente mais tarde.', 'msg-ul-bad-solid')
+        flash(u'Um erro inesperado ocorreu! Tente criar uma tarefa novamente mais tarde.', 'msg-ul-bad-solid')
 
     return redirect('/')
 
@@ -138,7 +156,7 @@ def editar_tarefa(id):
 
     usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
     tarefa = tarefa_dao.busca_por_id(id)
-    lista_tipo = tipo_dao.listar_tipos_do_usuario(session['usuario_logado'])
+    lista_tipo = tipo_dao.listar_tipo_usuario(session['usuario_logado'])
     lista_status = status_dao.listar_status()
     lista_prioridade = prioridade_dao.listar_prioridades()
     
@@ -168,11 +186,14 @@ def atualizar():
 
         flash(u'Tarefa atualizada com sucesso! :)', "msg-ul-good")
 
+        return redirect(f'/tarefa_info/{id}')
+
     except Exception:
 
         flash(u'Erro ao atualizar a tarefa. Tente novamente', 'msg-ul-bad')
 
-    return redirect(f'/tarefa_info/{id}')
+        return redirect('/tarefa_info')
+
 
 
 # Cria uma grande lista com todas as tarefas
@@ -181,7 +202,7 @@ def atualizar():
 def lista_de_tarefas():
     lista = tarefa_dao.listar()
     
-    return render_template('index.html', tarefas=lista)
+    return render_template(index_template, tarefas=lista)
 
 
 # Faz praticamente o mesmo que o "editar", exceto que na há alterações no banco
@@ -234,9 +255,9 @@ def login():
     proxima = request.args.get('proxima')
 
     if proxima == None:
-        proxima= ''
+        proxima = ''
 
-    return render_template('index.html', proxima=proxima)
+    return render_template(index_template, proxima=proxima)
 
 
 # Verifica se os dados de login estão corretos e se correto,cria uma sessão para o usuário, se não, pede para que o usuário tente fazer login novamente 
