@@ -1,4 +1,7 @@
+from flask import flash, redirect
 from models import Tarefa, Usuario, Tipo, Status, Prioridade, System
+
+import sqlite3
 
 # ------------------------------------------------------ SQL --------------------------------------------------------------------------------------
 
@@ -373,15 +376,30 @@ class UsuarioDao:
         
     def salvar_usuario(self, usuario):
         cursor = self.__db.cursor()
+
+        try:
         
-        if (usuario._id):
-            cursor.execute(SQL_ATUALIZA_USUARIO, (usuario._nome, usuario._email, usuario._senha, usuario._id))
-            
-        else:
-            cursor.execute(SQL_CRIA_USUARIO, (usuario._nome, usuario._email, usuario._senha))
-            
-        self.__db.commit()
-        return usuario
+            if (usuario._id):
+                cursor.execute(SQL_ATUALIZA_USUARIO, (usuario._nome, usuario._email, usuario._senha, usuario._id))
+                
+            else:
+                cursor.execute(SQL_CRIA_USUARIO, (usuario._nome, usuario._email, usuario._senha))
+                
+            self.__db.commit()
+
+            return usuario
+
+        except sqlite3.IntegrityError:
+
+            flash(u'Email já cadastrado! Tente logar usando-o ou crie uma nova conta.', 'msg-ul-bad')
+
+
+        except Exception:
+
+            flash(u'Erro desconhecido ao criar/atualizar conta! Tente novamente mais tarde.', 'msg-ul-bad')
+
+        return redirect('/')
+
 
     def buscar_por_email_usu(self, email):
         cursor =  self.__db.cursor()
@@ -401,55 +419,51 @@ class UsuarioDao:
     # Tentar otimizar o resultado
     def conta_tarefas(self, usuario_id):
         cursor = self.__db.cursor()
-        cursor.execute(SQL_CONTA_TAREFAS, (usuario_id,))
-        tarefas_qnt = cursor.fetchone()
-
-        if tarefas_qnt:
+        try:
+            cursor.execute(SQL_CONTA_TAREFAS, (usuario_id,))
+            tarefas_qnt = cursor.fetchone()
 
             return tarefas_qnt
 
-        else:
-            
+        except Exception:
+
             return 0
-        
     
     def conta_tarefas_prontas(self, usuario_id):
         cursor = self.__db.cursor()
-        cursor.execute(SQL_CONTA_TAREFAS_FEITAS, (usuario_id,))
-        tarefas_prontas = cursor.fetchone()
-
-        if tarefas_prontas:
+        try:
+            cursor.execute(SQL_CONTA_TAREFAS_FEITAS, (usuario_id,))
+            tarefas_prontas = cursor.fetchone()
 
             return tarefas_prontas
-
-        else:
+        
+        except Exception:
 
             return 0
         
     
     def conta_tarefas_fazer(self, usuario_id):
         cursor = self.__db.cursor()
-        cursor.execute(SQL_CONTA_TAREFAS_FAZER, (usuario_id,))
-        tarefas_fazer = cursor.fetchone()
-
-        if tarefas_fazer:
+        try:
+            cursor.execute(SQL_CONTA_TAREFAS_FAZER, (usuario_id,))
+            tarefas_fazer = cursor.fetchone()
 
             return tarefas_fazer
-            
-        else:
+
+        except Exception:
 
             return 0
         
     
     def conta_tarefas_fazendo(self, usuario_id):
         cursor = self.__db.cursor()
-        cursor.execute(SQL_CONTA_TAREFAS_FAZENDO, (usuario_id,))
-        tarefas_fazendo = cursor.fetchone()
-
-        if tarefas_fazendo:
-
+        try:
+            cursor.execute(SQL_CONTA_TAREFAS_FAZENDO, (usuario_id,))
+            tarefas_fazendo = cursor.fetchone()
+            
             return tarefas_fazendo
-        else:
+        
+        except Exception:
 
             return 0
     
