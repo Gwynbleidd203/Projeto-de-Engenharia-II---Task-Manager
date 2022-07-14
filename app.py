@@ -76,6 +76,7 @@ def index():
         return render_template('landing.html', proxima=proxima)
     
     if session:
+
         try:
             usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
             print(session['usuario_logado'])
@@ -122,14 +123,12 @@ def criar():
         tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, None)
 
         tarefa = tarefa_dao.salvar(tarefa)
-
-        return redirect('/')
     
     except Exception:
 
         flash(u'Um erro inesperado ocorreu, tente criar uma tarefa novamente mais tarde.', 'msg-ul-bad-solid')
 
-        return redirect('/')
+    return redirect('/')
 
 
 # Função que recebe o id da tarefa desejada e recebe seus respectivos valores do banco de dados
@@ -190,6 +189,7 @@ def lista_de_tarefas():
 @app.route('/tarefa_info/<int:id>')
 @login_required
 def tarefa_info(id):
+
     usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
     lista = tarefa_dao.busca_por_id(id)
     lista_tipo = tipo_dao.listar_tipo_usuario(usuario._id)
@@ -231,7 +231,7 @@ def criar_usuario():
 @app.route('/login')
 def login():
 
-    proxima=request.args.get('proxima')
+    proxima = request.args.get('proxima')
 
     if proxima == None:
         proxima= ''
