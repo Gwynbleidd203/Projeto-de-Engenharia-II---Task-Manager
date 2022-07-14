@@ -150,22 +150,28 @@ def editar_tarefa(id):
 @app.route('/atualizar', methods=['POST', ])
 @login_required
 def atualizar():
+
+    try:
     
-    nome = request.form['nome']
-    descricao = request.form['descricao']
-    tipo_id = request.form['tipo']
-    status_id = request.form['status']
-    prioridade_id = request.form['prioridade']
-    usuario_id = request.form['usuario_id']
-    data_criacao = request.form['data_criacao']
-    data_prevista = request.form['data_prevista']
-    id = request.form['id']
+        nome = request.form['nome']
+        descricao = request.form['descricao']
+        tipo_id = request.form['tipo']
+        status_id = request.form['status']
+        prioridade_id = request.form['prioridade']
+        usuario_id = request.form['usuario_id']
+        data_criacao = request.form['data_criacao']
+        data_prevista = request.form['data_prevista']
+        id = request.form['id']
 
-    tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, data_criacao, data_prevista, id)
+        tarefa = Tarefa(nome, descricao, tipo_id, status_id, prioridade_id, None, None, None, usuario_id, data_prevista, data_criacao, data_prevista, id)
 
-    tarefa_dao.salvar(tarefa)
+        tarefa_dao.salvar(tarefa)
 
-    flash(u'Tarefa atualizada com sucesso! :)', "msg-ul-good")
+        flash(u'Tarefa atualizada com sucesso! :)', "msg-ul-good")
+
+    except Exception:
+
+        flash(u'Erro ao atualizar a tarefa. Tente novamente', 'msg-ul-bad')
 
     return redirect(f'/tarefa_info/{id}')
 
