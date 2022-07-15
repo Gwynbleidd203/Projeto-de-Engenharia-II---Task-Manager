@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, flash, jsonify
+from flask import Flask, render_template, render_template_string, request, redirect, session, flash, jsonify
 
 from dao import StatusDao, TarefaDao, TipoDao, UsuarioDao, PrioridadeDao
 
@@ -99,25 +99,24 @@ def index():
     
         return render_template(landing_template, proxima=proxima)
     
-    elif session:
+    if session:
 
-        try:
-            usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
-            print(session['usuario_logado'])
-            proxima = request.args.get('proxima')
-            lista = tarefa_dao.listar_tarefas_por_usuario(usuario._id)
-            lista_tipo = tipo_dao.listar_tipo_usuario(usuario._id)
-            lista_status = status_dao.listar_status()
-            lista_prioridades = prioridade_dao.listar_prioridades()
-            
-            return render_template(index_template, proxima=proxima, tarefas=lista, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridades, usuario=usuario)
+        usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
+        print(session['usuario_logado'])
+        proxima = request.args.get('proxima')
+        lista = tarefa_dao.listar_tarefas_por_usuario(usuario._id)
+        lista_tipo = tipo_dao.listar_tipo_usuario(usuario._id)
+        lista_status = status_dao.listar_status()
+        lista_prioridades = prioridade_dao.listar_prioridades()
         
-        except Exception:
+        return render_template(index_template, proxima=proxima, tarefas=lista, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridades, usuario=usuario)
 
-            proxima = request.args.get('proxima')
-    
-            return render_template(landing_template, proxima=proxima)
-       
+    else:
+
+        proxima = request.args.get('proxima')
+
+        return render_template(landing_template, proxima=proxima)
+
 
 @app.route('/novo')
 @login_required
@@ -254,6 +253,7 @@ def login():
     proxima = request.args.get('proxima')
 
     if proxima == None:
+        
         proxima = ''
 
     return render_template(index_template, proxima=proxima)
@@ -348,7 +348,7 @@ def criar_tipo():
 
     usuario_id = request.form['usuario_id']
 
-    tipo = Tipo(nome, usuario_id)
+    tipo = Tipo(nome.capitalize(), usuario_id)
     
     tipo = tipo_dao.salvar_tipo(tipo)
 
@@ -376,7 +376,7 @@ def atualizar_tipo():
     
     id = request.form['id']
 
-    tipo = Tipo(nome, usuario_id, id)
+    tipo = Tipo(nome.capitalize(), usuario_id, id)
 
     tipo_dao.salvar_tipo(tipo)
 

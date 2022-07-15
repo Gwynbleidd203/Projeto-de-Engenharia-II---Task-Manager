@@ -1,4 +1,5 @@
 from flask import flash, redirect
+
 from models import Tarefa, Usuario, Tipo, Status, Prioridade, System
 
 import sqlite3
