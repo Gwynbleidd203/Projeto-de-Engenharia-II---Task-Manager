@@ -69,6 +69,22 @@
 
         </div>
 
+        <div class="tarefas-list-container">
+
+            <h2>Tarefas concluídas por {{ usuario._nome }}.</h2>
+
+            <ul class="tarefa-list">
+
+                {% for tarefa in tarefas %}
+
+                <li><a href="{{ url_for('tarefa_info', id=tarefa._id) }}">{{ tarefa._nome }}</a></li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
     </div>
 
     <script src="{{url_for('static', filename='scripts/script.js')}}"></script>

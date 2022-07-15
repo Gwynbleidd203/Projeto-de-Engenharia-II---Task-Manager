@@ -8,7 +8,7 @@ body {
     padding: 10px;
 }
 
-main, .tipo-list-container {
+main, .tipo-list-container, .tarefas-list-container {
     display: flex;
     flex-direction: column;
     flex-shrink: calc(1.0);
@@ -19,6 +19,7 @@ main, .tipo-list-container {
     border-radius: 16px;
     padding: 56px 112px;
     min-width: 250px;
+    margin: 36px;
 }
 
 .profile-center {
@@ -73,12 +74,12 @@ form > a {
     height: fit-content;
 }
 
-.tipo-list-container > h2 {
+.tipo-list-container > h2, .tarefas-list-container > h2 {
     padding: 16px 0px;
     border-bottom: 2px solid black;
 }
 
-.tipo-list-container > ul {
+.tipo-list-container > ul, .tarefas-list-container > ul {
     list-style: none;
     display: flex;
     flex-direction: column;

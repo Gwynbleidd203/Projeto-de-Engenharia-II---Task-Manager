@@ -253,7 +253,7 @@ def login():
     proxima = request.args.get('proxima')
 
     if proxima == None:
-        
+
         proxima = ''
 
     return render_template(index_template, proxima=proxima)
@@ -301,13 +301,14 @@ def logout():
 def perfil(id):
 
     usuario = usuario_dao.buscar_usuario_por_id(id)
+    tarefas = tarefa_dao.listar_tarefas_finalizadas_usuario(id)
     tarefas_qnt = usuario_dao.conta_tarefas(id)
     tarefas_prontas = usuario_dao.conta_tarefas_prontas(id)
     tarefas_fazendo = usuario_dao.conta_tarefas_fazendo(id)
     tarefas_fazer = usuario_dao.conta_tarefas_fazer(id)
     tipos = tipo_dao.listar_tipos_do_usuario(id)
     
-    return render_template('profile.html', usuario=usuario, tarefas_qnt=tarefas_qnt, tarefas_prontas=tarefas_prontas, tarefas_fazendo=tarefas_fazendo, tarefas_fazer=tarefas_fazer, tipos=tipos)
+    return render_template('profile.html', tarefas=tarefas, usuario=usuario, tarefas_qnt=tarefas_qnt, tarefas_prontas=tarefas_prontas, tarefas_fazendo=tarefas_fazendo, tarefas_fazer=tarefas_fazer, tipos=tipos)
 
 
 @app.route('/status')
