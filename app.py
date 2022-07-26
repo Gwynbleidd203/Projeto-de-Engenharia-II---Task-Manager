@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Flask, render_template, render_template_string, request, redirect, session, flash, jsonify
 
 from flask_moment import Moment
@@ -16,6 +18,8 @@ import sqlite3
 
 app = Flask(__name__)
 app.secret_key = 'ENGII'
+
+moment = Moment(app)
 
 db = sqlite3.connect('database.db', check_same_thread=False)
 
@@ -47,7 +51,7 @@ def bad_request(e):
     error_number = '400'
     error_description = 'Bad request.'
 
-    return render_template(error_template, error_img=error_img, error_number=error_number, error_description=error_description), 400
+    return render_template(error_template, error_img=error_img, error_number=error_number, error_description=error_description, current_time=datetime.utcnow()), 400
 
 
 @app.errorhandler(403)
@@ -57,7 +61,7 @@ def bad_request(e):
     error_number = '403'
     error_description = 'Forbidden.'
 
-    return render_template(error_template, error_img=error_img, error_number=error_number, error_description=error_description), 403
+    return render_template(error_template, error_img=error_img, error_number=error_number, error_description=error_description, current_time=datetime.utcnow()), 403
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -66,7 +70,7 @@ def page_not_found(e):
     error_number = '404'
     error_description = 'Page not found.'
 
-    return render_template(error_template, error_img=error_img, error_number=error_number, error_description=error_description), 404
+    return render_template(error_template, error_img=error_img, error_number=error_number, error_description=error_description, current_time=datetime.utcnow()), 404
 
 
 @app.errorhandler(500)

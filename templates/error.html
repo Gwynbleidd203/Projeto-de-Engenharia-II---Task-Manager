@@ -36,6 +36,7 @@
         <img src="{{ error_img }}" alt="">
         <h1>Error {{ error_number }}</h1>
         <h2>{{ error_description }}</h2>
+        <p>{{ moment(current_time).fromNow(refresh=True) }}</p>
     </main>
 </body>
 </html>
