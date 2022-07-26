@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="..//static/css/style.css">
+
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="order-by">
+        <div class="modal-order">
+            <a class="modal-close-btn" href="javascript:voide(0)" onclick="closeOrder()">&times;</a>
+
+            <div class="container-order">
+
+                <h1>Ordenar por:</h1>
+
+                <div class="container-order-1">
+                    <label for="prioridade_check">Prioridade
+                        <input type="checkbox" name="prioridade_check" id="prioridade_check">
+                    </label>
+                    <label for="status_check">Status
+                        <input type="checkbox" name="status_check" id="status_check">
+                    </label>
+                    <label for="data_check">Data
+                        <input type="checkbox" name="data_check" id="data_check">
+                    </label>
+                    <label for="nome_check">Nome
+                        <input type="checkbox" name="nome_check" id="nome_check">
+                    </label>
+                </div>
+
+                <div class="container-order-2">
+                    
+                    <input type="radio" name="maior_check" id="maior_check" value="maior">
+                    <label for="maior_check">Maior</label> <br>
+
+                    <input type="radio" name="menor_check" id="menor_check" value="menor">
+                    <label for="menor_check">Menor</label>
+                    
+                </div>
+
+                <button>OK</button>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

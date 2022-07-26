@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
     <link rel="stylesheet" href="../static/style.css">
     <link rel="icon" type="image/x-icon" href="/static/icons/favicon-16x16.png">
-    <title>{% block title %}Post It Virtual{% endblock %}</title>
+    <title>{% block title %}Post It Virtual{% endblock title %}</title>
 </head>
 
 {% block content %}
@@ -20,51 +20,54 @@
 
     {% block menu %}
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <ul id="messages" class="msg" >
-        {% for category, message in messages %}
-        <li id="hideMe" class="msg {{ category }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-{% endwith %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
 
-    {% block push_menu %}
+        <ul id="messages" class="msg" >
 
-    <div id="mySidenav" class="sidenav">
+            {% for category, message in messages %}
 
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <li id="hideMe" class="msg {{ category }}">{{ message }}</li>
 
-        {% block menu_btn %}
+            {% endfor %}
 
-        {% block home %}
+        </ul>
 
-        <a href="{{url_for('index')}}">Home</a>
+        {% endif %}
+    {% endwith %}
 
-        {% endblock %}
+        {% block push_menu %}
 
-        <!--Bloco do Menu-->
+        <div id="mySidenav" class="sidenav">
 
-        {% block login_btn %}
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-        <a href="#" onclick="openLogin()">Login</a>
+            {% block menu_btn %}
 
-        {% endblock %}
+                {% block home %}
 
-        <a href="#" onclick="openForm()">Criar Task</a>
+                <a href="{{url_for('index')}}">Home</a>
 
+                {% endblock home %}
 
-        <a href="{{url_for('sobre')}}">Sobre</a>
+                <!--Bloco do Menu-->
 
-        {% endblock %}
+                {% block login_btn %}
 
-    </div>
+                <a href="#" onclick="openLogin()">Login</a>
 
-    {% endblock %}
+                {% endblock login_btn %}
 
+                <a href="#" onclick="openForm()">Criar Task</a>
 
-    {% endblock %}
+                <a href="{{url_for('sobre')}}">Sobre</a>
+
+            {% endblock menu_btn %}
+
+        </div>
+
+        {% endblock push_menu %}
+    {% endblock menu %}
 
     {% block login %}
 
@@ -94,7 +97,7 @@
         </div>
     </div>
 
-    {% endblock %}
+    {% endblock login %}
 
     {% block conta %}
 
@@ -124,7 +127,7 @@
 
     </div>
 
-    {% endblock %}
+    {% endblock conta %}
 
     {% block criar %}
 
@@ -198,7 +201,7 @@
 
     </div>
 
-    {% endblock %}
+    {% endblock criar %}
 
     <div id="create-tipo" class="pop-up">
         <div class="modal-tipo">
@@ -224,8 +227,54 @@
         </div>
     </div>
 
+    <div id="order-by">
+        <div class="modal-order">
+            <a class="modal-close-btn" href="javascript:voide(0)" onclick="closeOrder()">&times;</a>
+
+            <div class="container-order">
+
+                <h1>Ordenar por:</h1>
+
+                <div class="container-order-1">
+                    <label for="prioridade_check">Prioridade
+                        <input type="checkbox" name="prioridade_check" id="prioridade_check" checked="checked">
+                    </label>
+                    <label for="status_check">Status
+                        <input type="checkbox" name="status_check" id="status_check" checked="checked">
+                    </label>
+                    <label for="data_check">Data
+                        <input type="checkbox" name="data_check" id="data_check" checked="checked">
+                    </label>
+                    <label for="nome_check">Nome
+                        <input type="checkbox" name="nome_check" id="nome_check" checked="checked">
+                    </label>
+                </div>
+
+                <div class="container-order-2">
+                    
+                    <input type="radio" name="maior_check" id="maior_check" checked="checked" value="maior">
+                    <label for="maior_check">Maior</label> <br>
+
+                    <input type="radio" name="menor_check" id="menor_check" checked="checked" value="menor">
+                    <label for="menor_check">Menor</label>
+                    
+                </div>
+
+                <button>OK</button>
+
+            </div>
+
+        </div>
+    </div>
+
     <!-- Use any element to open the sidenav -->
     <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="" onclick="openNav()">
+
+    <div id="order-btn-list">
+        <img id="filter-list-btn" src="{{ url_for('static', filename='icons/filter_list.svg') }}" alt="">
+
+        <img id="sort-list-btn" src="{{ url_for('static', filename='icons/sort.svg') }}" alt="">
+    </div>
 
     <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 
@@ -295,7 +344,7 @@
         
     </div>
 
-    {% endblock %}
+    {% endblock task %}
 
     <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
     <script src="../static/script.js"></script>
@@ -309,6 +358,6 @@
 
 </body>
 
-{% endblock %}
+{% endblock content %}
 
 </html>

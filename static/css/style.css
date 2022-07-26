@@ -101,6 +101,23 @@ body {
   cursor: pointer;
 }
 
+#order-btn-list {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+  width: fit-content;
+  height: fit-content;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+#order-btn-list > img {
+  width: 48px;
+  height: 48px;
+}
+
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
   display: contents;

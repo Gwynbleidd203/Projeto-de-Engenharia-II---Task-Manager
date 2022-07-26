@@ -26,7 +26,7 @@ form > h1 {
     color: whitesmoke;
 }
 
-input, select, textarea {
+input[type=text], input[type=date], select, textarea {
     text-decoration: none;
     outline: none;
     border: none;
