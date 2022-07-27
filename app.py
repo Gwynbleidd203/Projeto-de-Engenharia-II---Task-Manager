@@ -14,10 +14,16 @@ from models import Tarefa, Usuario, Tipo
 
 from functools import wraps
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+import os
+
 import sqlite3
 
 app = Flask(__name__)
-app.secret_key = 'ENGII'
+app.secret_key = os.getenv('SECRET_KEY')
 
 moment = Moment(app)
 
