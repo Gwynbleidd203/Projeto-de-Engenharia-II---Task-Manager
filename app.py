@@ -113,13 +113,13 @@ def index():
     
         return render_template(landing_template, proxima=proxima)
     
-    if session:
+    if session['usuario_logado']:
 
         usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
         print(session['usuario_logado'])
         proxima = request.args.get('proxima')
-        lista = tarefa_dao.listar_tarefas_por_usuario(usuario._id)
-        lista_tipo = tipo_dao.listar_tipo_usuario(usuario._id)
+        lista = tarefa_dao.listar_tarefas_por_usuario(session['usuario_logado'])
+        lista_tipo = tipo_dao.listar_tipo_usuario(session['usuario_logado'])
         lista_status = status_dao.listar_status()
         lista_prioridades = prioridade_dao.listar_prioridades()
         

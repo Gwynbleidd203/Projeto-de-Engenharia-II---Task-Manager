@@ -48,6 +48,16 @@ function closeCreateTipo () {
   document.getElementById("create-tipo").style.display = 'none'
 }
 
+/* MODAL FILTERS */
+
+function closeFilter () {
+  document.getElementById("filter").style.display = 'none'
+}
+
+function openFilter () {
+  document.getElementById("filter").style.display = 'block'
+}
+
 /* AJAX */
 
 function showNewTask() {

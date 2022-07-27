@@ -227,15 +227,17 @@
         </div>
     </div>
 
-    <div id="order-by">
+    <div id="filter" class="pop-up">
         <div class="modal-order">
-            <a class="modal-close-btn" href="javascript:voide(0)" onclick="closeOrder()">&times;</a>
+
+            <a class="modal-close-btn" href="javascript:voide(0)" onclick="closeFilter()">&times;</a>
 
             <div class="container-order">
 
-                <h1>Ordenar por:</h1>
-
                 <div class="container-order-1">
+
+                    <h2>Ordenar por:</h2> <br>
+
                     <label for="prioridade_check">Prioridade
                         <input type="checkbox" name="prioridade_check" id="prioridade_check" checked="checked">
                     </label>
@@ -251,6 +253,8 @@
                 </div>
 
                 <div class="container-order-2">
+
+                    <h2>Ordem:</h2> <br>
                     
                     <input type="radio" name="maior_check" id="maior_check" checked="checked" value="maior">
                     <label for="maior_check">Maior</label> <br>
@@ -258,6 +262,12 @@
                     <input type="radio" name="menor_check" id="menor_check" checked="checked" value="menor">
                     <label for="menor_check">Menor</label>
                     
+                </div>
+
+                <div class="container-order-3">
+
+                    <h2>Filtrar por:</h2> <br>
+
                 </div>
 
                 <button>OK</button>
@@ -270,11 +280,11 @@
     <!-- Use any element to open the sidenav -->
     <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="" onclick="openNav()">
 
-    <div id="order-btn-list">
-        <img id="filter-list-btn" src="{{ url_for('static', filename='icons/filter_list.svg') }}" alt="">
+    {% block filter_button %}
 
-        <img id="sort-list-btn" src="{{ url_for('static', filename='icons/sort.svg') }}" alt="">
-    </div>
+    <img id="filter-list-btn" src="{{ url_for('static', filename='icons/filter_tune.svg') }}" alt="Filter Button" onclick="openFilter()">
+
+    {% endblock filter_button %}
 
     <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 
