@@ -113,7 +113,7 @@ def index():
     
         return render_template(landing_template, proxima=proxima)
     
-    if session['usuario_logado']:
+    if session:
 
         usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
         print(session['usuario_logado'])

@@ -234,55 +234,47 @@
 
             <div class="container-order">
 
-                <div class="container-order-1">
-
-                    <h2>Ordenar por:</h2> <br>
-
-                    <label for="prioridade_check">Prioridade
-                        <input type="checkbox" name="prioridade_check" id="prioridade_check" checked="checked">
-                    </label>
-                    <label for="status_check">Status
-                        <input type="checkbox" name="status_check" id="status_check" checked="checked">
-                    </label>
-                    <label for="data_check">Data
-                        <input type="checkbox" name="data_check" id="data_check" checked="checked">
-                    </label>
-                    <label for="nome_check">Nome
-                        <input type="checkbox" name="nome_check" id="nome_check" checked="checked">
-                    </label>
-                </div>
-
                 <div class="container-order-2">
 
-                    <h2>Ordem:</h2> <br>
-                    
+                    <h2>Filtrar por:</h2> <br>
+
                     <div class="container-order-inner">
-                        <input type="radio" name="maior_check" id="maior_check" value="maior">
-                        <label for="maior_check">Maior</label> <br>
+                        <input type="radio" name="filter_check" id="nome_check" value="NOME">
+                        <label for="maior_check">Nome</label> <br>
                     </div>
 
                     <div class="container-order-inner">
-                        <input type="radio" name="menor_check" id="menor_check" value="menor">
-                        <label for="menor_check" aria-checked="mixed">Menor</label>
+                        <input type="radio" name="filter_check" id="menor_check" value="">
+                        <label for="menor_check">Menor</label>
                     </div>
-                    
+
                 </div>
 
                 <div class="container-order-3">
 
-                    <h2>Filtrar por:</h2> <br>
+                    <h2>Ordem:</h2> <br>
+                    
+                    <div class="container-order-inner">
+                        <input type="radio" name="order_check" id="maior_check" value="ASC">
+                        <label for="maior_check">Maior</label> <br>
+                    </div>
+
+                    <div class="container-order-inner">
+                        <input type="radio" name="order_check" id="menor_check" value="DESC">
+                        <label for="menor_check">Menor</label>
+                    </div>
 
                 </div>
 
-                <button>OK</button>
-
             </div>
+
+            <button class="submit-btn">OK</button>
 
         </div>
     </div>
 
     <!-- Use any element to open the sidenav -->
-    <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="" onclick="openNav()">
+    <img id="nav-btn-push" src="{{url_for('static', filename='icons/list-btn-blk.png')}}" alt="Menu Button" onclick="openNav()">
 
     {% block filter_button %}
 
