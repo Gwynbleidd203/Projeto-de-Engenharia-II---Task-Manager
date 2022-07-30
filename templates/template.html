@@ -239,29 +239,51 @@
                     <h2>Filtrar por:</h2> <br>
 
                     <div class="container-order-inner">
-                        <input type="radio" name="filter_check" id="nome_check" value="NOME">
-                        <label for="maior_check">Nome</label> <br>
+
+                        <select name="status" id="status">
+
+                            <option value="0" selected disabled >Status</option>
+        
+                            {% for status in status_list %}
+        
+                            <option value="{{ status._id }}">{{ status._nome }}</option>
+        
+                            {% endfor %}
+        
+                        </select> <br>
+                        
                     </div>
 
                     <div class="container-order-inner">
-                        <input type="radio" name="filter_check" id="menor_check" value="">
-                        <label for="menor_check">Menor</label>
+
+                        <select name="prioridade" id="prioridade" required>
+
+                            <option value="0" selected disabled>Prioridade</option>
+        
+                            {% for prioridade in prioridades %}
+        
+                            <option value="{{ prioridade._id }}">{{ prioridade._nome }}</option>
+        
+                            {% endfor %}
+        
+                        </select> <br>
+
                     </div>
 
-                </div>
-
-                <div class="container-order-3">
-
-                    <h2>Ordem:</h2> <br>
-                    
                     <div class="container-order-inner">
-                        <input type="radio" name="order_check" id="maior_check" value="ASC">
-                        <label for="maior_check">Maior</label> <br>
-                    </div>
 
-                    <div class="container-order-inner">
-                        <input type="radio" name="order_check" id="menor_check" value="DESC">
-                        <label for="menor_check">Menor</label>
+                        <select name="tipo" id="tipo" required>
+
+                            <option value="0" selected disabled>Tipo</option>
+        
+                            {% for tipo in tipos %}
+        
+                            <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+        
+                            {% endfor %}
+        
+                        </select> <br>
+
                     </div>
 
                 </div>
