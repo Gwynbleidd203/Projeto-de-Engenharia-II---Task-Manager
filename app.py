@@ -132,6 +132,9 @@ def index():
         return render_template(landing_template, proxima=proxima)
 
 
+@app.route('/<filtro>')
+
+
 @app.route('/novo')
 @login_required
 def novo():
@@ -182,6 +185,7 @@ def editar_tarefa(id):
 def atualizar():
 
     try:
+        
         nome = request.form['nome']
         descricao = request.form['descricao']
         tipo_id = request.form['tipo']

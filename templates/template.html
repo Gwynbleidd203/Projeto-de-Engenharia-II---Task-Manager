@@ -232,63 +232,49 @@
 
             <a class="modal-close-btn" href="javascript:voide(0)" onclick="closeFilter()">&times;</a>
 
-            <div class="container-order">
+            <form class="container-order" action="">
 
-                <div class="container-order-2">
+                <h2>Filtrar por:</h2> <br>
 
-                    <h2>Filtrar por:</h2> <br>
+                <select name="status" id="status">
 
-                    <div class="container-order-inner">
+                    <option value="0" selected disabled >Status</option>
 
-                        <select name="status" id="status">
+                    {% for status in status_list %}
 
-                            <option value="0" selected disabled >Status</option>
-        
-                            {% for status in status_list %}
-        
-                            <option value="{{ status._id }}">{{ status._nome }}</option>
-        
-                            {% endfor %}
-        
-                        </select> <br>
-                        
-                    </div>
+                    <option value="{{ status._id }}">{{ status._nome }}</option>
 
-                    <div class="container-order-inner">
+                    {% endfor %}
 
-                        <select name="prioridade" id="prioridade" required>
+                </select> <br>
+                    
 
-                            <option value="0" selected disabled>Prioridade</option>
-        
-                            {% for prioridade in prioridades %}
-        
-                            <option value="{{ prioridade._id }}">{{ prioridade._nome }}</option>
-        
-                            {% endfor %}
-        
-                        </select> <br>
+                <select name="prioridade" id="prioridade" required>
 
-                    </div>
+                    <option value="0" selected disabled>Prioridade</option>
 
-                    <div class="container-order-inner">
+                    {% for prioridade in prioridades %}
 
-                        <select name="tipo" id="tipo" required>
+                    <option value="{{ prioridade._id }}">{{ prioridade._nome }}</option>
 
-                            <option value="0" selected disabled>Tipo</option>
-        
-                            {% for tipo in tipos %}
-        
-                            <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
-        
-                            {% endfor %}
-        
-                        </select> <br>
+                    {% endfor %}
 
-                    </div>
+                </select> <br>
 
-                </div>
 
-            </div>
+                <select name="tipo" id="tipo" required>
+
+                    <option value="0" selected disabled>Tipo</option>
+
+                    {% for tipo in tipos %}
+
+                    <option value="{{ tipo._id }}">{{ tipo._nome }}</option>
+
+                    {% endfor %}
+
+                </select> <br>
+
+            </form>
 
             <button class="submit-btn">OK</button>
 
