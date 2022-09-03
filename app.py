@@ -107,13 +107,7 @@ def login_required(f):
 
 @app.route('/')
 def index():
-    if session == None or session == "":
-
-        proxima = request.args.get('proxima')
-    
-        return render_template(landing_template, proxima=proxima)
-    
-    if session:
+    try:
 
         usuario = usuario_dao.buscar_usuario_por_id(session['usuario_logado'])
         print(session['usuario_logado'])
@@ -125,14 +119,11 @@ def index():
         
         return render_template(index_template, proxima=proxima, tarefas=lista, tipos=lista_tipo, status_list=lista_status, prioridades=lista_prioridades, usuario=usuario)
 
-    else:
+    except Exception:
 
         proxima = request.args.get('proxima')
 
         return render_template(landing_template, proxima=proxima)
-
-
-@app.route('/<filtro>')
 
 
 @app.route('/novo')
