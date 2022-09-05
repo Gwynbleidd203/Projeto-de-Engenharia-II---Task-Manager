@@ -73,11 +73,14 @@ body {
   position: fixed;
   top: 0;
   right: 0;
-  height: 48px; }
+  height: 48px;
+  text-decoration: none;
+  font-size: 20px; }
 
 #task-link-btn {
   float: right;
-  color: var(--menu-sec); }
+  color: var(--menu-sec);
+  text-decoration: none; }
   #task-link-btn:visited {
     color: var(--menu-sec); }
   #task-link-btn:hover {
@@ -114,10 +117,9 @@ body {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   margin: 12px; }
-
-.btn_del:hover {
-  background-color: #f85555;
-  color: #020101; }
+  .btn_del:hover {
+    background-color: #f85555;
+    color: #020101; }
 
 .btn_edit {
   background-color: #04d331;
@@ -132,10 +134,9 @@ body {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   margin: 12px; }
-
-.btn_edit:hover {
-  background-color: #76ce7a;
-  color: #020101; }
+  .btn_edit:hover {
+    background-color: #76ce7a;
+    color: #020101; }
 
 .btn-custom {
   display: flex;
@@ -150,6 +151,26 @@ body {
   left: 0;
   z-index: 10; }
 
+#close-btn {
+  color: white;
+  float: right;
+  font-size: large; }
+  #close-btn:hover {
+    cursor: pointer;
+    color: red; }
+
+.submit-btn {
+  padding: 15px 18px;
+  margin: 10px auto;
+  border-radius: 7px;
+  border: none;
+  transition: 0.7s;
+  background-color: var(--cards-sec); }
+  .submit-btn:hover {
+    cursor: pointer;
+    opacity: 0.6;
+    box-shadow: 2px 6px 0 rgba(0, 0, 0, 0.24); }
+
 .icon {
   width: 32px;
   height: 32px; }
@@ -162,6 +183,19 @@ body {
   width: 100%;
   height: 100%;
   background-size: cover; }
+
+#create-account-text {
+  color: whitesmoke; }
+
+#create-account-link, #create-account-link:visited {
+  color: var(--link-main);
+  text-decoration: none; }
+
+#create-account-link:hover {
+  color: white; }
+
+#create-account-link:active {
+  color: var(--cards-sec); }
 
 .msg {
   width: 20rem;
@@ -185,6 +219,12 @@ body {
 
 .msg-ul-good {
   background-color: #1a73e7b9; }
+
+#hideMe {
+  -webkit-animation: vanish 0s ease-in 5s forwards;
+  animation: vanish 0s ease-in 5s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards; }
 
 .about-us {
   display: flex;
@@ -225,6 +265,105 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-around; }
+
+body {
+  display: flex;
+  justify-content: space-around;
+  min-height: 100vh;
+  padding: 10px; }
+
+main, .tipo-list-container, .tarefas-list-container {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: calc(1.0);
+  justify-content: center;
+  align-items: center;
+  align-self: auto;
+  box-shadow: 5px 10px 20px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  padding: 56px 112px;
+  min-width: 250px;
+  margin: 36px; }
+
+.profile-center {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: fit-content;
+  margin: 8px; }
+
+.profile-left, .profile-right {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 8px; }
+
+.profile-botttom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 4px; }
+
+#profile-search {
+  width: auto; }
+
+#maginifying-glass {
+  width: 32px;
+  height: 32px; }
+
+form {
+  height: fit-content;
+  width: fit-content;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 4px; }
+
+form > a {
+  width: fit-content;
+  height: fit-content; }
+
+.tipo-list-container > h2, .tarefas-list-container > h2 {
+  padding: 16px 0px;
+  border-bottom: 2px solid black; }
+
+.tipo-list-container > ul, .tarefas-list-container > ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 16px auto; }
+
+.tipo-list-container > li, a {
+  color: var(--menu-main);
+  text-decoration: none;
+  padding: 8px auto; }
+
+.tipo-list-container a:hover {
+  text-decoration: underline; }
+
+.form-tipo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: space-around; }
+
+.tipo-container-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px; }
+
+.tipo-container-buttons button {
+  color: whitesmoke; }
 
 /* Color Palette*/
 /* -------------------------- */
@@ -398,12 +537,6 @@ body {
   gap: 16px; }
 
 /* Message Animation Start*/
-#hideMe {
-  -webkit-animation: vanish 0s ease-in 5s forwards;
-  animation: vanish 0s ease-in 5s forwards;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards; }
-
 /* Message Animation End */
 /* Modal Start */
 .modal-login, .modal-create, .modal-create-user, .modal-tipo {
@@ -417,19 +550,6 @@ body {
   margin: 0 auto;
   padding: 24px 56px;
   border-radius: 16px; }
-
-#create-account-text {
-  color: whitesmoke; }
-
-#create-account-link, #create-account-link:visited {
-  color: var(--link-main);
-  text-decoration: none; }
-
-#create-account-link:hover {
-  color: white; }
-
-#create-account-link:active {
-  color: var(--cards-sec); }
 
 /* Modal End */
 /* TASK DIV EDIT START */

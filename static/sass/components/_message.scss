@@ -24,3 +24,10 @@
 .msg-ul-good {
     background-color: #1a73e7b9;
 }
+
+#hideMe {
+    -webkit-animation: vanish 0s ease-in 5s forwards;
+    animation: vanish 0s ease-in 5s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}

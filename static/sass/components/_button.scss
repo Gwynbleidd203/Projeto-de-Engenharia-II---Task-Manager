@@ -15,11 +15,15 @@
     top: 0;
     right: 0;
     height: 48px;
+
+    text-decoration: none;
+    font-size: 20px;
 }
 
 #task-link-btn {
     float: right;
     color: var(--menu-sec);
+    text-decoration: none;
 
     &:visited {
         color: var(--menu-sec);
@@ -36,6 +40,7 @@
         color: var(--link-main);
     }
 }
+
 
 .modal-close-btn {
     color: whitesmoke;
@@ -70,12 +75,13 @@
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     margin: 12px;
+
+    &:hover {
+        background-color: #f85555;
+        color: rgb(2, 1, 1);
+    }
 }
-  
-.btn_del:hover {
-    background-color: #f85555;
-    color: rgb(2, 1, 1);
-}
+
   
 .btn_edit {
     background-color: #04d331;
@@ -90,11 +96,11 @@
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     margin: 12px;
-}
-  
-.btn_edit:hover {
-    background-color: #76ce7a;
-    color: rgb(2, 1, 1);
+
+    &:hover {
+        background-color: #76ce7a;
+        color: rgb(2, 1, 1);
+    }
 }
 
 .btn-custom {
@@ -111,3 +117,30 @@
     left: 0;
     z-index: 10;
 }
+
+#close-btn {
+    color: white;
+    float: right;
+    font-size: large;
+
+    &:hover {
+        cursor: pointer;
+        color: red;
+    }
+}
+
+.submit-btn {
+    padding: 15px 18px;
+    margin: 10px auto;
+    border-radius: 7px;
+    border: none;
+    transition: 0.7s;
+    background-color: var(--cards-sec);
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.6;
+        box-shadow: 2px 6px 0 rgba(0,0,0,0.24);
+    }
+}
+

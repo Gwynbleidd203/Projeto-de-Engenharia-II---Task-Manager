@@ -41,35 +41,3 @@ input[type=text], input[type=date], input[type=email], input[type=password], sel
 input:hover {
     outline: auto;
 }
-
-#close-btn {
-    color: white;
-    float: right;
-    font-size: large;
-}
-
-#close-btn:hover {
-    cursor: pointer;
-    color: red;
-}
-
-.submit-btn {
-    padding: 15px 18px;
-    margin: 10px auto;
-    border-radius: 7px;
-    border: none;
-    transition: 0.7s;
-    background-color: var(--cards-sec);
-}
-
-.submit-btn:hover {
-    cursor: pointer;
-    opacity: 0.6;
-    box-shadow: 2px 6px 0 rgba(0,0,0,0.24);
-}
-
-#task-link-btn {
-    float: right;
-    text-decoration: none;
-    font-size: 20px;
-}

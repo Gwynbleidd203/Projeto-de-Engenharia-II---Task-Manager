@@ -8,9 +8,11 @@
 
 @import "components/button";
 @import "components/icons";
+@import "components/links";
 @import "components/message";
 
 @import "pages/about";
+@import "pages/profile";
 
 /* Color Palette*/
 
@@ -201,13 +203,6 @@
 
 /* Message Animation Start*/
 
-#hideMe {
-  -webkit-animation: vanish 0s ease-in 5s forwards;
-  animation: vanish 0s ease-in 5s forwards;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-}
-
 /* Message Animation End */
 
 /* Modal Start */
@@ -223,23 +218,6 @@
   margin: 0 auto;
   padding: 24px 56px;
   border-radius: 16px;
-}
-
-#create-account-text {
-  color: whitesmoke;
-}
-
-#create-account-link, #create-account-link:visited {
-  color: var(--link-main);
-  text-decoration: none;
-}
-
-#create-account-link:hover {
-  color: white;
-}
-
-#create-account-link:active {
-  color: var(--cards-sec);
 }
 
 

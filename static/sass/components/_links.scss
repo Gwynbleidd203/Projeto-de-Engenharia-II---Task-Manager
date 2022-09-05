@@ -1,0 +1,16 @@
+#create-account-text {
+    color: whitesmoke;
+  }
+  
+#create-account-link, #create-account-link:visited {
+    color: var(--link-main);
+    text-decoration: none;
+}
+  
+#create-account-link:hover {
+    color: white;
+}
+  
+#create-account-link:active {
+    color: var(--cards-sec);
+}
