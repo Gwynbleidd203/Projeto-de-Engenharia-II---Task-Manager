@@ -227,6 +227,108 @@ body {
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards; }
 
+.task-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  float: left;
+  background-color: var(--cards-main);
+  width: 20rem;
+  height: 20.31rem;
+  line-height: 25px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border-radius: 7px;
+  padding: 10px 12px;
+  word-wrap: break-word;
+  overflow: hidden;
+  margin: 50px;
+  transition: 0.2s; }
+
+.task-div:hover {
+  background-color: var(--cards-sec);
+  box-shadow: 5px 10px 20px 5px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1); }
+
+.task-div-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: var(--cards-main);
+  width: 70%;
+  max-width: 430px;
+  min-width: 370px;
+  height: calc(100vh - 18rem);
+  max-height: 450px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 32px 40px;
+  border-radius: 16px;
+  word-wrap: break-word;
+  transition: 0.2s;
+  margin-top: calc(12vw - 30px); }
+
+.task-div-edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20vh auto;
+  background-color: var(--cards-main);
+  width: 30rem;
+  height: 32rem;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  word-wrap: break-word;
+  transition: 0.2s; }
+
+.task-div-info:hover {
+  box-shadow: 5px 10px 20px 5px rgba(0, 0, 0, 0.2); }
+
+@media screen and (max-width: 1000px) {
+  .task-div {
+    width: 17rem;
+    height: 18rem;
+    overflow: hidden; } }
+
+/* Message Start */
+/* Message End */
+.task-div-inner-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.task-link-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+  align-self: flex-end; }
+
+.task-div-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  align-self: flex-end;
+  gap: 32px; }
+
+.task-link-container {
+  display: hidden; }
+
+.task-inner-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around; }
+
+.task-top-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  align-self: flex-end;
+  gap: 16px; }
+
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
   display: contents;
@@ -440,108 +542,6 @@ form > a {
   width: fit-content;
   height: fit-content;
   border-radius: 12px; }
-
-.task-div {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  float: left;
-  background-color: var(--cards-main);
-  width: 20rem;
-  height: 20.31rem;
-  line-height: 25px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  border-radius: 7px;
-  padding: 10px 12px;
-  word-wrap: break-word;
-  overflow: hidden;
-  margin: 50px;
-  transition: 0.2s; }
-
-.task-div:hover {
-  background-color: var(--cards-sec);
-  box-shadow: 5px 10px 20px 5px rgba(0, 0, 0, 0.2);
-  transform: scale(1.1); }
-
-.task-div-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  background-color: var(--cards-main);
-  width: 70%;
-  max-width: 430px;
-  min-width: 370px;
-  height: calc(100vh - 18rem);
-  max-height: 450px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  padding: 32px 40px;
-  border-radius: 16px;
-  word-wrap: break-word;
-  transition: 0.2s;
-  margin-top: calc(12vw - 30px); }
-
-.task-div-edit {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  margin: 20vh auto;
-  background-color: var(--cards-main);
-  width: 30rem;
-  height: 32rem;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  border-radius: 16px;
-  word-wrap: break-word;
-  transition: 0.2s; }
-
-.task-div-info:hover {
-  box-shadow: 5px 10px 20px 5px rgba(0, 0, 0, 0.2); }
-
-@media screen and (max-width: 1000px) {
-  .task-div {
-    width: 17rem;
-    height: 18rem;
-    overflow: hidden; } }
-
-/* Message Start */
-/* Message End */
-.task-div-inner-top {
-  display: flex;
-  flex-direction: column;
-  align-items: center; }
-
-.task-link-container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: flex-end;
-  align-self: flex-end; }
-
-.task-div-inner {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  align-self: flex-end;
-  gap: 32px; }
-
-.task-link-container {
-  display: hidden; }
-
-.task-inner-buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around; }
-
-.task-top-buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  align-self: flex-end;
-  gap: 16px; }
 
 /* Message Animation Start*/
 /* Message Animation End */
