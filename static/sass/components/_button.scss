@@ -3,6 +3,9 @@
     position: fixed;
     top: 0;
     left: 0;
+    animation-name: fadeIn;
+    animation-duration: 2.5s;
+    animation-iteration-count: 1;
 
     &:hover {
         cursor: pointer;
@@ -15,6 +18,9 @@
     top: 0;
     right: 0;
     height: 48px;
+    animation-name: fadeIn;
+    animation-duration: 2.5s;
+    animation-iteration-count: 1;
 
     text-decoration: none;
     font-size: 20px;

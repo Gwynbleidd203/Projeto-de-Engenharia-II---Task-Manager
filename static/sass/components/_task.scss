@@ -1,3 +1,5 @@
+
+
 .task-div {
     display: flex;
     flex-direction: column;
@@ -15,6 +17,9 @@
     overflow: hidden;
     margin: 50px;
     transition: 0.2s;
+    animation-name: fadeIn;
+    animation-duration: 2.5s;
+    animation-iteration-count: 1;
 
     &:hover {
         background-color: var(--cards-sec);
