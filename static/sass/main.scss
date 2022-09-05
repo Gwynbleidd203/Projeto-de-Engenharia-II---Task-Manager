@@ -1,75 +1,20 @@
-@charset "UTF-8";
-
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
-
 @import url(form.css);
 
-*,
-*::after,
-*::before {
-  box-sizing: border-box;
-  user-select: none;
-  margin: 0;
-  padding: 0;
-}
+@import "abstracts/variables";
+
+@import "base/animations";
+@import "base/base";
+@import "base/typography";
+
+@import "components/button";
+@import "components/icons";
+@import "components/message";
+
+@import "pages/about";
+
 /* Color Palette*/
 
-:root {
-  --bg-main: #8bb7e07d;
-  --cards-main: #51a3f5bd;
-  --cards-sec: #3a9afa;
-  --menu-main: #2864A3;
-  --menu-sec: #CAECF7;
-  --link-main: #a7e1f5;
-  --pop-up: #4cadfd;
-  --red-warning: #e90202;
-  --red-warning-2: #b10202;
-}
-
-$bg-main: #8bb7e07d;
-
-$cards-main: #51a3f5bd;
-$cards-sec: #3a9afa;
-
-$menu-main: #CAECF7;
-$menu-sec: #CAECF7;
-
-$link-main: #a7e1f5;
-
-$pop-up: #4cadfd;
-
-$red-warning: #e90202;
-$red-warning-2: #b10202;
-
-$box-shadow-default: 0px 8px 16px 0px rgba(0,0,0,0.2);
-
-@mixin flex-box-default($direction, $justify, $align) {
-    display: flex;
-    flex-direction: $direction;
-    justify-content: $justify;
-    align-items: $align;
-    flex-wrap: wrap;
-}
-
-@mixin fit-content {
-    width: fit-content;
-    height: fit-content;
-}
-
-
 /* -------------------------- */
-
-body {
-    @include flex-box-default(row, space-around, center);
-    font-family:'Roboto', sans-serif;
-    background-color: $bg-main;
-    font-weight: bold;
-    align-self: center;
-    align-content: center;
-    gap: 2rem;
-    min-height: 100vh;
-    min-width: 100vw;
-}
 
 /* The side navigation menu */
 .sidenav {
@@ -79,7 +24,7 @@ body {
   z-index: 1; /* Stay on top */
   top: 0; /* Stay at the top */
   left: 0;
-  background-color: $menu-main; /* Black*/
+  background-color: var(--menu-main); /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -90,12 +35,15 @@ body {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: $menu-sec;
+  color: var(--menu-sec);
   display: block;
   transition: 0.3s;
 }
 
-
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
 
 /* Position and style the close button (top right corner) */
 .sidenav .closebtn {
@@ -113,40 +61,9 @@ body {
 }
 
 .modal-form {
-  @include fit-content();
+  width: fit-content;
+  height: fit-content;
   border-radius: 12px;
-}
-
-#nav-btn-push {
-  float: left;
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-#filter-list-btn {
-  float: right;
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 48px;
-}
-
-#order-btn-list {
-  @include flex-box-default(row, space-around, center);
-  @include fit-content();
-  position: fixed;
-  top: 0;
-  right: 0;
-
-  & > img {
-    width: 48px;
-    height: 48px;
-  }
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
@@ -164,9 +81,11 @@ body {
 }
 
 .task-div {
-  @include flex-box-default(column, space-between, center);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   float: left;
-  background-color: $cards-main;
+  background-color: var(--cards-main);
   width: 20rem;
   height: 20.31rem;
   line-height: 25px;
@@ -178,12 +97,12 @@ body {
   overflow: hidden;
   margin: 50px;
   transition: 0.2s;
+}
 
-  &:hover {
-    background-color: $cards-sec;
-    box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.2);
-    transform: scale(1.1);
-  }
+.task-div:hover {
+  background-color: var(--cards-sec);
+  box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.2);
+  transform: scale(1.1);
 }
 
 .task-div-info {
@@ -191,7 +110,7 @@ body {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background-color: $cards-main;
+  background-color: var(--cards-main);
   width: 70%;
   max-width: 430px;
   min-width: 370px;
@@ -203,10 +122,6 @@ body {
   word-wrap: break-word;
   transition: 0.2s;
   margin-top: calc(12vw - 30px);
-  
-  &:hover {
-    box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.2);
-  }
 }
 
 .task-div-edit {
@@ -215,13 +130,17 @@ body {
   justify-content: space-around;
   align-items: center;
   margin: 20vh auto;
-  background-color: $cards-main;
+  background-color: var(--cards-main);
   width: 30rem;
   height: 32rem;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 16px;
   word-wrap: break-word;
   transition: 0.2s;
+}
+
+.task-div-info:hover {
+  box-shadow: 5px 10px 20px 5px rgba(0,0,0,0.2);
 }
 
 @media screen and (max-width: 1000px) {
@@ -232,76 +151,9 @@ body {
   }
 }
 
-.btn_del {
-  background-color: #e90202;
-  border: none;
-  color: white;
-  padding: 09px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 8px;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  margin: 12px;
-
-  &:hover {
-    background-color: #f85555;
-    color: rgb(2, 1, 1);
-  }
-}
-
-.btn_edit {
-  background-color: #04d331;
-  border: none;
-  color: white;
-  padding: 09px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 8px;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  margin: 12px;
-
-  &:hover {
-    background-color: #76ce7a;
-    color: rgb(2, 1, 1);
-  }
-}
-
 
 
 /* Message Start */
-
-.msg {
-  width: 20rem;
-  list-style-type: none;
-  height: fit-content;
-  padding: 24px 56px;
-  border-radius: 5px;
-  z-index: 10;
-  position: absolute;
-  top: 1;
-  left: 40;
-  right: 40;
-  text-decoration: none;
-  text-align: center;
-}
-
-.msg-ul-bad {
-  background-color: #e9232394;
-}
-
-.msg-ul-bad-solid {
-  background-color: #e92323de;
-}
-
-.msg-ul-good {
-  background-color: #1a73e7b9;
-}
 
 /* Message End */
 
@@ -309,7 +161,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
 }
 
 .task-link-container {
@@ -327,36 +178,6 @@ body {
   justify-content: space-around;
   align-self: flex-end;
   gap: 32px;
-}
-
-#task-link-btn {
-  float: right;
-  color: $menu-sec;
-
-  &:visited {
-    float: right;
-    color: $menu-sec;
-  }
-
-  &:hover {
-    color: whitesmoke;
-  }
-  
-  &:active {
-    animation: rotation;
-    animation-duration: 300ms;
-    animation-iteration-count: 1;
-    color: $link-main;
-  }
-}
-
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(180deg);
-  }
 }
 
 .task-link-container {
@@ -378,22 +199,6 @@ body {
   gap: 16px;
 }
 
-.icon {
-  width: 32px;
-  height: 32px;
-}
-
-.icon-2 {
-  width: 16px;
-  height: 16px;
-}
-
-.btn-custom {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-}
-
 /* Message Animation Start*/
 
 #hideMe {
@@ -403,33 +208,16 @@ body {
   animation-fill-mode: forwards;
 }
 
-@keyframes vanish {
-  to {
-      width:0;
-      height:0;
-      overflow:hidden;
-      visibility: hidden;
-      display: none;
-  }
-}
-
-@-webkit-keyframes vanish {
-  to {
-    width:0;
-    height:0;
-    overflow:hidden;
-    visibility: hidden;
-    display: none;
-  }
-}
-
 /* Message Animation End */
 
 /* Modal Start */
 
 .modal-login, .modal-create, .modal-create-user, .modal-tipo {
-  background-color: $menu-main;
-  @include flex-box-default(column, space-around, center);
+  background-color: var(--menu-main);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   width: 28rem;
   height: fit-content;
   margin: 0 auto;
@@ -437,122 +225,27 @@ body {
   border-radius: 16px;
 }
 
-.modal-order {
-  @include flex-box-default(column, center, center);
-  align-self: right;
-
-  margin: auto;
-
-  border-radius: 16px;
-  background-color: $pop-up;
-  color:whitesmoke;
-
-  padding: 56px;
-  gap: 16px;
-  width: 20%;
-  height: fit-content;
-}
-
-.container-order {
-  @include flex-box-default(column, space-around, center);
-  width: 100%;
-}
-
-.container-order-1, .container-order-2 {
-  @include flex-box-default(column, space-around, center);
-  gap: 8px;
-}
-
-.modal-close-btn, .modal-close-btn:visited {
-  color: whitesmoke;
-  font-size: 24px;
-  text-decoration: none;
-  display: flex;
-  align-self: flex-end;
-}
-
-.modal-close-btn:hover {
-  color: $red-warning;
-}
-
-.modal-close-btn:active {
-  color: $red-warning-2;
-}
-
 #create-account-text {
   color: whitesmoke;
 }
 
-#create-account-link, 
-#create-account-link:visited {
-  color: $link-main;
+#create-account-link, #create-account-link:visited {
+  color: var(--link-main);
   text-decoration: none;
-  &:hover {
-    color: white;
-  }
-
-  &:active {
-    color: $cards-sec;
-  }
 }
 
-#home-btn {
-  width: 48px;
-  height: 48px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 10;
+#create-account-link:hover {
+  color: white;
 }
 
-.about-us {
-  @include flex-box-default(column, center, center);
-  align-self: center;
-  margin: auto;
-  flex-shrink: initial;
+#create-account-link:active {
+  color: var(--cards-sec);
 }
 
-.about-us-description {
-  text-align: center;
-  word-wrap: break-word;
-  word-spacing: 0.02rem;
-  width: calc(50vw + 100px);
-  max-width: 600px;
-  min-width: 200px;
-  margin: 56px auto;
-  border-radius: 20px;
-  padding: 56px;
-  box-shadow: $box-shadow-default;
-}
 
-.about-us-contact {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  margin: 56px auto;
-  width: calc(50vw + 10px);
-  padding: 56px;
-  border-radius: 20px;
-  max-width: 600px;
-  box-shadow: $box-shadow-default;
-}
-
-.contact {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-}
 
 /* Modal End */
 
 /* TASK DIV EDIT START */
 
 /* TASK DIV EDIT END */
-
-.logo-bg {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-}

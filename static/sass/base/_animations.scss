@@ -1,0 +1,28 @@
+@keyframes vanish {
+  to {
+      width:0;
+      height:0;
+      overflow:hidden;
+      visibility: hidden;
+      display: none;
+  }
+}
+  
+@-webkit-keyframes vanish {
+  to {
+    width:0;
+    height:0;
+    overflow:hidden;
+    visibility: hidden;
+    display: none;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}

@@ -1,0 +1,26 @@
+.msg {
+    width: 20rem;
+    list-style-type: none;
+    height: fit-content;
+    padding: 24px 56px;
+    border-radius: 5px;
+    z-index: 10;
+    position: absolute;
+    top: 1;
+    left: 40;
+    right: 40;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+.msg-ul-bad {
+    background-color: #e9232394;
+}
+  
+.msg-ul-bad-solid {
+    background-color: #e92323de;
+}
+  
+.msg-ul-good {
+    background-color: #1a73e7b9;
+}

@@ -1,0 +1,26 @@
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  user-select: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+html {
+    font-size: 62.5%;
+}
+*/
+
+body {
+  box-sizing: border-box;
+  background-color: var(--bg-main);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-self: center;
+  align-content: center;
+  gap: 2rem;
+}
