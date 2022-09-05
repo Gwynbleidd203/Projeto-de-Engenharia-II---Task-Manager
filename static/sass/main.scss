@@ -10,7 +10,9 @@
 @import "components/icons";
 @import "components/links";
 @import "components/message";
-@import "components/side-nav";
+
+@import "layout/main";
+@import "layout/side-nav";
 
 @import "pages/about";
 @import "pages/info";
@@ -24,20 +26,6 @@
   width: fit-content;
   height: fit-content;
   border-radius: 12px;
-}
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
-  display: contents;
-  flex-wrap: nowrap;
-  transition: margin-left .5s;
-  padding: 20px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
 }
 
 .task-div {
@@ -177,11 +165,3 @@
   padding: 24px 56px;
   border-radius: 16px;
 }
-
-
-
-/* Modal End */
-
-/* TASK DIV EDIT START */
-
-/* TASK DIV EDIT END */
