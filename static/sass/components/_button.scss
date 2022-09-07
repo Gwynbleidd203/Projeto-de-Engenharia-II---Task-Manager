@@ -17,13 +17,13 @@
     position: fixed;
     top: 0;
     right: 0;
-    height: 48px;
+    height: 4.8rem;
     animation-name: fadeIn;
     animation-duration: 2.5s;
     animation-iteration-count: 1;
 
     text-decoration: none;
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 #task-link-btn {
@@ -50,7 +50,7 @@
 
 .modal-close-btn {
     color: whitesmoke;
-    font-size: 24px;
+    font-size: 2.4rem;
     text-decoration: none;
     display: flex;
     align-self: flex-end;
@@ -69,56 +69,59 @@
     }
 }
 
-.btn_del {
-    background-color: #e90202;
-    border: none;
-    color: white;
-    padding: 09px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 8px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    margin: 12px;
+.btn {
 
-    &:hover {
-        background-color: #f85555;
-        color: rgb(2, 1, 1);
+    &_del {
+        background-color: #e90202;
+        border: none;
+        color: white;
+        padding: .9rem 2rem;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1.6rem;
+        border-radius: .8rem;
+        -webkit-transition-duration: .4s;
+        transition-duration: .4s;
+        margin: 1.2rem;
+    
+        &:hover {
+            background-color: #f85555;
+            color: rgb(2, 1, 1);
+        }
     }
-}
-
-  
-.btn_edit {
-    background-color: #04d331;
-    border: none;
-    color: white;
-    padding: 09px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 8px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    margin: 12px;
-
-    &:hover {
-        background-color: #76ce7a;
-        color: rgb(2, 1, 1);
+    
+      
+    &_edit {
+        background-color: #04d331;
+        border: none;
+        color: white;
+        padding: .9rem 2rem;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1.6rem;
+        border-radius: .8rem;
+        -webkit-transition-duration: .4s;
+        transition-duration: .4s;
+        margin: 1.2rem;
+    
+        &:hover {
+            background-color: #76ce7a;
+            color: rgb(2, 1, 1);
+        }
     }
-}
-
-.btn-custom {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
+    
+    &-custom {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+    }
 }
 
 #home-btn {
-    width: 48px;
-    height: 48px;
+    width: 4.8rem;
+    height: 4.8rem;
     position: absolute;
     top: 0;
     left: 0;
@@ -137,9 +140,9 @@
 }
 
 .submit-btn {
-    padding: 15px 18px;
-    margin: 10px auto;
-    border-radius: 7px;
+    padding: 1.5rem 1.8rem;
+    margin: 1rem auto;
+    border-radius: .7rem;
     border: none;
     transition: 0.7s;
     background-color: var(--cards-sec);
@@ -147,7 +150,7 @@
     &:hover {
         cursor: pointer;
         opacity: 0.6;
-        box-shadow: 2px 6px 0 rgba(0,0,0,0.24);
+        box-shadow: .2rem .6rem 0 rgba(0,0,0,0.24);
     }
 }
 
